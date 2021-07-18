@@ -22,7 +22,7 @@ class Sentancizer(RepresenterMixin):
     @args_logger
     def main(self):
         self.text_to_lines()
-        logger.debug("Sentancizer.text_in_lines: " + str(self.text_in_lines))
+        # logger.debug("Sentancizer.text_in_lines: " + str(self.text_in_lines))
         return self.text_in_lines
 
 
