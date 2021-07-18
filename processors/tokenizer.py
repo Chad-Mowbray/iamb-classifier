@@ -20,7 +20,8 @@ class Tokenizer(RepresenterMixin):
 
     @args_logger
     def make_initial_tokens(self):
-        logger.info("Tokenizer.make_initial_tokens()...")
+        import inspect
+        print(inspect.ismethod(self.make_initial_tokens))
         initial_tokens = [word_tokenize(line) for line in self.lines]
         return initial_tokens
 

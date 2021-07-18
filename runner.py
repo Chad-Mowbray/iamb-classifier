@@ -13,12 +13,10 @@ class Runner(RepresenterMixin):
     Accepts text file
     """
     def __init__(self, raw_file_contents):
-        logging.info("Runner init...")
         self.raw_file_contents = raw_file_contents
 
     @args_logger
     def initial_process_contents(self):
-        logging.info("Runner.initial_process_contents...")
         s = Sentancizer(self.raw_file_contents)
         lines = s.main()
         t = Tokenizer(lines)
