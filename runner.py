@@ -1,4 +1,4 @@
-from processors.sentancizer import Sentancizer
+from processors.sentencizer import Sentencizer
 from processors.tokenizer import Tokenizer
 
 from utils.representer import RepresenterMixin
@@ -22,8 +22,8 @@ class Runner(RepresenterMixin):
 
     @args_logger
     def initial_process_contents(self):
-        sentancizer = Sentancizer(self.raw_file_contents)
-        lines = sentancizer.main()
+        sentencizer = Sentencizer(self.raw_file_contents)
+        lines = sentencizer.main()
         tokenizer = Tokenizer(lines, cmudict)
         tokenizer.create_tokens()
 
@@ -33,7 +33,7 @@ class Runner(RepresenterMixin):
 if __name__ == "__main__":
     with open("poems/test_poem.txt") as f:
         contents = f.read()
-        contents = "But we have left the gentle haunts to pass address expeditiously\n"
+        contents = " sssdkjsdh347shjdksjhds lamp-lit gentle haunts to pass address expeditiously\n"
         r = Runner(contents)
         r.initial_process_contents()
 
