@@ -1,5 +1,6 @@
 from nltk import word_tokenize
 from string import punctuation
+from utils.dicts import DictsSingleton
 
 from utils.representer import RepresenterMixin
 from utils.logger import args_logger
@@ -17,11 +18,11 @@ class Tokenizer(RepresenterMixin):
     """
 
 
-    def __init__(self, lines, cmudict):
+    def __init__(self, lines):
         self.lines = lines
         self.line_tokens = []
         self.remove = punctuation
-        self.cmudict = cmudict
+        self.dicts = DictsSingleton()
 
     @args_logger
     def make_initial_tokens(self):
@@ -43,7 +44,7 @@ class Tokenizer(RepresenterMixin):
     def create_tokens(self):
         lines = self.process_lines()
         for line in lines:
-            tokenized_line = [Token(t, self.cmudict) for t in line]
+            tokenized_line = [Token(t, self.dicts) for t in line]
             print(list(map(lambda t: print(t()), tokenized_line)))
 
 
