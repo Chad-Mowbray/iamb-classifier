@@ -62,9 +62,9 @@ class Token(RepresenterMixin):
     @args_logger
     def handle_not_in_cmudict(self, token):
         spelling_normalized_token = self.spelling_normalizer(token)
-        if spelling_normalized_token:
-            try:
-                self.lookup(spelling_normalized_token)
+        # if spelling_normalized_token:
+        #     try:
+        #         self.lookup(spelling_normalized_token)
 
 
     @args_logger

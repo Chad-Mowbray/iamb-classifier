@@ -28,9 +28,18 @@ class Runner(RepresenterMixin):
 
 
 if __name__ == "__main__":
-    with open("poems/test_poem.txt") as f:
-        contents = f.read()
-        contents = "earthshattering fireflies lamp-lit gentle haunts to pass address expeditiously\n"
-        r = Runner(contents)
-        r.initial_process_contents()
+    # with open("poems/test_poem.txt") as f:
+    #     contents = f.read()
+    #     contents = "earthshattering fireflies lamp-lit gentle haunts to pass address expeditiously\n"
+    #     r = Runner(contents)
+    #     r.initial_process_contents()
 
+
+    from processors.phoneme_fsm import PhonemeFSM
+    for w in ["disceased", "lamplit", "silver-smithes"]:
+        fsm = PhonemeFSM(w)
+        res = fsm.dispatch()
+        print(res)
+    
+
+# disceased lamplit silver-smithes  ["disceased", "lamplit", "silver-smithes"]

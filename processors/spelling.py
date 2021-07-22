@@ -14,7 +14,7 @@ class SpellingNormalizer(RepresenterMixin):
     @args_logger
     def get_modernized_spelling(self):
         modernized = reg.modernize(self.unknown_word)
-        print(modernized)
+        # print(modernized)
         self.modernized_word = modernized
 
 

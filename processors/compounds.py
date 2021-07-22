@@ -1,3 +1,5 @@
+from processors.spelling import SpellingNormalizer
+
 
 class Compounds:
 
@@ -5,8 +7,6 @@ class Compounds:
         self.original_word = original_word
         self.lemmatizer = lemmatizer
         self.words = words
-
-
 
     def find_compound_in_wordlist(self, initial=2):
         median = len(self.original_word) // 2
@@ -16,8 +16,8 @@ class Compounds:
         res = []
 
         for i in range(initial, len(self.original_word) - 2):
-            left = self.original_word[:i]
-            right = wnl.lemmatize(self.original_word[i:])
+            left = SpellingNormalizer(self.original_word[:i]).modernized_word or self.original_word[:i]
+            right = SpellingNormalizer(wnl.lemmatize(self.original_word[i:])).modernized_word or wnl.lemmatize(self.original_word[i:])
             if left in wordlist and right in wordlist:
                 if current_split_idx:
                     prior_distance = abs(current_split_idx - median)
