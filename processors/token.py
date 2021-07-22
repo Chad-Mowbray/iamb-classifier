@@ -1,8 +1,8 @@
-
 from processors.spelling import SpellingNormalizer
 from utils.logger import args_logger
 from utils.representer import RepresenterMixin
 from processors.compounds import Compounds
+from processors.phoneme_fsm import PhonemeFSM
 
 from syllabify.syllabify import syllabify, pprint
 
@@ -40,56 +40,31 @@ class Token(RepresenterMixin):
             "syllabifications": self.syllabifications
         }
 
-    @args_logger
-    def lookup(self, token):
-        return self.d.cmudict[token]
 
     @args_logger
-    def spelling_normalizer(self, token):
-        spelling_normalizer = SpellingNormalizer(token)
-        print("########## ", spelling_normalizer.modernized_word)
-        return spelling_normalizer.modernized_word
-
-    @args_logger
-    def compound_checker(self, token):
-        print('Checking if compound...')
-        compound = Compounds(token, self.d.words, self.d.lemmatizer).find_compound_in_wordlist()
-        if compound:
-            pass
-        print(compound)
-        return compound if compound else "not found"
-
-    @args_logger
-    def handle_not_in_cmudict(self, token):
-        spelling_normalized_token = self.spelling_normalizer(token)
-        # if spelling_normalized_token:
-        #     try:
-        #         self.lookup(spelling_normalized_token)
+    def handle_compounds(self, phoneme_reprs):
+        updated_phoneme_reprs = []
+        for phoneme_repr in phoneme_reprs:
+            primary_stress_indicies = [i for i,phon in enumerate(phoneme_repr) if self.PRIMARY_STRESS in phon ]
+            if len(primary_stress_indicies) > 1:
+                for idx in reversed(primary_stress_indicies):
+                    phoneme_repr_copy = [phon for phon in phoneme_repr]
+                    phoneme_repr_copy[idx] = phoneme_repr_copy[idx][:-1] + self.SECONDARY_STRESS
+                    updated_phoneme_reprs.append(phoneme_repr_copy)
+                return updated_phoneme_reprs
+        return phoneme_reprs
 
 
     @args_logger
-    def get_phonemes_from_dict(self, variant=None):
-        try:
-            token = variant if variant else self.token
-            print("token: ", token)
-            self.phoneme_reprs = self.lookup(token)
-            self.modified_token = token if variant else ''
-        except KeyError:
-            print("key error")
-            self.handle_not_in_cmudict(token)
-            # spelling_normalizer = SpellingNormalizer(token)
-            # print("########## ", spelling_normalizer.modernized_word)
-            # if spelling_normalizer.modernized_word is None:
-            #     print('Checking if compound...')
-            #     compound = Compounds(token, self.d.words, self.d.lemmatizer).find_compound_in_wordlist()
-            #     if compound:
-            #         pass
-            #     print(compound)
-            #     return compound if compound else "not found"
-            # else:
-            #     print('retry')
-            #     self.get_phonemes_from_dict(spelling_normalizer.modernized_word)
-
+    def get_phonemes_from_dict(self):
+        token = self.token
+        print("token: ", token)
+        fsm = PhonemeFSM(token)
+        phoneme_reprs = fsm.dispatch()
+        self.phoneme_reprs = self.handle_compounds(phoneme_reprs)
+        print(fsm)
+        self.modified_token = fsm.spelling_normalized
+       
 
     @args_logger
     def get_syllable_count(self):
@@ -107,11 +82,14 @@ class Token(RepresenterMixin):
             syllabifications.append(syllabified)
         self.syllabifications = syllabifications
 
+
     @args_logger
     def get_stress_patterns(self):
         stress_patterns = []
         for syllabification in self.syllabifications:
             pattern = [1 if self.PRIMARY_STRESS in syl else 0 for syl in syllabification]
+            if sum(pattern) > 1:
+                print("multiple stress...")
             stress_patterns.append(pattern)
         self.stress_patterns = stress_patterns
   

@@ -12,6 +12,16 @@ class PhonemeFSM():
         self.current_state = "LOOKUP"
         self.is_normalized = False
         self.compound_checked = False
+        self.spelling_normalized = ''
+
+    def __str__(self):
+        return f"""
+        initial: {self.initial_token}
+        state: {self.current_state}
+        is_normalized: {self.is_normalized}
+        compound_checked: {self.compound_checked}
+        spelling_normalized: {self.spelling_normalized}
+        """
 
 
     def LOOKUP(self, token=None):
@@ -33,12 +43,15 @@ class PhonemeFSM():
             return self.dispatch("COMPOUND")
         else:
             self.is_normalized = True
+            print("normalized: ", spelling_normalized)
+            self.spelling_normalized = spelling_normalized
             return self.dispatch("LOOKUP", token=spelling_normalized)
 
         
     def COMPOUND(self, token=None):
         token = token if token else self.initial_token
         compound = Compounds(token, self.dicts.words, self.dicts.lemmatizer).find_compound_in_wordlist()
+        self.compound_checked = True
         if compound:
             # then look up both
             left = self.dispatch("LOOKUP", token=compound[0])

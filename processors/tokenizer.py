@@ -2,6 +2,8 @@ from nltk import word_tokenize
 from string import punctuation
 from utils.dicts import DictsSingleton
 
+from pprint import pprint
+
 from utils.representer import RepresenterMixin
 from utils.logger import args_logger
 import logging
@@ -45,7 +47,7 @@ class Tokenizer(RepresenterMixin):
         lines = self.process_lines()
         for line in lines:
             tokenized_line = [Token(t, self.dicts) for t in line]
-            print(list(map(lambda t: print(t()), tokenized_line)))
+            pprint(list(map(lambda t: print(pprint(t()), "\n"), tokenized_line)))
 
 
 
