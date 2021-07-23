@@ -17,7 +17,7 @@ class Runner(RepresenterMixin):
     def __init__(self, raw_file_contents):
         self.raw_file_contents = raw_file_contents
 
-    @args_logger
+    # @args_logger
     def initial_process_contents(self):
         sentencizer = Sentencizer(self.raw_file_contents)
         lines = sentencizer.main()

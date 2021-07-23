@@ -15,11 +15,11 @@ class Sentencizer(RepresenterMixin):
         self.raw_text_contents = raw_text_contents
         self.text_in_lines = None
 
-    @args_logger
+    # @args_logger
     def text_to_lines(self):
         self.text_in_lines = self.raw_text_contents.split('\n')
 
-    @args_logger
+    # @args_logger
     def main(self):
         self.text_to_lines()
         # logger.debug("Sentancizer.text_in_lines: " + str(self.text_in_lines))

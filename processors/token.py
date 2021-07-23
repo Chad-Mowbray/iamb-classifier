@@ -41,7 +41,7 @@ class Token(RepresenterMixin):
         }
 
 
-    @args_logger
+    # @args_logger
     def handle_compounds(self, phoneme_reprs):
         updated_phoneme_reprs = []
         for phoneme_repr in phoneme_reprs:
@@ -55,7 +55,7 @@ class Token(RepresenterMixin):
         return phoneme_reprs
 
 
-    @args_logger
+    # @args_logger
     def get_phonemes_from_dict(self):
         token = self.token
         print("token: ", token)
@@ -66,7 +66,7 @@ class Token(RepresenterMixin):
         self.modified_token = fsm.spelling_normalized
        
 
-    @args_logger
+    # @args_logger
     def get_syllable_count(self):
         counts = []
         for syllabification in self.syllabifications:
@@ -74,7 +74,7 @@ class Token(RepresenterMixin):
         self.syllable_count = counts
 
 
-    @args_logger
+    # @args_logger
     def get_syllabification(self):
         syllabifications = []
         for stress_repr in self.phoneme_reprs:
@@ -83,7 +83,7 @@ class Token(RepresenterMixin):
         self.syllabifications = syllabifications
 
 
-    @args_logger
+    # @args_logger
     def get_stress_patterns(self):
         stress_patterns = []
         for syllabification in self.syllabifications:
@@ -94,7 +94,7 @@ class Token(RepresenterMixin):
         self.stress_patterns = stress_patterns
   
 
-    @args_logger
+    # @args_logger
     def main(self):
         self.get_phonemes_from_dict()
         self.get_syllabification()

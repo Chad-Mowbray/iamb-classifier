@@ -26,12 +26,12 @@ class Tokenizer(RepresenterMixin):
         self.remove = punctuation
         self.dicts = DictsSingleton()
 
-    @args_logger
+    # @args_logger
     def make_initial_tokens(self):
         initial_tokens = [word_tokenize(line) for line in self.lines]
         return initial_tokens
 
-    @args_logger
+    # @args_logger
     def process_lines(self):
         initial_tokens = self.make_initial_tokens()
         cleaned_tokens = [ [self.clean(token) for token in line if token not in self.remove] for line in initial_tokens]
@@ -42,7 +42,7 @@ class Tokenizer(RepresenterMixin):
     def clean(word):
         return word.lower()
 
-    @args_logger
+    # @args_logger
     def create_tokens(self):
         lines = self.process_lines()
         for line in lines:
