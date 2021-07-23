@@ -1,4 +1,5 @@
 # python -m cProfile -s tottime runner.py > profile.txt
+# https://github.com/jrfonseca/gprof2dot
 
 import cProfile, pstats, io
 from pstats import SortKey
@@ -14,6 +15,10 @@ pr.disable()
 s = io.StringIO()
 # sortby = SortKey.CUMULATIVE
 sortby = SortKey.TIME
-ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+stats = pstats.Stats(pr, stream=s)
+
+ps = stats.sort_stats(sortby)
 ps.print_stats()
+
+stats.print_callers()
 print(s.getvalue())
