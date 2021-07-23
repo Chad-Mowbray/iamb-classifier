@@ -1,6 +1,6 @@
 from utils.dicts import DictsSingleton
-from processors.spelling import SpellingNormalizer
-from processors.compounds import Compounds
+from token_processors.spelling import SpellingNormalizer
+from token_processors.compounds import Compounds
 
 
 class PhonemeFSM():
@@ -30,7 +30,7 @@ class PhonemeFSM():
             phonemes = self.cmudict[token]
             return self.dispatch("SUCCESS", phonemes=phonemes)
         except KeyError:
-            if self.is_normalized: 
+            if self.is_normalized or self.compound_checked: 
                 if self.compound_checked:
                     return self.dispatch("FAILURE")
                 return self.dispatch("COMPOUND", token=token)
@@ -56,10 +56,11 @@ class PhonemeFSM():
             # then look up both
             left = self.dispatch("LOOKUP", token=compound[0])
             right = self.dispatch("LOOKUP", token=compound[1])
-            if left and right:
+            print("Right: ", right, "left", left, "compound: ", compound)
+            if left[0] and right[0]:
+                print('Both left and right:', left, right)
                 return self.dispatch("SUCCESS")
-        else:
-            return self.dispatch("FAILURE")
+        return self.dispatch("FAILURE")
 
 
     def SUCCESS(self, phonemes=None):
@@ -72,7 +73,9 @@ class PhonemeFSM():
 
     def FAILURE(self):
         print("FAILURE: ", self.initial_token)
-        return self.initial_token
+        self.final_phoneme_repr = [[]]
+        self.current_state = "FAILURE"
+        return self.final_phoneme_repr
 
 
     def dispatch(self, new_state=None, **kwargs):

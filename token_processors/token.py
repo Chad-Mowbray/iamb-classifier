@@ -1,8 +1,8 @@
-from processors.spelling import SpellingNormalizer
+from token_processors.spelling import SpellingNormalizer
 from utils.logger import args_logger
 from utils.representer import RepresenterMixin
-from processors.compounds import Compounds
-from processors.phoneme_fsm import PhonemeFSM
+from token_processors.compounds import Compounds
+from token_processors.phoneme_fsm import PhonemeFSM
 
 from syllabify.syllabify import syllabify, pprint
 

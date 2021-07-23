@@ -1,4 +1,4 @@
-from processors.spelling import SpellingNormalizer
+from token_processors.spelling import SpellingNormalizer
 
 
 class Compounds:

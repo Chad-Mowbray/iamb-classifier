@@ -10,7 +10,7 @@ import logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(message)s')
 
-from processors.token import Token
+from token_processors.token import Token
 
 
 class Tokenizer(RepresenterMixin):
@@ -47,7 +47,8 @@ class Tokenizer(RepresenterMixin):
         lines = self.process_lines()
         for line in lines:
             tokenized_line = [Token(t, self.dicts) for t in line]
-            pprint(list(map(lambda t: print(pprint(t()), "\n"), tokenized_line)))
+            # pprint(list(map(lambda t: print(pprint(t()), "\n"), tokenized_line)))
+            return tokenized_line
 
 
 
