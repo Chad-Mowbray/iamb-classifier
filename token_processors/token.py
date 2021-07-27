@@ -6,6 +6,8 @@ from token_processors.phoneme_fsm import PhonemeFSM
 
 from syllabify.syllabify import syllabify, pprint
 
+from re import search
+
 
 class Token(RepresenterMixin):
     """
@@ -29,6 +31,9 @@ class Token(RepresenterMixin):
 
     def __str__(self):
         return f"Token instance: {self.token}"
+    
+    def __repr__(self):
+        return str(self)
 
     def __call__(self, *args, **kwargs):
         return {
@@ -58,11 +63,11 @@ class Token(RepresenterMixin):
     # @args_logger
     def get_phonemes_from_dict(self):
         token = self.token
-        print("token: ", token)
+        # print("token: ", token)
         fsm = PhonemeFSM(token)
         phoneme_reprs = fsm.dispatch()
         self.phoneme_reprs = self.handle_compounds(phoneme_reprs)
-        print(fsm)
+        # print(fsm)
         self.modified_token = fsm.spelling_normalized
        
 
@@ -86,8 +91,11 @@ class Token(RepresenterMixin):
     # @args_logger
     def get_stress_patterns(self):
         stress_patterns = []
+        # print(self.syllabifications)
         for syllabification in self.syllabifications:
-            pattern = [1 if self.PRIMARY_STRESS in syl else 0 for syl in syllabification]
+            # pattern = [1 if self.PRIMARY_STRESS in syl else 0 for syl in syllabification]
+            pattern = [int(search(r'[12]', syl).group()) if search(r'[12]', syl) else 0 for syl in syllabification]
+            # print(pattern)
             if sum(pattern) > 1:
                 print("multiple stress...")
             stress_patterns.append(pattern)

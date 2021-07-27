@@ -43,7 +43,7 @@ class PhonemeFSM():
             return self.dispatch("COMPOUND")
         else:
             self.is_normalized = True
-            print("normalized: ", spelling_normalized)
+            # print("normalized: ", spelling_normalized)
             self.spelling_normalized = spelling_normalized
             return self.dispatch("LOOKUP", token=spelling_normalized)
 
@@ -56,9 +56,9 @@ class PhonemeFSM():
             # then look up both
             left = self.dispatch("LOOKUP", token=compound[0])
             right = self.dispatch("LOOKUP", token=compound[1])
-            print("Right: ", right, "left", left, "compound: ", compound)
+            # print("Right: ", right, "left", left, "compound: ", compound)
             if left[0] and right[0]:
-                print('Both left and right:', left, right)
+                # print('Both left and right:', left, right)
                 return self.dispatch("SUCCESS")
         return self.dispatch("FAILURE")
 
@@ -72,7 +72,7 @@ class PhonemeFSM():
         return self.final_phoneme_repr
 
     def FAILURE(self):
-        print("FAILURE: ", self.initial_token)
+        # print("FAILURE: ", self.initial_token)
         self.final_phoneme_repr = [[]]
         self.current_state = "FAILURE"
         return self.final_phoneme_repr

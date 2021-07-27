@@ -1,5 +1,5 @@
 import unittest
-from processors.phoneme_fsm import PhonemeFSM
+from token_processors.phoneme_fsm import PhonemeFSM
 
 
 class TestPhonemeFSM(unittest.TestCase):

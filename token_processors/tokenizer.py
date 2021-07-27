@@ -29,6 +29,7 @@ class Tokenizer(RepresenterMixin):
     # @args_logger
     def make_initial_tokens(self):
         initial_tokens = [word_tokenize(line) for line in self.lines]
+        print(initial_tokens)
         return initial_tokens
 
     # @args_logger
@@ -45,11 +46,14 @@ class Tokenizer(RepresenterMixin):
     # @args_logger
     def create_tokens(self):
         lines = self.process_lines()
+        print("lines: ", lines)
+        tokenized_lines = []
         for line in lines:
             tokenized_line = [Token(t, self.dicts) for t in line]
+            if tokenized_line: tokenized_lines.append(tokenized_line)
             # pprint(list(map(lambda t: print(pprint(t()), "\n"), tokenized_line)))
-            return tokenized_line
-
+        print("tokenized lines: ", tokenized_lines)
+        return tokenized_lines
 
 
 
