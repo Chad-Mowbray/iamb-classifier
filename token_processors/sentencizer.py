@@ -23,7 +23,7 @@ class Sentencizer(RepresenterMixin):
     def main(self):
         self.text_to_lines()
         # logger.debug("Sentancizer.text_in_lines: " + str(self.text_in_lines))
-        print("Sentencizer text in lines: ", self.text_in_lines)
+        # print("Sentencizer text in lines: ", self.text_in_lines)
         return self.text_in_lines
 
 

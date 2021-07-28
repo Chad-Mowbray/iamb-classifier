@@ -97,7 +97,8 @@ class Token(RepresenterMixin):
             pattern = [int(search(r'[12]', syl).group()) if search(r'[12]', syl) else 0 for syl in syllabification]
             # print(pattern)
             if sum(pattern) > 1:
-                print("multiple stress...")
+                x = 2
+                # print("multiple stress...")
             stress_patterns.append(pattern)
         self.stress_patterns = stress_patterns
   

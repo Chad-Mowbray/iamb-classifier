@@ -28,6 +28,7 @@ class Runner(RepresenterMixin):
         for line in line_tokens:
             iambic_line_tokens = IambicLine(line)
             initial = iambic_line_tokens.initial_processing()
+            # print("initial: ", initial)
             is_valid_ip = iambic_line_tokens.is_valid_IP(initial)
             truth.append(is_valid_ip)
         print(truth)
@@ -53,6 +54,7 @@ if __name__ == "__main__":
         # contents = "disceased to pass address the earth respect\n"  
         # contents = "disceased to pass address the earth aspect\nthe expeditious pass address within\ndisceased to pass address the earth respect\n" 
         # contents = "But we have left those gentle haunts to pass\n"
+        contents = "Sees his own face, self-slain Humanity,\n"
 
         r = Runner(contents)
         r.initial_process_contents()

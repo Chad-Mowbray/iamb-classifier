@@ -21,16 +21,17 @@ class IambicLine():
         # self.tokens = tokens
         self.base_stresses = self.get_base_stress_patterns(tokens)
         self.valid_pattern = None
-        self.round_1_complete = False
-        self.round_2_complete = False
-        self.round_3_complete = False
+        self.unmodified_check_complete = False
+        self.promote_secondary_check_complete = False
+        self.alter_primary_check_complete = False
+        self.demote_monosyllable_check_complete = False
 
     def get_base_stress_patterns(self, tokens):
         """
         accepts: List of Tokens: [Token, Token, Token, Token, Token]
         returns: List of Tuples - [([[0], [1], [0]], 'the'), ([[2, 0, 1, 0]], 'expeditious'), ([[1]], 'pass'), ([[1, 2], [0, 1]], 'address'), ([[0, 1], [0, 1]], 'within')]
         """
-        print("*****", tokens)
+        # print("*****", tokens)
         base_stresses = [(t.stress_patterns, t.token) for t in tokens]
         return base_stresses
 
@@ -43,6 +44,8 @@ class IambicLine():
         return stress_variation_combinations
 
     def get_actual_stress_possibilities(self, stress_variation_combinations):
+        # print("get_actual_stress_possibilities called")
+        # print("stress_variation_combinations: ", stress_variation_combinations)
         """
         accepts: List of Tuples (stress variation combinations) - [([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])]
         returns: List of Dictionaries - [{'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}]
@@ -69,8 +72,9 @@ class IambicLine():
 
 
     def is_valid_IP(self, actual_stress_possibilities):
-        # print("is_valid_IP", self.round_1_complete, self.round_2_complete, self.round_3_complete)
-        # print("is_valid_IP, actual_stress_possibilities", actual_stress_possibilities)
+        # print("is_valid_IP", self.unmodified_check_complete, self.promote_secondary_check_complete, self.alter_primary_check_complete, self.demote_monosyllable_check_complete)
+        # if self.demote_monosyllable_check_complete:
+        #     print("is_valid_IP, actual_stress_possibilities", [ x["formatted"] for x in actual_stress_possibilities])
 
         """
         accepts: List of Dictionaries - [{'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}]
@@ -83,7 +87,7 @@ class IambicLine():
                 # self.get_closest_fit()
                 return True
 
-        self.round_1_complete = True
+        self.unmodified_check_complete = True
         return self.fit_to_IP()
  
 
@@ -106,7 +110,39 @@ class IambicLine():
         stress_variation_combinations = new_combinations
         actual_stress_possibilities = self.get_actual_stress_possibilities(stress_variation_combinations)
 
-        self.round_2_complete = True
+        self.promote_secondary_check_complete = True
+        return self.is_valid_IP(actual_stress_possibilities)
+
+
+    def demote_monosyllable_stress(self):
+        """
+        simplified: any monosyllable can be demoted
+        """
+        actual_stress_possibilities = self.initial_processing()
+        combinations = self.get_possible_stress_variation_combinations(self.base_stresses)
+
+
+        new_combinations = []
+        i = 0
+        for combination in combinations:
+            mod = []
+            for word in combination:
+                mod.append([0 if s == 1 and len(word) == 1 and i % 2 == 0 else s for s in word])
+                i = i + len(word)
+            poss = tuple(mod)
+            if poss in new_combinations:
+                pass
+            else:
+                new_combinations.append(poss)
+            i = 0
+
+        zipped = list(zip(combinations, new_combinations))
+        demoted_combinations = [[*pair] for pair in zipped]
+        cartesian_product = list(product(*[combo for combo in demoted_combinations]))
+        flattened_cartesian_product = [x for y in cartesian_product for x in y]
+        stress_variation_combinations = flattened_cartesian_product
+        actual_stress_possibilities = self.get_actual_stress_possibilities(stress_variation_combinations)
+        self.demote_monosyllable_check_complete = True
         return self.is_valid_IP(actual_stress_possibilities)
 
 
@@ -122,17 +158,22 @@ class IambicLine():
                         c_copy[i] = variant
                         new_possibles.append(tuple(c_copy))
         actual_stress_possibilities = self.initial_processing(new_possibles)
-        self.round_3_complete = True
+        self.alter_primary_check_complete = True
         return self.is_valid_IP(actual_stress_possibilities)   
 
 
 
     def fit_to_IP(self):
-        if self.round_3_complete: 
+        if self.alter_primary_check_complete: 
             return False
-        if self.round_1_complete and not self.round_2_complete:
+        if self.unmodified_check_complete and not self.promote_secondary_check_complete:
             return self.promote_secondary_stresses()
-        if self.round_1_complete and self.round_2_complete:
+        if self.unmodified_check_complete and self.promote_secondary_check_complete:
+            if not self.demote_monosyllable_check_complete:
+                return self.demote_monosyllable_stress()
             if self.alter_primary_stresses():
                 return True
         return False
+
+
+

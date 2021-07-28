@@ -8,7 +8,13 @@ class TestIambicLine(unittest.TestCase):
 
     def setUp(self):
         self.ibls = []
-        for l in [ "disceased to pass address the earth aspect\n", "the expeditious pass address within\n", "disceased to pass address the earth respect\n", "abbreviated"]:
+        for l in [
+            "disceased to pass address the earth aspect\n", 
+            "the expeditious pass address within\n", 
+            "disceased to pass address the earth respect\n", 
+            "abbreviated\n"
+            "But we have left those gentle haunts to pass\n"
+            ]:
             sentencizer = Sentencizer(l)
             lines = sentencizer.main()
             tokenizer = Tokenizer(lines)
@@ -36,6 +42,11 @@ class TestIambicLine(unittest.TestCase):
         initial = self.ibls[3].initial_processing()
         is_valid_ip = self.ibls[3].is_valid_IP(initial)
         self.assertFalse(is_valid_ip)
+    
+    def test_demote_stress(self):
+        initial = self.ibls[4].initial_processing()
+        is_valid_ip = self.ibls[4].is_valid_IP(initial)
+        self.assertTrue(is_valid_ip)       
 
 
 class TestIambicLineFromFile(unittest.TestCase):
