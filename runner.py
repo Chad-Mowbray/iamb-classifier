@@ -22,19 +22,15 @@ class Runner(RepresenterMixin):
 
     # @args_logger
     def initial_process_contents(self):
-        # print(self.sentences)
-        for s in self.sentences:
-            tokenizer = Tokenizer(self.sentences)
-            line_tokens = tokenizer.create_tokens()
-            # print(" line_tokens: ",line_tokens)
-            for line in line_tokens:
-                # print("$$$$$$$ ", line, line_tokens)
-                iambic_line_tokens = IambicLine(line)
-                initial = iambic_line_tokens.initial_processing()
-                # print(initial)
-                is_valid_ip = iambic_line_tokens.is_valid_IP(initial)
-                print(is_valid_ip)
-            # break
+        truth = []
+        tokenizer = Tokenizer(self.sentences)
+        line_tokens = tokenizer.create_tokens()
+        for line in line_tokens:
+            iambic_line_tokens = IambicLine(line)
+            initial = iambic_line_tokens.initial_processing()
+            is_valid_ip = iambic_line_tokens.is_valid_IP(initial)
+            truth.append(is_valid_ip)
+        print(truth)
 
         # print("iambic_line_tokens: ", iambic_line_tokens)
         # print(iambic_line_tokens.base_stress_pattern)

@@ -13,8 +13,9 @@ class TestIambicLine(unittest.TestCase):
             lines = sentencizer.main()
             tokenizer = Tokenizer(lines)
             line_tokens = tokenizer.create_tokens()
-            iambic_line_tokens = IambicLine(line_tokens)
-            self.ibls.append(iambic_line_tokens)
+            for line in line_tokens:
+                iambic_line_tokens = IambicLine(line)
+                self.ibls.append(iambic_line_tokens)
 
     def test_simple_case(self):
         initial = self.ibls[2].initial_processing()
@@ -48,16 +49,17 @@ class TestIambicLineFromFile(unittest.TestCase):
             lines = sentencizer.main()
             tokenizer = Tokenizer(lines)
             line_tokens = tokenizer.create_tokens()
-            iambic_line_tokens = IambicLine(line_tokens)
-            self.ibls.append(iambic_line_tokens)
+            for line in line_tokens:
+                iambic_line_tokens = IambicLine(line)
+                self.ibls.append(iambic_line_tokens)
 
     def test_exists(self):
         self.assertTrue(self.ibls)
-        self.assertEqual(len(self.ibls), 1)
+        self.assertGreater(len(self.ibls), 1)
         # self.assertEqual(self.ibls[0], "apple")
 
-        initial = self.ibls[0].initial_processing()
-        is_valid_ip = self.ibls[0].is_valid_IP(initial)
+        initial = self.ibls[1].initial_processing()
+        is_valid_ip = self.ibls[1].is_valid_IP(initial)
         self.assertTrue(is_valid_ip)
 
 

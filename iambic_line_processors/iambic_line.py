@@ -30,6 +30,7 @@ class IambicLine():
         accepts: List of Tokens: [Token, Token, Token, Token, Token]
         returns: List of Tuples - [([[0], [1], [0]], 'the'), ([[2, 0, 1, 0]], 'expeditious'), ([[1]], 'pass'), ([[1, 2], [0, 1]], 'address'), ([[0, 1], [0, 1]], 'within')]
         """
+        print("*****", tokens)
         base_stresses = [(t.stress_patterns, t.token) for t in tokens]
         return base_stresses
 
@@ -68,7 +69,9 @@ class IambicLine():
 
 
     def is_valid_IP(self, actual_stress_possibilities):
-        print("is_valid_IP", self.round_1_complete, self.round_2_complete, self.round_3_complete)
+        # print("is_valid_IP", self.round_1_complete, self.round_2_complete, self.round_3_complete)
+        # print("is_valid_IP, actual_stress_possibilities", actual_stress_possibilities)
+
         """
         accepts: List of Dictionaries - [{'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}]
         returns: Boolean
