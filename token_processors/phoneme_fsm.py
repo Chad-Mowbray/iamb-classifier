@@ -51,12 +51,13 @@ class PhonemeFSM():
     def COMPOUND(self, token=None):
         token = token if token else self.initial_token
         compound = Compounds(token, self.dicts.words, self.dicts.lemmatizer).find_compound_in_wordlist()
+        # print("compounds: ", compound)
         self.compound_checked = True
         if compound:
             # then look up both
             left = self.dispatch("LOOKUP", token=compound[0])
             right = self.dispatch("LOOKUP", token=compound[1])
-            # print("Right: ", right, "left", left, "compound: ", compound)
+            print("Right: ", right, "left", left, "compound: ", compound)
             if left[0] and right[0]:
                 # print('Both left and right:', left, right)
                 return self.dispatch("SUCCESS")
@@ -64,11 +65,18 @@ class PhonemeFSM():
 
 
     def SUCCESS(self, phonemes=None):
-        if phonemes is None: return self.final_phoneme_repr
+        print("SUCCESS called")
+        if phonemes is None: 
+            print("SUCCESS called, phonemes None")
+            return self.final_phoneme_repr
         if hasattr(self, "final_phoneme_repr"):
             self.final_phoneme_repr[0].extend(phonemes[0])
+            print("SUCCESS called, has final_phoneme_repr: ", self.final_phoneme_repr, "phonemes: ", phonemes)
         else:
+            print("SUCCESS first: phonemes: ", phonemes)
             self.final_phoneme_repr = phonemes
+
+        print("SUCCESS called, returning final_phoneme_repr")
         return self.final_phoneme_repr
 
     def FAILURE(self):

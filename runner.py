@@ -54,7 +54,8 @@ if __name__ == "__main__":
         # contents = "disceased to pass address the earth respect\n"  
         # contents = "disceased to pass address the earth aspect\nthe expeditious pass address within\ndisceased to pass address the earth respect\n" 
         # contents = "But we have left those gentle haunts to pass\n"
-        contents = "Sees his own face, self-slain Humanity,\n"
+        # contents = "Sees his own face, self-slain Humanity,\n"
+        # contents = "the lamp-sun lamps beyond the earth respect\n"
 
         r = Runner(contents)
         r.initial_process_contents()

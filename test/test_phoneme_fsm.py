@@ -19,6 +19,11 @@ class TestPhonemeFSM(unittest.TestCase):
         analyzed = fsm.dispatch()
         self.assertEqual(analyzed, [['S', 'IH1', 'L', 'V', 'ER0', 'S', 'M', 'IH1', 'TH', 'S']])
 
+    def test_dashed_compound(self):
+        fsm = PhonemeFSM("sun-moon")
+        analyzed = fsm.dispatch()
+        self.assertEqual(analyzed, [['S', 'AH1', 'N', 'M', 'UW1', 'N']])  
+
 
 if __name__ == "__main__":
     unittest.main()

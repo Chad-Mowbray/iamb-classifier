@@ -9,6 +9,13 @@ class Compounds:
         self.words = words
 
     def find_compound_in_wordlist(self, initial=2):
+
+        print("find_compound_in_wordlist called")
+
+        if self.handle_dashed_word():
+            return self.handle_dashed_word()
+
+
         median = len(self.original_word) // 2
         current_split_idx = 0
         wordlist = self.words
@@ -29,3 +36,14 @@ class Compounds:
                     current_split_idx = i
                     res = [self.original_word[:current_split_idx], self.original_word[current_split_idx:]]
         return res or None
+
+    
+    def handle_dashed_word(self):
+        print("handle_dashed_word called")
+        if "-" in self.original_word:
+            left, right = self.original_word.split("-")
+            left = SpellingNormalizer(left).modernized_word or left
+            right = SpellingNormalizer(self.lemmatizer.lemmatize(right)).modernized_word or self.lemmatizer.lemmatize(right)
+            if left in self.words and right in self.words:
+                return [left, right]
+

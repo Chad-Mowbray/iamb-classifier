@@ -6,6 +6,7 @@ from pprint import pprint
 class IambicLine():
     """
     should ultimately modifiy self.tokens with the final stresses?
+    Should try each rule at a time, then all of them combined?
     """
 
     BASE_PATTERN = (0,1,0,1,0,1,0,1,0,1)
@@ -31,8 +32,9 @@ class IambicLine():
         accepts: List of Tokens: [Token, Token, Token, Token, Token]
         returns: List of Tuples - [([[0], [1], [0]], 'the'), ([[2, 0, 1, 0]], 'expeditious'), ([[1]], 'pass'), ([[1, 2], [0, 1]], 'address'), ([[0, 1], [0, 1]], 'within')]
         """
-        # print("*****", tokens)
         base_stresses = [(t.stress_patterns, t.token) for t in tokens]
+        print("*****", base_stresses)
+
         return base_stresses
 
     def get_possible_stress_variation_combinations(self, base_stresses):
@@ -105,6 +107,7 @@ class IambicLine():
             mod = []
             for word in combination:
                 mod.append([1 if s == 2 and len(word) > 2 else s for s in word])
+            print("MOD: ", mod)
             new_combinations.append(tuple(mod))
 
         stress_variation_combinations = new_combinations
@@ -115,6 +118,7 @@ class IambicLine():
 
 
     def demote_monosyllable_stress(self):
+        # print("demote_monosyllable_stress", self.unmodified_check_complete, self.promote_secondary_check_complete, self.alter_primary_check_complete, self.demote_monosyllable_check_complete)
         """
         simplified: any monosyllable can be demoted
         """
@@ -146,6 +150,8 @@ class IambicLine():
         return self.is_valid_IP(actual_stress_possibilities)
 
 
+    def promote_polysyllabic_zero_stresses(self):
+        pass
 
     def alter_primary_stresses(self):
         possibles = self.get_possible_stress_variation_combinations(self.base_stresses)
