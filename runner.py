@@ -1,4 +1,3 @@
-from re import I
 from token_processors.sentencizer import Sentencizer
 from token_processors.tokenizer import Tokenizer
 from iambic_line_processors.iambic_line import IambicLine
@@ -54,8 +53,10 @@ if __name__ == "__main__":
         # contents = "disceased to pass address the earth respect\n"  
         # contents = "disceased to pass address the earth aspect\nthe expeditious pass address within\ndisceased to pass address the earth respect\n" 
         # contents = "But we have left those gentle haunts to pass\n"
-        # contents = "Sees his own face, self-slain Humanity,\n"
+        contents = "Sees his own face, self-slain Humanity,\n"
+        contents = "humanity itself the race to pass"
         # contents = "the lamp-sun lamps beyond the earth respect\n"
+        # contents = "Lamp lit his face, moon-river hit his side\n"
 
         r = Runner(contents)
         r.initial_process_contents()

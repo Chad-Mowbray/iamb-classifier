@@ -54,13 +54,13 @@ class Token(RepresenterMixin):
             if len(primary_stress_indicies) > 1:
                 for idx in reversed(primary_stress_indicies):
                     phoneme_repr_copy = [phon for phon in phoneme_repr]
-                    print("copy: ",phoneme_repr_copy)
+                    # print("copy: ",phoneme_repr_copy)
                     phoneme_repr_copy[idx] = phoneme_repr_copy[idx][:-1] + self.SECONDARY_STRESS
                     updated_phoneme_reprs.append(phoneme_repr_copy)
                 updated_phoneme_reprs.append(phoneme_repr)
-                print("updated compound repr: ", updated_phoneme_reprs)
+                # print("updated compound repr: ", updated_phoneme_reprs)
                 return updated_phoneme_reprs
-        print("unmodified compound repr: ", phoneme_reprs)
+        # print("unmodified compound repr: ", phoneme_reprs)
         return phoneme_reprs
 
 
@@ -70,7 +70,7 @@ class Token(RepresenterMixin):
         # print("token: ", token)
         fsm = PhonemeFSM(token)
         phoneme_reprs = fsm.dispatch()
-        print("phoneme_reprs: ", phoneme_reprs)
+        # print("phoneme_reprs: ", phoneme_reprs)
         self.phoneme_reprs = self.handle_compounds(phoneme_reprs)
         # print(fsm)
         self.modified_token = fsm.spelling_normalized
