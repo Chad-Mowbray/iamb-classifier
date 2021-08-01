@@ -49,6 +49,7 @@ class Tokenizer(RepresenterMixin):
         # print("lines: ", lines)
         tokenized_lines = []
         for line in lines:
+            # print("sentence tokens: ", [t for t in line])
             tokenized_line = [Token(t, self.dicts) for t in line]
             if tokenized_line: tokenized_lines.append(tokenized_line)
             # pprint(list(map(lambda t: print(pprint(t()), "\n"), tokenized_line)))

@@ -19,3 +19,11 @@ The application should be able to take an IP text as input and output the period
 
 ### Iambic Line Processor
 ![iambic line](readme/iambic_line.png)
+
+
+
+
+
+
+notes:
+-use "difficulty measure" as a feature: how many rules on average have to be applied to a sample?

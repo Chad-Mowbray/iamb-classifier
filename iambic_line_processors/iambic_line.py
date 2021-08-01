@@ -4,20 +4,11 @@ from pprint import pprint
 
 
 class IambicLine():
-    """
-    should ultimately modifiy self.tokens with the final stresses?
-    Should try each rule at a time, then all of them combined?
-    Maybe accumulate with each additional rule (keep an "all_possibilities" attribute and add to it for every rule application)
-    """
+
+    #TODO: to manage state, create an object {0: unmodified, 1: promote_secondary...}
+    #       and increment a counter for every is_valid_IP check, instead of current switches
 
     BASE_PATTERN = (0,1,0,1,0,1,0,1,0,1)
-    # WORD_STRESS_PATTERNS = {
-    #     2: ( [0,1], [1,0] ),
-    #     3: ( ([0,0,1], [1,0,1]), ([0,1,0], [0,1,0]), ([1,0,0], [1,0,1]) ),
-    #     4: ( ([0,0,0,1], [0,1,0,1]), ([0,0,1,0], [1,0,1,0]), ([0,1,0,0], [0,1,0,1]), ([1,0,0,0], [1,0,1,0]) ),
-    #     5: ( [0,0,0,0,1], [0,0,0,1,0], [0,0,1,0,0], [0,1,0,0,0], [1,0,0,0,0] ),
-    #     6: ( [0,0,0,0,0,1], [0,0,0,0,1,0], [0,0,0,1,0,0], [0,0,1,0,0,0], [0,1,0,0,0,0], [1,0,0,0,0,0] )
-    # }
     WORD_STRESS_PATTERNS = {
         2: ( [0,1], [1,0] ),
         3: {
@@ -29,148 +20,170 @@ class IambicLine():
             (0,0,0,1): [0,1,0,1],
             (0,0,1,0): [1,0,1,0],
             (0,1,0,0): [0,1,0,1],
-            (1,0,0,0): [1,0,1,0]
+            (1,0,0,0): [1,0,1,0],
+            (2,0,1,0): [1,0,1,0]  # TODO TEMPORARY
         },
-        5: {
-            (0,1,0,2,0): [0,1,0,1,0]
+        5: { #TODO: systematize
+            (0,1,0,2,0): [0,1,0,1,0],
+            (0,1,0,1,0): [0,1,0,1,0],
+            (0,0,0,1,0): [0,1,0,1,0],
+            (0,1,0,0,0): [0,1,0,1,0]
         }
     }
 
     def __init__(self, tokens):
-        # self.tokens = tokens
-        self.base_stresses = self.get_base_stress_patterns(tokens)
+        self.tokens = tokens
+        self.formatted_list_of_realized_stress_patterns = []
+        self.unique_dict_of_realized_stress_patterns = {}
+        self.is_valid_pattern = False
         self.valid_pattern = None
-        self.unmodified_check_complete = False
-        self.promote_secondary_check_complete = False
-        self.alter_primary_check_complete = False
-        self.demote_monosyllable_check_complete = False
-        self.promote_polysyllabic_zero_check_complete = False
+        self.current_state = 0
 
-    def get_base_stress_patterns(self, tokens):
-        """
-        accepts: List of Tokens: [Token, Token, Token, Token, Token]
-        returns: List of Tuples - [([[0], [1], [0]], 'the'), ([[2, 0, 1, 0]], 'expeditious'), ([[1]], 'pass'), ([[1, 2], [0, 1]], 'address'), ([[0, 1], [0, 1]], 'within')]
-        """
-        base_stresses = [(t.stress_patterns, t.token) for t in tokens]
-        # print("*****", base_stresses)
+        self.main()
 
-        return base_stresses
 
-    def get_possible_stress_variation_combinations(self, base_stresses):
-        """
-        accepts: List of Tuples - [([[0], [1], [0]], 'the'), ([[2, 0, 1, 0]], 'expeditious'), ([[1]], 'pass'), ([[1, 2], [0, 1]], 'address'), ([[0, 1], [0, 1]], 'within')]
-        returns: List of Tuples (stress variation combinations) - [([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])]
-        """
-        stress_variation_combinations = list(product(*[pair[0] for pair in base_stresses]))
-        return stress_variation_combinations
+    def get_original_stress_patterns_per_token(self):
+        return [(t.stress_patterns, t.token) for t in self.tokens]
 
-    def get_actual_stress_possibilities(self, stress_variation_combinations):
-        # print("get_actual_stress_possibilities called")
-        # print("stress_variation_combinations: ", stress_variation_combinations)
+
+    def get_possible_stress_patterns_per_token(self, original_stress_patterns_per_token):
         """
-        accepts: List of Tuples (stress variation combinations) - [([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])]
-        returns: List of Dictionaries - [{'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}]
+        returns: List[Tuples(Lists)]
         """
-        combos_list = []
-        for c in stress_variation_combinations:
-            f = tuple( s for w in c for s in w)
+        return list(product(*[pair[0] for pair in original_stress_patterns_per_token]))
+
+
+    def create_formatted_list_of_realized_stress_patterns(self, stress_patterns_per_token):
+        """
+        accepts: List[Tuples(Lists)]
+        produces: 
+            -adds on to self.formatted_list_of_realized_stress_patterns -- List[Dictionaries]
+            -adds unique values to unique_dict_of_realized_stress_patterns -- Dict{Tuple: List[Tuples(Lists)]}
+        """
+        formatted_list_of_realized_stress_patterns = []
+        for pattern in stress_patterns_per_token:
+            f = tuple( syllable for word in pattern for syllable in word)
             line = {
                 "formatted": f,
-                "original": c
+                "original": pattern
             }
-            combos_list.append(line)
-        return combos_list
-
-    
-    def initial_processing(self, stress_pattern_combinations=None):
-        """
-        accepts: List of Tuples - [([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1]), ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])]
-        returns:  List of Dictionaries - [{'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}]
-        """
-        stress_variation_combinations = stress_pattern_combinations if stress_pattern_combinations else self.get_possible_stress_variation_combinations(self.base_stresses)
-        actual_stress_possibilities = self.get_actual_stress_possibilities(stress_variation_combinations)
-        return actual_stress_possibilities
+            formatted_list_of_realized_stress_patterns.append(line) 
+        self.formatted_list_of_realized_stress_patterns.extend(formatted_list_of_realized_stress_patterns)
+        self.create_unique_dict_of_realized_stress_patterns()
 
 
-    def is_valid_IP(self, actual_stress_possibilities):
-        print("is_valid_IP", self.unmodified_check_complete, self.promote_secondary_check_complete, self.demote_monosyllable_check_complete,self.promote_polysyllabic_zero_check_complete, self.alter_primary_check_complete)
-        if self.demote_monosyllable_check_complete:
-            print("is_valid_IP, actual_stress_possibilities")
-            pprint([ x["formatted"] for x in actual_stress_possibilities])
+    def create_unique_dict_of_realized_stress_patterns(self):
+        for entry in self.formatted_list_of_realized_stress_patterns:
+            if self.unique_dict_of_realized_stress_patterns.get(entry["formatted"]):
+                if entry["original"] not in self.unique_dict_of_realized_stress_patterns[entry["formatted"]]:
+                    self.unique_dict_of_realized_stress_patterns[entry["formatted"]].append(entry["original"])
+            else:
+                self.unique_dict_of_realized_stress_patterns[entry["formatted"]] = [entry["original"]]
 
+
+
+
+
+    def is_valid_IP(self):
+        if self.BASE_PATTERN in self.unique_dict_of_realized_stress_patterns:
+            return True
+        else:
+            return self.fit_to_IP()
+
+
+    def fit_to_IP(self):
         """
-        accepts: List of Dictionaries - [{'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (1, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([1], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 1, 2, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [1, 2], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}, {'formatted': (0, 2, 0, 1, 0, 1, 0, 1, 0, 1), 'original': ([0], [2, 0, 1, 0], [1], [0, 1], [0, 1])}]
-        returns: Boolean
+        After the initial check:
+            1. Promote secondary Stresses
+            2. Demote compound stresses
+            3. Demote monosyllabic stresses
+            4. Promote polysyllabic zero stresses
         """
-        for s in actual_stress_possibilities:
-            normal = tuple(syl for syl in s["formatted"])
-            if normal == self.BASE_PATTERN:
-                self.valid_pattern = s
-                # self.get_closest_fit()
+        phases = {
+            1: self.promote_secondary_stresses,
+            2: self.demote_compound_stress,
+            3: self.demote_monosyllable_stress,
+            4: self.promote_polysyllabic_zero_stresses,
+            5: self.alter_primary_stresses
+        }
+        try:
+            if phases[self.current_state]():
                 return True
+            else:
+                return False
+        except KeyError:
+            print("Ran out of transformations")
+            return False
 
-        self.unmodified_check_complete = True
-        return self.fit_to_IP()
- 
 
 
     def promote_secondary_stresses(self):
         """
-        accepts:
-        returns:
+        Works on a List[Tuples(Lists)]
+        Creates a new List[Tuples(Lists)]
         """
-        actual_stress_possibilities = self.initial_processing()
+        new_combinations = [] # List[Tuples(Lists)]
+        for line in self.get_baseline_before_alteration():
+            reconstituted_line = []
+            for w in line:
+                reconstituted_line.append([1 if s == 2 and len(w) > 2 else s for s in w])
+            new_combinations.append(tuple(reconstituted_line))
 
-        combinations = self.get_possible_stress_variation_combinations(self.base_stresses)
+        return self.check_validity_and_continue(new_combinations)
+
+    @staticmethod
+    def create_demoted_compound_variations(word):
+        word_stress_variations = []
+        for i,syllable in enumerate(word):
+            if syllable == 1:
+                word_copy = [*word]
+                word_copy[i] = 0
+                word_stress_variations.append(word_copy)
+                continue
+        return word_stress_variations
+
+
+    def demote_compound_stress(self):
         new_combinations = []
-        for combination in combinations:
-            mod = []
-            for word in combination:
-                mod.append([1 if s == 2 and len(word) > 2 else s for s in word])
-            # print("MOD: ", mod)
-            new_combinations.append(tuple(mod))
+        primary_count = 0
+        for line in self.get_baseline_before_alteration():
+            for word in line:
+                for syllable in word:
+                    if syllable == 1:
+                        primary_count += 1
+                    if primary_count > 1:
+                        word_stress_variations = self.create_demoted_compound_variations(word)
+                        idx_word_in_line = line.index(word)
+                        for word_stress_variation in word_stress_variations:
+                            line_copy = [w for w in line]
+                            line_copy[idx_word_in_line] = word_stress_variation
+                            line_copy = tuple(line_copy)
+                            new_combinations.append(line_copy)
+                primary_count = 0
+            new_combinations.append(line)
 
-        stress_variation_combinations = new_combinations
-        actual_stress_possibilities = self.get_actual_stress_possibilities(stress_variation_combinations)
-
-        self.promote_secondary_check_complete = True
-        return self.is_valid_IP(actual_stress_possibilities)
+        return self.check_validity_and_continue(new_combinations)
 
 
     def demote_monosyllable_stress(self):
-        # print("demote_monosyllable_stress", self.unmodified_check_complete, self.promote_secondary_check_complete, self.alter_primary_check_complete, self.demote_monosyllable_check_complete)
         """
-        simplified: any monosyllable can be demoted
+        Works on a List[Tuples(Lists)]
+        Creates a new List[Tuples(Lists)]
         """
-        # actual_stress_possibilities = self.initial_processing()
-        combinations = self.get_possible_stress_variation_combinations(self.base_stresses)
-
-
         new_combinations = []
         i = 0
-        for combination in combinations:
-            mod = []
-            for word in combination:
-                mod.append([0 if s == 1 and len(word) == 1 and i % 2 == 0 else s for s in word])
-                i = i + len(word)
-            poss = tuple(mod)
-            if poss in new_combinations:
-                pass
-            else:
-                new_combinations.append(poss)
+        for line in self.get_baseline_before_alteration():
+            reconstituted_line = []
+            for w in line:
+                reconstituted_line.append([0 if s == 1 and len(w) == 1 and i % 2 == 0 else s for s in w])
+                i = i + len(w)
+            new_combinations.append(tuple(reconstituted_line))
             i = 0
 
-        zipped = list(zip(combinations, new_combinations))
-        demoted_combinations = [[*pair] for pair in zipped]
-        cartesian_product = list(product(*[combo for combo in demoted_combinations]))
-        flattened_cartesian_product = [x for y in cartesian_product for x in y]
-        stress_variation_combinations = flattened_cartesian_product
-        actual_stress_possibilities = self.get_actual_stress_possibilities(stress_variation_combinations)
-        self.demote_monosyllable_check_complete = True
-        return self.is_valid_IP(actual_stress_possibilities)
+        return self.check_validity_and_continue(new_combinations)
 
 
-    # helper
+    #helper
     def get_polysyllabic_stress_possibilities(self, word):
         try:
             multi_stressed = self.WORD_STRESS_PATTERNS[len(word)][tuple(word)]
@@ -178,79 +191,57 @@ class IambicLine():
         except:
             print("*" * 80, "polysyllabic pattern not found:", word)
 
-
     def promote_polysyllabic_zero_stresses(self):
         """
         check if the word requires two stresses
         """
-        print("promote_polysyllabic_zero_stresses")
-        combinations = self.get_possible_stress_variation_combinations(self.base_stresses)
-
         new_combinations = []
         i = 0
-        for combination in combinations:
-            mod = []
-            # print(combination)
-            for word in combination:
+        for line in self.get_baseline_before_alteration():
+            reconstituted_line = []
+            for word in line:
                 if len(word) == 3 and i % 2 == 1:
+                    pass
                     print("three letter word needs two syllables")
                     # print(word)
                 elif len(word) > 3:
-                    print("more than 3 syllable word, needs more than 1 stress")
                     multi_stressed = self.get_polysyllabic_stress_possibilities(word)
-                    mod.append(multi_stressed)
+                    reconstituted_line.append(multi_stressed)
                 else:
-                    mod.append(word)
+                    reconstituted_line.append(word)
                 i = i + len(word)
-            poss = tuple(mod)
-            if poss in new_combinations:
-                pass
-            else:
-                new_combinations.append(poss)
+            new_combinations.append(tuple(reconstituted_line))
             i = 0
-            # new_combinations.append(mod)
-        # print("new_combinations: ", new_combinations)
 
-        zipped = list(zip(combinations, new_combinations))
-        promoted_combinations = [[*pair] for pair in zipped]
-        cartesian_product = list(product(*[combo for combo in promoted_combinations]))
-        flattened_cartesian_product = [x for y in cartesian_product for x in y]
-        stress_variation_combinations = flattened_cartesian_product
-        actual_stress_possibilities = self.get_actual_stress_possibilities(stress_variation_combinations)
-        print("polysyllabic actual_stress_possibilities: ", len(actual_stress_possibilities))
-        self.promote_polysyllabic_zero_check_complete = True
-        return self.is_valid_IP(actual_stress_possibilities)
+        return self.check_validity_and_continue(new_combinations)
 
 
     def alter_primary_stresses(self):
-        possibles = self.get_possible_stress_variation_combinations(self.base_stresses)
-        new_possibles = []
-        for c in possibles:
-            for i,w in enumerate(c):
-                if len(w) > 1:
-                    for variant in self.WORD_STRESS_PATTERNS[len(w)]:
-                        c_copy = [w for w in c]
-                        c_copy[i] = variant
-                        new_possibles.append(tuple(c_copy))
-        actual_stress_possibilities = self.initial_processing(new_possibles)
-        self.alter_primary_check_complete = True
-        return self.is_valid_IP(actual_stress_possibilities)   
+        new_combinations = []
+        for line in self.get_baseline_before_alteration():
+            for i,word in enumerate(line):
+                if len(word) > 1:
+                    for variant in self.WORD_STRESS_PATTERNS[len(word)]:
+                        line_copy = [*line]
+                        line_copy[i] = variant
+                        new_combinations.append(tuple(line_copy))
+
+        return self.check_validity_and_continue(new_combinations)
 
 
+    def get_baseline_before_alteration(self):
+        return (l for line in self.unique_dict_of_realized_stress_patterns.values() for l in line)
 
-    def fit_to_IP(self):
-        if self.alter_primary_check_complete: 
-            return False
-        if self.unmodified_check_complete and not self.promote_secondary_check_complete:
-            return self.promote_secondary_stresses()
-        if self.unmodified_check_complete and self.promote_secondary_check_complete:
-            if not self.demote_monosyllable_check_complete:
-                return self.demote_monosyllable_stress()
-            if not self.promote_polysyllabic_zero_check_complete:
-                return self.promote_polysyllabic_zero_stresses()
-            if self.alter_primary_stresses():
-                return True
-        return False
+    def check_validity_and_continue(self, new_combinations):
+        self.create_formatted_list_of_realized_stress_patterns(new_combinations)
+        self.current_state += 1
+        self.is_valid_pattern = self.is_valid_IP()
+        return self.is_valid_pattern
 
 
-
+    def main(self):
+        original_stress_patterns_per_token = self.get_original_stress_patterns_per_token()
+        possible_stress_patterns_per_token = self.get_possible_stress_patterns_per_token(original_stress_patterns_per_token)
+        self.is_valid_pattrn = self.check_validity_and_continue(possible_stress_patterns_per_token)
+        # print(self.is_valid_pattern)
+        

@@ -10,10 +10,11 @@ class Compounds:
 
     def find_compound_in_wordlist(self, initial=2):
 
-        print("find_compound_in_wordlist called")
-
-        if self.handle_dashed_word():
-            return self.handle_dashed_word()
+        # print("find_compound_in_wordlist called")
+        dashed_word = self.handle_dashed_word()
+        if dashed_word:
+            # print(dashed_word)
+            return dashed_word
 
 
         median = len(self.original_word) // 2
@@ -39,7 +40,7 @@ class Compounds:
 
     
     def handle_dashed_word(self):
-        print("handle_dashed_word called")
+        # print("handle_dashed_word called")
         if "-" in self.original_word:
             left, right = self.original_word.split("-")
             left = SpellingNormalizer(left).modernized_word or left

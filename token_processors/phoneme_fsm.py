@@ -70,13 +70,16 @@ class PhonemeFSM():
             # print("SUCCESS called, phonemes None")
             return self.final_phoneme_repr
         if hasattr(self, "final_phoneme_repr"):
-            self.final_phoneme_repr[0].extend(phonemes[0])
+            # TODO: should compounds be separated or kept as a single unit?
+            # print(self.final_phoneme_repr)
+            self.final_phoneme_repr[0].extend(phonemes[0]) # self.final_phoneme_repr[0].extend(phonemes[0])
             # print("SUCCESS called, has final_phoneme_repr: ", self.final_phoneme_repr, "phonemes: ", phonemes)
         else:
             # print("SUCCESS first: phonemes: ", phonemes)
             self.final_phoneme_repr = phonemes
 
         # print("SUCCESS called, returning final_phoneme_repr")
+        # print(self.final_phoneme_repr)
         return self.final_phoneme_repr
 
     def FAILURE(self):

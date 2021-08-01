@@ -25,16 +25,10 @@ class Runner(RepresenterMixin):
         tokenizer = Tokenizer(self.sentences)
         line_tokens = tokenizer.create_tokens()
         for line in line_tokens:
-            iambic_line_tokens = IambicLine(line)
-            initial = iambic_line_tokens.initial_processing()
-            # print("initial: ", initial)
-            is_valid_ip = iambic_line_tokens.is_valid_IP(initial)
-            truth.append(is_valid_ip)
+            iambic_line = IambicLine(line)
+            truth.append(iambic_line.is_valid_pattern)
         print(truth)
 
-        # print("iambic_line_tokens: ", iambic_line_tokens)
-        # print(iambic_line_tokens.base_stress_pattern)
-        # print("possible IP line? ", iambic_line_tokens.is_ip())
 
 
 
@@ -49,14 +43,15 @@ if __name__ == "__main__":
 
         # contents = "disceased to pass address the earth aspect\n"  
         # contents = "the expeditious pass address within\n"  
-        # contents = "abbreviated"
+        # contents = "abbreviated once for this I strike"
         # contents = "disceased to pass address the earth respect\n"  
         # contents = "disceased to pass address the earth aspect\nthe expeditious pass address within\ndisceased to pass address the earth respect\n" 
         # contents = "But we have left those gentle haunts to pass\n"
-        contents = "Sees his own face, self-slain Humanity,\n"
-        contents = "humanity itself the race to pass"
+        # contents = "Sees his own face, self-slain Humanity,\n"
+        # contents = "humanity itself the race to pass"
         # contents = "the lamp-sun lamps beyond the earth respect\n"
         # contents = "Lamp lit his face, moon-river hit his side\n"
+
 
         r = Runner(contents)
         r.initial_process_contents()
