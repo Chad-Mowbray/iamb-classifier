@@ -7,6 +7,7 @@ class Compounds:
         self.original_word = original_word
         self.lemmatizer = lemmatizer
         self.words = words
+        # print("Compound instance created: ", self.original_word)
 
     def find_compound_in_wordlist(self, initial=2):
 
@@ -24,8 +25,8 @@ class Compounds:
         res = []
 
         for i in range(initial, len(self.original_word) - 2):
-            left = SpellingNormalizer(self.original_word[:i]).modernized_word or self.original_word[:i]
-            right = SpellingNormalizer(wnl.lemmatize(self.original_word[i:])).modernized_word or wnl.lemmatize(self.original_word[i:])
+            left = SpellingNormalizer(self.original_word[:i]).modernized_word[0] or self.original_word[:i]
+            right = SpellingNormalizer(wnl.lemmatize(self.original_word[i:])).modernized_word[0] or wnl.lemmatize(self.original_word[i:])
             if left in wordlist and right in wordlist:
                 if current_split_idx:
                     prior_distance = abs(current_split_idx - median)
@@ -43,8 +44,11 @@ class Compounds:
         # print("handle_dashed_word called")
         if "-" in self.original_word:
             left, right = self.original_word.split("-")
-            left = SpellingNormalizer(left).modernized_word or left
-            right = SpellingNormalizer(self.lemmatizer.lemmatize(right)).modernized_word or self.lemmatizer.lemmatize(right)
+            # print("left, right in compounds, handle dashed: ", left, right)
+            left = SpellingNormalizer(left).modernized_word[0] or left
+            right = SpellingNormalizer(self.lemmatizer.lemmatize(right)).modernized_word[0] or self.lemmatizer.lemmatize(right)
+            # print(" Processed left, right in compounds, handle dashed: ", left, right)
+
             if left in self.words and right in self.words:
                 return [left, right]
 

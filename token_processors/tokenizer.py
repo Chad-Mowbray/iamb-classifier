@@ -1,4 +1,4 @@
-from nltk import word_tokenize
+import re
 from string import punctuation
 from utils.dicts import DictsSingleton
 
@@ -25,10 +25,14 @@ class Tokenizer(RepresenterMixin):
         self.line_tokens = []
         self.remove = punctuation
         self.dicts = DictsSingleton()
+        # print("Tokenizer instance created: ", self.lines)
+
+    def tokenize_line(self, line):
+        return re.split("[ \n!\"#$%&()*+,./:;<=>?@[\]^_`{|}~  \t]", line)
 
     # @args_logger
     def make_initial_tokens(self):
-        initial_tokens = [word_tokenize(line) for line in self.lines]
+        initial_tokens = [self.tokenize_line(line) for line in self.lines]
         # print(initial_tokens)
         return initial_tokens
 
@@ -38,10 +42,10 @@ class Tokenizer(RepresenterMixin):
         cleaned_tokens = [ [self.clean(token) for token in line if token not in self.remove] for line in initial_tokens]
         return cleaned_tokens
 
-    @staticmethod
     # @args_logger
-    def clean(word):
-        return word.lower()
+    def clean(self, word):
+        word = word.lower()
+        return word
 
     # @args_logger
     def create_tokens(self):
@@ -51,6 +55,7 @@ class Tokenizer(RepresenterMixin):
         for line in lines:
             # print("sentence tokens: ", [t for t in line])
             tokenized_line = [Token(t, self.dicts) for t in line]
+            # print([id(t) for t in tokenized_line])
             if tokenized_line: tokenized_lines.append(tokenized_line)
             # pprint(list(map(lambda t: print(pprint(t()), "\n"), tokenized_line)))
         # print("tokenized lines: ", tokenized_lines)

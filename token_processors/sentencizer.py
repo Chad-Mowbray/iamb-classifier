@@ -14,6 +14,7 @@ class Sentencizer(RepresenterMixin):
     def __init__(self, raw_text_contents):
         self.raw_text_contents = raw_text_contents
         self.text_in_lines = None
+        # print("Sentencizer instance created: ", self.raw_text_contents)
 
     # @args_logger
     def text_to_lines(self):

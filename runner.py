@@ -51,6 +51,10 @@ if __name__ == "__main__":
         # contents = "humanity itself the race to pass"
         # contents = "the lamp-sun lamps beyond the earth respect\n"
         # contents = "Lamp lit his face, moon-river hit his side\n"
+        # contents = "Both must alike from Heav'n derive their light,\nBoth must alike from Heaven derive their light,\nBoth must alike from Heav'n derive their light,\nBoth must alike from Heaven derive their light,\n"
+        # contents = "Both must alike from Heaven derive their light,\nBoth must alike from Heav'n derive their light,\n"
+
+        # contents = "silver-smithes"
 
 
         r = Runner(contents)

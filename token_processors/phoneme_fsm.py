@@ -1,6 +1,8 @@
 from utils.dicts import DictsSingleton
 from token_processors.spelling import SpellingNormalizer
 from token_processors.compounds import Compounds
+from copy import deepcopy
+import re
 
 
 class PhonemeFSM():
@@ -9,91 +11,121 @@ class PhonemeFSM():
         self.initial_token = token
         self.dicts = DictsSingleton()
         self.cmudict = self.dicts.cmudict
-        self.current_state = "LOOKUP"
-        self.is_normalized = False
-        self.compound_checked = False
-        self.spelling_normalized = ''
-
-    def __str__(self):
-        return f"""
-        initial: {self.initial_token}
-        state: {self.current_state}
-        is_normalized: {self.is_normalized}
-        compound_checked: {self.compound_checked}
-        spelling_normalized: {self.spelling_normalized}
-        """
-
-
-    def LOOKUP(self, token=None):
-        token = token if token else self.initial_token
-        try:
-            phonemes = self.cmudict[token]
-            return self.dispatch("SUCCESS", phonemes=phonemes)
-        except KeyError:
-            if self.is_normalized or self.compound_checked: 
-                if self.compound_checked:
-                    return self.dispatch("FAILURE")
-                return self.dispatch("COMPOUND", token=token)
-            return self.dispatch("NORMALIZE")
-
-
-    def NORMALIZE(self):
-        spelling_normalized = SpellingNormalizer(self.initial_token).modernized_word
-        if spelling_normalized is None:
-            return self.dispatch("COMPOUND")
-        else:
-            self.is_normalized = True
-            # print("normalized: ", spelling_normalized)
-            self.spelling_normalized = spelling_normalized
-            return self.dispatch("LOOKUP", token=spelling_normalized)
-
-        
-    def COMPOUND(self, token=None):
-        token = token if token else self.initial_token
-        compound = Compounds(token, self.dicts.words, self.dicts.lemmatizer).find_compound_in_wordlist()
-        # print("compounds: ", compound)
-        self.compound_checked = True
-        if compound:
-            # then look up both
-            left = self.dispatch("LOOKUP", token=compound[0])
-            right = self.dispatch("LOOKUP", token=compound[1])
-            # print("Right: ", right, "left", left, "compound: ", compound)
-            if left[0] and right[0]:
-                # print('Both left and right:', left, right)
-                return self.dispatch("SUCCESS")
-        return self.dispatch("FAILURE")
-
-
-    def SUCCESS(self, phonemes=None):
-        # print("SUCCESS called")
-        if phonemes is None: 
-            # print("SUCCESS called, phonemes None")
-            return self.final_phoneme_repr
-        if hasattr(self, "final_phoneme_repr"):
-            # TODO: should compounds be separated or kept as a single unit?
-            # print(self.final_phoneme_repr)
-            self.final_phoneme_repr[0].extend(phonemes[0]) # self.final_phoneme_repr[0].extend(phonemes[0])
-            # print("SUCCESS called, has final_phoneme_repr: ", self.final_phoneme_repr, "phonemes: ", phonemes)
-        else:
-            # print("SUCCESS first: phonemes: ", phonemes)
-            self.final_phoneme_repr = phonemes
-
-        # print("SUCCESS called, returning final_phoneme_repr")
-        # print(self.final_phoneme_repr)
-        return self.final_phoneme_repr
-
-    def FAILURE(self):
-        # print("FAILURE: ", self.initial_token)
+        self.normalized_spelling = ''
+        self.has_apostrophe = False
+        self.is_compound = [False, False]
         self.final_phoneme_repr = [[]]
-        self.current_state = "FAILURE"
-        return self.final_phoneme_repr
+        self.left_compound = ''
+        self.right_compound = ''
+        self.count = 0
+
+        self.lookup()
 
 
-    def dispatch(self, new_state=None, **kwargs):
-        # print(f"dispatch to {new_state}")
-        if new_state: self.current_state = new_state
-        current_method = getattr(self, self.current_state)
-        return current_method(**kwargs)
 
+    def lookup(self, called_by_normalize=False, compound_token=None):
+        # print("lookup called")
+        # print("compound_token: ", compound_token)
+        token = self.normalized_spelling if self.normalized_spelling else self.initial_token
+        token = compound_token if compound_token else token
+        # print("token: ", token)
+        try:
+            phonemes = self.cmudict.get(token, None)
+            # print("___________________________________________________", phonemes)
+            if phonemes is None: raise KeyError()
+            self.handle_success(phonemes)
+        except KeyError:
+            if called_by_normalize and self.count == 0:
+                self.count += 1
+                self.compound()
+            elif called_by_normalize and self.count > 1:
+                self.handle_failure()
+            else:
+                self.normalize(token)
+
+
+    
+    def normalize(self, token):
+        # print("normalize called")
+        # if any(self.is_compound): self.
+        spelling_normalized, has_apostrophe = SpellingNormalizer(token).modernized_word
+        if has_apostrophe: self.has_apostrophe = True
+        if spelling_normalized: self.normalized_spelling = spelling_normalized
+        if spelling_normalized:
+            # print("spelling normalized: ", spelling_normalized, "has_apostrophe:", self.has_apostrophe)
+            self.lookup(called_by_normalize=True)
+        else:
+            if any(self.is_compound):
+                self.lookup(called_by_normalize=True)
+            else:
+                self.compound()
+        
+
+
+    def compound(self):
+        # print("compound called...")
+        token = self.normalized_spelling if self.normalized_spelling else self.initial_token
+        compound = Compounds(token, self.dicts.words, self.dicts.lemmatizer).find_compound_in_wordlist()
+        # print(compound)
+        if compound:
+            left, right = compound[0], compound[1]
+            # print(left, right)
+
+            self.is_compound[0] = True
+            self.lookup(compound_token=left)
+            # print("left checked")
+
+            self.is_compound[1] = True
+            self.lookup(compound_token=right)
+            # print("right checked")
+
+        else:
+            self.apostrophe()
+
+
+    def apostrophe(self, phonemes):
+        phonemes_copy = deepcopy(phonemes)
+        reduced = []
+        for word in phonemes_copy:
+            filtered = [i for i,v in enumerate(word) if v[-1].isdigit()]
+            word.pop(filtered[-1])
+            reduced.append(word)
+        return reduced
+
+
+    def handle_success(self, phonemes):
+        # print("handle_success called with: ", phonemes)
+
+        if any(self.is_compound):
+            # print("checking compound: ", self.is_compound)
+            if self.is_compound[0]:
+                self.left_compound = phonemes
+                self.is_compound[0] = False
+                # print("left_compound:", self.left_compound)
+            if self.is_compound[1]:
+                self.right_compound = phonemes
+                self.is_compound[1] = False
+                # print("right_compound:", self.right_compound)
+        if self.left_compound and self.right_compound:
+            # print("Will be a valid compound")
+            # TODO: should final form be one or two words?
+            self.final_phoneme_repr = [self.left_compound[0] + self.right_compound[0]]
+            return
+
+        elif self.has_apostrophe:
+            reduced_phonemes = self.apostrophe(phonemes)
+            self.final_phoneme_repr = reduced_phonemes
+            return
+        
+        self.final_phoneme_repr = phonemes
+        
+        # print("end of handle_success")
+        # print(self.final_phoneme_repr)
 
         
+
+    def handle_failure(self):
+        # print("handle_failure called...")
+        print("*" * 80, "Unable to parse token ", self.final_phoneme_repr)
+
+
