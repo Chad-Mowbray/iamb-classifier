@@ -26,8 +26,12 @@ class IambicLine():
         self.is_valid_pattern = False
         self.valid_pattern = None
         self.current_state = 0
+        self.rules_applied = []
 
         self.main()
+
+    def __str__(self):
+        return f"{self.is_valid_pattern}, {len(self.rules_applied)}"
 
 
     def get_original_stress_patterns_per_token(self):
@@ -94,6 +98,7 @@ class IambicLine():
             4: self.promote_polysyllabic_zero_stresses,
             5: self.alter_primary_stresses
         }
+        self.rules_applied.append(phases[self.current_state].__name__)
         try:
             if phases[self.current_state]():
                 return True
@@ -210,9 +215,9 @@ class IambicLine():
                 #     print("three letter word needs two syllables")
                 #     print(word)
                 if len(word) >= 3:
-                    print(word, line)
+                    # print(word, line)
                     multi_stressed = self.get_polysyllabic_stress_possibilities(word)
-                    print("multi_stressed", multi_stressed)
+                    # print("multi_stressed", multi_stressed)
                     reconstituted_line.append(multi_stressed)
                 else:
                     reconstituted_line.append(word)
@@ -244,7 +249,7 @@ class IambicLine():
     def check_validity_and_continue(self, new_combinations):
         self.create_formatted_list_of_realized_stress_patterns(new_combinations)
         self.current_state += 1
-        pprint(self.unique_dict_of_realized_stress_patterns)
+        # pprint(self.unique_dict_of_realized_stress_patterns)
         self.is_valid_pattern = self.is_valid_IP()
         return self.is_valid_pattern
 

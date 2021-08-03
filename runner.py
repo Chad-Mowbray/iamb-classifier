@@ -2,6 +2,8 @@ from token_processors.sentencizer import Sentencizer
 from token_processors.tokenizer import Tokenizer
 from iambic_line_processors.iambic_line import IambicLine
 
+from pprint import pprint
+
 from utils.representer import RepresenterMixin
 from utils.logger import args_logger
 import logging
@@ -26,8 +28,8 @@ class Runner(RepresenterMixin):
         line_tokens = tokenizer.create_tokens()
         for line in line_tokens:
             iambic_line = IambicLine(line)
-            truth.append(iambic_line.is_valid_pattern)
-        print(truth)
+            truth.append(str(iambic_line))
+        pprint(truth)
 
 
 
@@ -53,7 +55,7 @@ if __name__ == "__main__":
         # contents = "Lamp lit his face, moon-river hit his side\n"
         # contents = "Both must alike from Heav'n derive their light,\nBoth must alike from Heaven derive their light,\nBoth must alike from Heav'n derive their light,\nBoth must alike from Heaven derive their light,\n"
         # contents = "Both must alike from Heaven derive their light,\nBoth must alike from Heav'n derive their light,\n"
-        contents = "Both must alike from Heav'n derive their light,"
+        # contents = "Both must alike from Heav'n derive their light,"
 
         # contents = "silver-smithes"
 
