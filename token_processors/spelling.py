@@ -19,10 +19,10 @@ class SpellingNormalizer(RepresenterMixin):
         # print("$$$ modernized spelling", modernized)
 
         has_apostrophe = False
-        if "'" in self.unknown_word[1:]:
+        if "'" in self.unknown_word[1:-1]:
             has_apostrophe = True
         if modernized is None:
-            if "'" in self.unknown_word[1:]:
+            if "'" in self.unknown_word[1:-2]:
                 self.modernized_word = [self.handle_non_initial_apostrophe(), has_apostrophe]
             else:
                 self.modernized_word = [modernized, has_apostrophe]
@@ -30,7 +30,8 @@ class SpellingNormalizer(RepresenterMixin):
             self.modernized_word = [modernized, has_apostrophe]
 
 
-    def handle_non_initial_apostrophe(self):
+    def handle_non_initial_apostrophe(self): # TODO: make more robust
+        # print("handle_non_initial_apostrophe called")
         return re.sub("'", "e", self.unknown_word)
 
 

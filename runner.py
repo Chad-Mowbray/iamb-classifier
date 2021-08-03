@@ -53,6 +53,7 @@ if __name__ == "__main__":
         # contents = "Lamp lit his face, moon-river hit his side\n"
         # contents = "Both must alike from Heav'n derive their light,\nBoth must alike from Heaven derive their light,\nBoth must alike from Heav'n derive their light,\nBoth must alike from Heaven derive their light,\n"
         # contents = "Both must alike from Heaven derive their light,\nBoth must alike from Heav'n derive their light,\n"
+        contents = "Both must alike from Heav'n derive their light,"
 
         # contents = "silver-smithes"
 

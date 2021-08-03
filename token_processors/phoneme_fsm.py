@@ -80,7 +80,9 @@ class PhonemeFSM():
             # print("right checked")
 
         else:
-            self.apostrophe()
+            # self.count += 1
+            # self.apostrophe()
+            self.handle_failure()
 
 
     def apostrophe(self, phonemes):
@@ -91,6 +93,9 @@ class PhonemeFSM():
             word.pop(filtered[-1])
             reduced.append(word)
         return reduced
+
+    def diy_stress_assignment(self):
+        print("God help you...")
 
 
     def handle_success(self, phonemes):
@@ -121,11 +126,14 @@ class PhonemeFSM():
         
         # print("end of handle_success")
         # print(self.final_phoneme_repr)
+        return
 
         
 
     def handle_failure(self):
         # print("handle_failure called...")
-        print("*" * 80, "Unable to parse token ", self.final_phoneme_repr)
+        print("*" * 80, "Unable to parse token ", self.initial_token, self.final_phoneme_repr)
+        self.diy_stress_assignment()
+        return
 
 
