@@ -36,6 +36,19 @@ class TestSpellingSyllabifier(unittest.TestCase):
         ss = SpellingSyllabifier("pixie")
         self.assertEqual(ss.syllable_count, 2)
 
+    def test_ea_count(self):
+        ss = SpellingSyllabifier("treat")
+        self.assertEqual(ss.syllable_count, 1)
+
+    def test_consonantal_y_count(self):
+        ss = SpellingSyllabifier("yea")
+        self.assertEqual(ss.syllable_count, 1)
+
+    def test_final_ed_count(self):
+        ss = SpellingSyllabifier("harbingered")
+        self.assertEqual(ss.syllable_count, 3)
+
+
     
 
 

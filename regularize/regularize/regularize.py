@@ -14,6 +14,7 @@ decruftre_macron = {re.compile(k): v for k,v in decruft.items()}
 decruftre = {re.compile(k): v for k,v in decruft.items() if "~" not in k}
 
 def decruftify(word):
+	print(word)
 	poss = []
 	if "~" in word or r"\u0304" in word:
 		for k,v in decruftre_macron.items():
@@ -23,6 +24,7 @@ def decruftify(word):
 				poss.append(re.sub(k,v,poss[-1]))
 	else:
 		for k,v in decruftre.items():
+			# print(k,v)
 			if re.search(k,word) and len(poss) == 0:
 				poss.append(re.sub(k,v,word))
 			elif re.search(k,word) and len(poss) != 0:

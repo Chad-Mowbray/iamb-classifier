@@ -66,6 +66,23 @@ class SpellingSyllabifier:
         elif re.search(r'ies?$', word):
             i_index = word.rindex('e')
             return self.check_special_cases(word[:i_index] + word[i_index + 1:])
+        elif re.search(r'y[aeiou]', word):
+            res = re.finditer(r'y[aeiou]', word)
+            y_consonant_indicies = [m.start() for m in res]
+            for y_consonant_idx in y_consonant_indicies:
+                word = word[:y_consonant_idx] + word[y_consonant_idx + 1:]
+            print("y consonant fixed: ", word)
+            return self.check_special_cases(word)
+        elif re.search(r'ea', word):
+            res = re.finditer(r'ea', word)
+            ea_consonant_indicies = [m.start() + 1 for m in res]
+            for ea_consonant_idx in ea_consonant_indicies:
+                word = word[:ea_consonant_idx] + word[ea_consonant_idx + 1:]
+            print("ea fixed: ", word)
+            return self.check_special_cases(word)
+        elif re.search(r'[^aeiou]ed$', word)  and len(word) >= 4:
+            e_index = word.rindex('e')
+            return self.check_special_cases(word[:e_index] + word[e_index + 1:])
         print("^^^^^^^^^^^", word)
         return word
 

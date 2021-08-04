@@ -28,6 +28,7 @@ class Compounds:
         for i in range(initial, len(self.original_word) - 2):
             left = SpellingNormalizer(self.original_word[:i]).modernized_word[0] or self.original_word[:i]
             right = SpellingNormalizer(wnl.lemmatize(self.original_word[i:])).modernized_word[0] or wnl.lemmatize(self.original_word[i:])
+            print("left, right in compounds: ", left, right)
             if left in wordlist and right in wordlist:
                 if current_split_idx:
                     prior_distance = abs(current_split_idx - median)

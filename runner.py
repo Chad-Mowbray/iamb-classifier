@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
         # contents = "silver-smithes"
         # contents = "Of Oreb, or of Sinai, didst inspire"
-        # contents = "Of Oreb, or of Sinai, didst inspire"
+        # contents = "That harbingered thy birth, Thou Man of Woes!"
 
 
         r = Runner(contents)

@@ -4,6 +4,10 @@ from nltk.corpus import cmudict as cmud
 
 
 class DictsSingleton():
+
+    #C urrently ad hoc adding syllabic variation
+    # TODO something better
+    
     _instance = None
     def __new__(cls):
         if cls._instance is None:
@@ -17,6 +21,8 @@ class DictsSingleton():
             cls._instance.cmudict["heaven"] = [['HH', 'EH1', 'V', 'AH0', 'N'], ['HH', 'EH1', 'N']]
             cls._instance.cmudict["heavens"] = [['HH', 'EH1', 'V', 'AH0', 'N', 'Z'], ['HH', 'EH1', 'N', 'Z']]
             cls._instance.cmudict["heavenly"] = [['HH', 'EH1', 'V', 'AH0', 'N', 'L', 'IY0'], ['HH', 'EH1', 'N', 'L', 'IY0']]
+            cls._instance.cmudict["choir"] = [['K', 'W', 'AY1', 'ER0'], ['K', 'W', 'AY1', 'R']]
+            cls._instance.cmudict["choirs"] = [['K', 'W', 'AY1', 'ER0', 'Z'], ['K', 'W', 'AY1', 'R', 'Z']]
             
         return cls._instance
 
