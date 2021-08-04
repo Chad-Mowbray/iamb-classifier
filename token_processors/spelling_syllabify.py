@@ -7,6 +7,8 @@ class SpellingSyllabifier:
     """
 
     VOWELS = "aeiouy"
+    DUMMY_STRESSED = "AH1"
+    DUMMY_UNSTRESSED = "AH0"
 
     def __init__(self, token):
         self.token = token
@@ -67,9 +69,22 @@ class SpellingSyllabifier:
         print("^^^^^^^^^^^", word)
         return word
 
+    
+    def simple_stressor(self):
+        count = self.syllable_count
+        if count == 1:
+            return [[self.DUMMY_STRESSED]]
+        else:
+            return [[self.DUMMY_STRESSED if i == self.syllable_count - 2 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count) ]]
+
+
+    #TODO
+    def complicated_stressor(self):
+        pass
+
 
     def create_phoneme_repr(self):
-        self.tentative_phonemes = [["AH1" if i == 0 else "AH0" for i in range(self.syllable_count) ]]
+        self.tentative_phonemes = self.simple_stressor()
 
 
     def main(self):

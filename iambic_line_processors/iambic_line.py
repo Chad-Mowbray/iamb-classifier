@@ -27,11 +27,13 @@ class IambicLine():
         self.valid_pattern = None
         self.current_state = 0
         self.rules_applied = []
+        self.syllables_per_line = []
+        self.altered_pattern = []
 
         self.main()
 
     def __str__(self):
-        return f"{self.is_valid_pattern}, {len(self.rules_applied)}"
+        return f"{self.is_valid_pattern}, {len(self.rules_applied)}, {self.syllables_per_line}, {self.altered_pattern}"
 
 
     def get_original_stress_patterns_per_token(self):
@@ -74,10 +76,18 @@ class IambicLine():
 
 
 
+    def get_syllables_per_line(self):
+        pprint(self.unique_dict_of_realized_stress_patterns)
+        for pattern in self.unique_dict_of_realized_stress_patterns:
+            if len(pattern) not in self.syllables_per_line:
+                self.syllables_per_line.append(len(pattern))
 
 
     def is_valid_IP(self):
+        self.get_syllables_per_line()
         if self.BASE_PATTERN in self.unique_dict_of_realized_stress_patterns:
+            if self.current_state == 6: 
+                self.altered_pattern = self.unique_dict_of_realized_stress_patterns[self.BASE_PATTERN]
             return True
         else:
             return self.fit_to_IP()
@@ -120,7 +130,8 @@ class IambicLine():
         for line in self.get_baseline_before_alteration():
             reconstituted_line = []
             for w in line:
-                reconstituted_line.append([1 if s == 2 and len(w) > 2 else s for s in w])
+                # reconstituted_line.append([1 if s == 2 and len(w) > 2 else s for s in w]) # should prevent [1,1]?
+                reconstituted_line.append([1 if s == 2 else s for s in w])
             new_combinations.append(tuple(reconstituted_line))
 
         return self.check_validity_and_continue(new_combinations)

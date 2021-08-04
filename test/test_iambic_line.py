@@ -62,13 +62,17 @@ class TestIambicLine(unittest.TestCase):
         is_valid_ip = self.ibls[5].is_valid_pattern
         self.assertTrue(is_valid_ip)    
 
-    def test_11_syllables_non_feminine(self):
+    def test_heaven_optionally_1_syllable(self):
         is_valid_ip = self.ibls[6].is_valid_pattern
-        self.assertFalse(is_valid_ip)    
+        self.assertTrue(is_valid_ip)    
 
     def test_non_initial_apostrophe(self):
         is_valid_ip = self.ibls[7].is_valid_pattern
-        self.assertTrue(is_valid_ip)           
+        self.assertTrue(is_valid_ip)    
+
+    def test_11_syllables(self):
+        is_valid_ip = self.ibls[8].is_valid_pattern
+        self.assertFalse(is_valid_ip)       
 
 
 class TestIambicLineFromFile(unittest.TestCase):
