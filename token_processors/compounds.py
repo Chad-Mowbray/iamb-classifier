@@ -1,6 +1,7 @@
 from token_processors.spelling import SpellingNormalizer
 
 
+
 class Compounds:
 
     def __init__(self, original_word, words, lemmatizer):

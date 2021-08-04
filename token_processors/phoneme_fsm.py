@@ -1,6 +1,7 @@
 from utils.dicts import DictsSingleton
 from token_processors.spelling import SpellingNormalizer
 from token_processors.compounds import Compounds
+from token_processors.spelling_syllabify import SpellingSyllabifier
 from copy import deepcopy
 import re
 
@@ -96,6 +97,10 @@ class PhonemeFSM():
 
     def diy_stress_assignment(self):
         print("God help you...")
+        spelling_syllabifier = SpellingSyllabifier(self.initial_token)
+        tentative_phonemes = spelling_syllabifier.tentative_phonemes
+        self.handle_success(tentative_phonemes)
+
 
 
     def handle_success(self, phonemes):

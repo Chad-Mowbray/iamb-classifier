@@ -10,6 +10,8 @@ import logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(message)s')
 
+import nltk
+nltk.download('wordnet')
 
 
 class Runner(RepresenterMixin):
@@ -58,6 +60,7 @@ if __name__ == "__main__":
         # contents = "Both must alike from Heav'n derive their light,"
 
         # contents = "silver-smithes"
+        # contents = "Of Oreb, or of Sinai, didst inspire"
 
 
         r = Runner(contents)
