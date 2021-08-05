@@ -24,6 +24,21 @@ class PhonemeFSM():
         self.lookup()
 
 
+    def check_ed(self, phonemes):
+        print("check_ed called")
+        print(phonemes, self.initial_token)
+
+        if self.initial_token.endswith("ed") and len(self.initial_token) > 4:
+            print("\tnot a short word")
+            antepenult_letter = self.initial_token[-3]
+            if antepenult_letter not in "aeiou":
+                phonemes_copy = deepcopy(phonemes[0])
+                print("\t", antepenult_letter, phonemes_copy)
+                phonemes_copy.insert(-1,'EH0')
+                print("\t", phonemes_copy)
+                phonemes.append(phonemes_copy)
+        return phonemes
+        
 
     def lookup(self, called_by_normalize=False, compound_token=None):
         print("lookup called")
@@ -35,6 +50,8 @@ class PhonemeFSM():
             phonemes = self.cmudict.get(token, None)
             # print("___________________________________________________", phonemes)
             if phonemes is None: raise KeyError()
+            phonemes = self.check_ed(phonemes)
+            print(phonemes)
             self.handle_success(phonemes)
         except KeyError:
             if called_by_normalize and self.count < 1:
@@ -139,8 +156,8 @@ class PhonemeFSM():
         
         self.final_phoneme_repr = phonemes
         
-        # print("end of handle_success")
-        # print(self.final_phoneme_repr)
+        print("end of handle_success")
+        print(self.final_phoneme_repr)
         return
 
         

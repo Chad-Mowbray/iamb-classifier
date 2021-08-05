@@ -7,7 +7,8 @@ class TestPhonemeFSM(unittest.TestCase):
     def test_old_spelling(self):
         fsm = PhonemeFSM('disceased')
         analyzed = fsm.final_phoneme_repr
-        self.assertEqual(analyzed, [['D', 'IH0', 'Z', 'IY1', 'Z', 'D']])
+        self.assertEqual(analyzed[0], ['D', 'IH0', 'Z', 'IY1', 'Z', 'D'])
+        self.assertEqual(analyzed[1], ['D', 'IH0', 'Z', 'IY1', 'Z', 'EH0', 'D'])
 
     def test_basic_compound(self):
         fsm = PhonemeFSM("lamplit")

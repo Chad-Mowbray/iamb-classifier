@@ -9,10 +9,23 @@ class SpellingSyllabifier:
     VOWELS = "aeiouy"
     DUMMY_STRESSED = "AH1"
     DUMMY_UNSTRESSED = "AH0"
+    REGEX = {
+        "QU": r'qu',
+        "ION": r'[st]{1}ions?$',
+        "AE": r'ae',
+        "DOUBLE": r'([eiouy])\1',  # no double a
+        "OU": r'ou',
+        "EY": r'ey\W?',
+        "IES": r'ies?$',
+        "YV": r'y[aeiou]',
+        "EA": r'ea',
+        "ED": r'[^aeiou]ed$',
+    }
 
     def __init__(self, token):
         self.token = token
         self.syllable_count = 0
+        self.modified_word = ''
         self.tentative_phonemes = [[]]
 
         self.main()
@@ -24,67 +37,67 @@ class SpellingSyllabifier:
         self.syllable_count = len(syllables)
         print(self.syllable_count)
 
+    def find_multiple(self, regex, word, rev=False):
+        res = re.finditer(regex, word)
+        indicies = [m.start() + 1 for m in res]
+        indicies = indicies[::-1] if rev else indicies
+        for idx in indicies:
+            word = word[:idx] + word[idx + 1:]
+        return word
+
+    def find_single(self, letter, word):
+        idx = word.rindex(letter)
+        word = word[:idx] + word[idx + 1:]
+        return word
+
 
     def check_special_cases(self, word=None):
         word = word if word else self.token
-        if re.search(r'qu', word):
-            res = re.finditer(r'qu', word)
-            qu_indicies = [m.start() + 1 for m in res]
-            for qu_index in qu_indicies:
-                word = word[:qu_index] + word[qu_index + 1:]
-        elif re.search(r'[st]{1}ions?$', word)  and len(word) > 4:
-            i_index = word.rindex('i')
-            return self.check_special_cases(word[:i_index] + word[i_index + 1:])
-        elif re.search(r'ae', word):
-            res = re.finditer(r'ae', word)
-            ae_indicies = [m.start() + 1 for m in res]
-            for ae_idx in ae_indicies[::-1]:
-                word = word[:ae_idx] + word[ae_idx + 1:]
-            print("ae fixed: ", word)
+
+        if re.search(self.REGEX["QU"], word):
+            word = self.find_multiple(self.REGEX["QU"], word)
             return self.check_special_cases(word)
-        elif re.search(r'([aeiouy])\1', word):
-            res = re.finditer(r'([aeiouy])\1', word)
-            double_vowel_indicies = [m.start() + 1 for m in res]
-            for double_vowel_idx in double_vowel_indicies:
-                word = word[:double_vowel_idx] + word[double_vowel_idx + 1:]
-            print("double vowel fixed: ", word)
+
+        elif re.search(self.REGEX["ION"], word)  and len(word) > 4:
+            word = self.find_single("i", word)
             return self.check_special_cases(word)
-        elif re.search(r'ou', word):
-            res = re.finditer(r'ou', word)
-            ou_dipthong_indicies = [m.start() + 1 for m in res]
-            for ou_dipthong_idx in ou_dipthong_indicies:
-                word = word[:ou_dipthong_idx] + word[ou_dipthong_idx + 1:]
-            print("ou fixed: ", word)
+
+        elif re.search(self.REGEX["AE"], word):
+            word = self.find_multiple(self.REGEX["AE"], word, rev=True)
             return self.check_special_cases(word)
-        elif re.search(r'ey\W?', word):
-            res = re.finditer(r'ey\W?', word)
-            ey_dipthong_indicies = [m.start() + 1 for m in res]
-            for ey_dipthong_idx in ey_dipthong_indicies:
-                word = word[:ey_dipthong_idx] + word[ey_dipthong_idx + 1:]
-            print("ey fixed: ", word)
+
+        elif re.search(self.REGEX["DOUBLE"], word):
+            word = self.find_multiple(self.REGEX["DOUBLE"], word)
             return self.check_special_cases(word)
+
+        elif re.search(self.REGEX["OU"], word):
+            word = self.find_multiple(self.REGEX["OU"], word)
+            return self.check_special_cases(word)
+
+        elif re.search(self.REGEX["EY"], word):
+            word = self.find_multiple(self.REGEX["EY"], word)
+            return self.check_special_cases(word)
+
         elif re.search(r'ies?$', word):
-            i_index = word.rindex('e')
-            return self.check_special_cases(word[:i_index] + word[i_index + 1:])
-        elif re.search(r'y[aeiou]', word):
-            res = re.finditer(r'y[aeiou]', word)
-            y_consonant_indicies = [m.start() for m in res]
-            for y_consonant_idx in y_consonant_indicies:
-                word = word[:y_consonant_idx] + word[y_consonant_idx + 1:]
-            print("y consonant fixed: ", word)
+            word = self.find_single("e", word)
             return self.check_special_cases(word)
-        elif re.search(r'ea', word):
-            res = re.finditer(r'ea', word)
-            ea_consonant_indicies = [m.start() + 1 for m in res]
-            for ea_consonant_idx in ea_consonant_indicies:
-                word = word[:ea_consonant_idx] + word[ea_consonant_idx + 1:]
-            print("ea fixed: ", word)
+
+        elif re.search(self.REGEX["YV"], word):
+            word = self.find_multiple(self.REGEX["YV"], word)
             return self.check_special_cases(word)
+
+        elif re.search(self.REGEX["EA"], word):
+            word = self.find_multiple(self.REGEX["EA"], word)
+            return self.check_special_cases(word)
+
         elif re.search(r'[^aeiou]ed$', word)  and len(word) >= 4:
-            e_index = word.rindex('e')
-            return self.check_special_cases(word[:e_index] + word[e_index + 1:])
-        print("^^^^^^^^^^^", word)
-        return word
+            word = self.find_single("e", word)
+            return self.check_special_cases(word)
+
+
+        # print("^^^^^^^^^^^", word)
+        self.modified_word = word
+        return self.modified_word
 
     
     def simple_stressor(self):
@@ -107,3 +120,16 @@ class SpellingSyllabifier:
     def main(self):
         self.get_syllable_count()
         self.create_phoneme_repr()
+
+
+
+if __name__ == "__main__":
+    from pprint import pprint
+
+    words = ["quality", "inspections", "aeneidae", "look", "question", "thought", "thou", "linsey-woolsey", "pixie", "pixies", "yea", "treat", "galilaean", "harbingered", "yeoman"]
+
+    res = []
+    for word in words:
+        ss = SpellingSyllabifier(word)
+        res.append([word, ss.modified_word, ss.syllable_count])
+    pprint(res)

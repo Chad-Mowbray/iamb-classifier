@@ -48,6 +48,13 @@ class TestSpellingSyllabifier(unittest.TestCase):
         ss = SpellingSyllabifier("harbingered")
         self.assertEqual(ss.syllable_count, 3)
 
+    def test_dipthong_and_vowel_count(self):
+        ss = SpellingSyllabifier("galilaean")
+        self.assertEqual(ss.syllable_count, 4)
+
+    def test_y_and_2_vowels_count(self):
+        ss = SpellingSyllabifier("yeoman")
+        self.assertEqual(ss.syllable_count, 2)
 
     
 
