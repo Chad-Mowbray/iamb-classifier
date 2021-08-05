@@ -45,7 +45,7 @@ if __name__ == "__main__":
         # print(contents)
         # print(type(contents))
 
-        # contents = "disceased to pass address the earth aspect\n"  
+        contents = "disceased to pass address the earth aspect\n"  
         # contents = "the expeditious pass address within\n"  
         # contents = "abbreviated once for this I strike"
         # contents = "disceased to pass address the earth respect\n"  
@@ -61,8 +61,8 @@ if __name__ == "__main__":
 
         # contents = "silver-smithes"
         # contents = "Of Oreb, or of Sinai, didst inspire"
-        # contents = "upborne"
-
+        # contents = "moonfaced"
+# 
 
         r = Runner(contents)
         r.initial_process_contents()

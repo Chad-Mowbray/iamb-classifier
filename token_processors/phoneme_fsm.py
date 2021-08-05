@@ -119,6 +119,7 @@ class PhonemeFSM():
         
         spelling_syllabifier = SpellingSyllabifier(self.initial_token)
         tentative_phonemes = spelling_syllabifier.tentative_phonemes
+        print("tentative_phonemes: ", tentative_phonemes)
         print(self.is_compound, self.left_compound, self.right_compound)
         self.stress_assigned_diy = True
         # self.is_compound = [False, False]
@@ -146,7 +147,8 @@ class PhonemeFSM():
         if self.left_compound and self.right_compound:
             # print("Will be a valid compound")
             # TODO: should final form be one or two words?
-            self.final_phoneme_repr = [self.left_compound[0] + self.right_compound[0]]
+            # self.final_phoneme_repr = [self.left_compound[0] + self.right_compound[0]]
+            self.final_phoneme_repr = [lt + rt for lt in self.left_compound for rt in self.right_compound]
             return
 
         elif self.has_apostrophe:
@@ -167,5 +169,4 @@ class PhonemeFSM():
         print("*" * 80, "Unable to parse token ", self.initial_token, self.final_phoneme_repr)
         self.diy_stress_assignment()
         return
-
 

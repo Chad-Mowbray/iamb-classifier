@@ -36,6 +36,15 @@ class IambicLine():
         return f"{self.is_valid_pattern}, {len(self.rules_applied)}, {self.syllables_per_line}, {self.altered_pattern}"
 
 
+    def test_base_pattern(self):
+        for potential in self.unique_dict_of_realized_stress_patterns:
+            if len(potential) != len(self.BASE_PATTERN): continue
+            comparison = [syl for i,syl in enumerate(potential) if i % 2 == 0 and syl in [0,2] or i % 2 == 1 and syl == self.BASE_PATTERN[i] ]
+            if len(comparison) == len(self.BASE_PATTERN):
+                return True
+        return False
+
+
     def get_original_stress_patterns_per_token(self):
         return [(t.stress_patterns, t.token) for t in self.tokens]
 
@@ -77,7 +86,7 @@ class IambicLine():
 
 
     def get_syllables_per_line(self):
-        # pprint(self.unique_dict_of_realized_stress_patterns)
+        pprint(self.unique_dict_of_realized_stress_patterns)
         for pattern in self.unique_dict_of_realized_stress_patterns:
             if len(pattern) not in self.syllables_per_line:
                 self.syllables_per_line.append(len(pattern))
@@ -85,12 +94,20 @@ class IambicLine():
 
     def is_valid_IP(self):
         self.get_syllables_per_line()
-        if self.BASE_PATTERN in self.unique_dict_of_realized_stress_patterns:
+        if self.test_base_pattern():
+            print("##"*80)
             if self.current_state == 6: 
                 self.altered_pattern = self.unique_dict_of_realized_stress_patterns[self.BASE_PATTERN]
             return True
         else:
+            print("INVALID"*80)
             return self.fit_to_IP()
+        # if self.BASE_PATTERN in self.unique_dict_of_realized_stress_patterns:
+            # if self.current_state == 6: 
+            #     self.altered_pattern = self.unique_dict_of_realized_stress_patterns[self.BASE_PATTERN]
+        #     return True
+        # else:
+        #     return self.fit_to_IP()
 
 
     def fit_to_IP(self):
@@ -101,11 +118,18 @@ class IambicLine():
             3. Demote monosyllabic stresses
             4. Promote polysyllabic zero stresses
         """
+        # phases = {
+        #     1: self.promote_secondary_stresses,
+        #     2: self.demote_compound_stress,
+        #     3: self.demote_monosyllable_stress,
+        #     4: self.promote_polysyllabic_zero_stresses, #TODO but only to 2?
+        #     5: self.alter_primary_stresses
+        # }
         phases = {
-            1: self.promote_secondary_stresses,
-            2: self.demote_compound_stress,
-            3: self.demote_monosyllable_stress,
-            4: self.promote_polysyllabic_zero_stresses,
+            1: self.demote_compound_stress,
+            2: self.demote_monosyllable_stress,
+            3: self.promote_polysyllabic_zero_stresses, #TODO but only to 2?
+            4: self.promote_secondary_stresses,
             5: self.alter_primary_stresses
         }
         self.rules_applied.append(phases[self.current_state].__name__)
@@ -121,6 +145,7 @@ class IambicLine():
 
 
     def promote_secondary_stresses(self):
+        #TODO: should this run at the end? 
         """
         Works on a List[Tuples(Lists)]
         Creates a new List[Tuples(Lists)]
@@ -130,8 +155,8 @@ class IambicLine():
         for line in self.get_baseline_before_alteration():
             reconstituted_line = []
             for w in line:
-                # reconstituted_line.append([1 if s == 2 and len(w) > 2 else s for s in w]) # should prevent [1,1]?
-                reconstituted_line.append([1 if s == 2 else s for s in w])
+                reconstituted_line.append([1 if s == 2 and len(w) > 2 else s for s in w]) # should prevent [1,1]?
+                # reconstituted_line.append([1 if s == 2 else s for s in w])
             new_combinations.append(tuple(reconstituted_line))
 
         return self.check_validity_and_continue(new_combinations)
@@ -142,7 +167,7 @@ class IambicLine():
         for i,syllable in enumerate(word):
             if syllable == 1:
                 word_copy = [*word]
-                word_copy[i] = 0
+                word_copy[i] = 0 # should be 2?
                 word_stress_variations.append(word_copy)
                 continue
         return word_stress_variations
@@ -211,6 +236,7 @@ class IambicLine():
 
 
     def promote_polysyllabic_zero_stresses(self):
+        #TODO: bisyllabic words should get promoted first, this should promote to 2
         """
         check if the word requires more than one stress
         """

@@ -73,7 +73,7 @@ class Token(RepresenterMixin):
         # print("new fsm: ", id(fsm))
         # phoneme_reprs = fsm.dispatch()
         phoneme_reprs = fsm.final_phoneme_repr
-        # print("phoneme_reprs: ", phoneme_reprs)
+        print("phoneme_reprs from Token: ", phoneme_reprs)
         self.phoneme_reprs = self.handle_compounds(phoneme_reprs)
         # print(fsm)
         self.modified_token = fsm.normalized_spelling

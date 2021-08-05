@@ -30,6 +30,13 @@ class TestPhonemeFSM(unittest.TestCase):
         analyzed = fsm.final_phoneme_repr
         self.assertEqual(analyzed, [['S', 'IH1', 'L', 'V', 'ER0', 'S', 'M', 'IH1', 'TH', 'S']])
 
+    def test_regular_compound_ed(self):
+        fsm = PhonemeFSM("moonfaced")
+        analyzed = fsm.final_phoneme_repr
+        self.assertEqual(analyzed, [['M', 'UW1', 'N', 'F', 'EY1', 'S', 'T'], ['M', 'UW1', 'N', 'F', 'EY1', 'S', 'EH0', 'T'], ['M', 'UW1', 'EH0', 'N', 'F', 'EY1', 'S', 'T'], ['M', 'UW1', 'EH0', 'N', 'F', 'EY1', 'S', 'EH0', 'T']])
+
+        
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,4 +1,5 @@
 import re
+from copy import deepcopy
 
 class SpellingSyllabifier:
     """
@@ -112,12 +113,29 @@ class SpellingSyllabifier:
     def complicated_stressor(self):
         pass
 
+    
+    def check_ed(self, phonemes):
+        print("check_ed called")
+        print(phonemes, self.initial_token)
+
+        if self.initial_token.endswith("ed") and len(self.initial_token) > 4:
+            print("\tnot a short word")
+            antepenult_letter = self.initial_token[-3]
+            if antepenult_letter not in "aeiou":
+                phonemes_copy = deepcopy(phonemes[0])
+                print("\t", antepenult_letter, phonemes_copy)
+                phonemes_copy.insert(-1,'EH0')
+                print("\t", phonemes_copy)
+                phonemes.append(phonemes_copy)
+        return phonemes
+
 
     def create_phoneme_repr(self):
         self.tentative_phonemes = self.simple_stressor()
 
 
     def main(self):
+        print("spelling syllabify started with:", self.token)
         self.get_syllable_count()
         self.create_phoneme_repr()
 
