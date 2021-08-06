@@ -4,7 +4,7 @@ from token_processors.sentencizer import Sentencizer
 from token_processors.tokenizer import Tokenizer
 
 
-class TestIambicLine(unittest.TestCase):
+class TestToIambicLine(unittest.TestCase):
 
     def setUp(self):
         self.ibls = []
@@ -75,7 +75,7 @@ class TestIambicLine(unittest.TestCase):
         self.assertFalse(is_valid_ip)       
 
 
-class TestIambicLineFromFile(unittest.TestCase):
+class TestToIambicLineFromFile(unittest.TestCase):
 
     def setUp(self):
         self.ibls = []

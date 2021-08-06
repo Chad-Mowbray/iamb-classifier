@@ -46,23 +46,23 @@ class Token(RepresenterMixin):
             "syllabifications": self.syllabifications
         }
 
-
-    # @args_logger
-    def handle_compounds(self, phoneme_reprs):
-        updated_phoneme_reprs = []
-        for phoneme_repr in phoneme_reprs:
-            primary_stress_indicies = [i for i,phon in enumerate(phoneme_repr) if self.PRIMARY_STRESS in phon ]
-            if len(primary_stress_indicies) > 1:
-                for idx in reversed(primary_stress_indicies):
-                    phoneme_repr_copy = [phon for phon in phoneme_repr]
-                    # print("copy: ",phoneme_repr_copy)
-                    phoneme_repr_copy[idx] = phoneme_repr_copy[idx][:-1] + self.SECONDARY_STRESS
-                    updated_phoneme_reprs.append(phoneme_repr_copy)
-                updated_phoneme_reprs.append(phoneme_repr)
-                # print("updated compound repr: ", updated_phoneme_reprs)
-                return updated_phoneme_reprs
-        # print("unmodified compound repr: ", phoneme_reprs)
-        return phoneme_reprs
+    # THIS IS NOW DONE IN IAMBIC_LINE
+    # # @args_logger
+    # def handle_compounds(self, phoneme_reprs):
+    #     updated_phoneme_reprs = []
+    #     for phoneme_repr in phoneme_reprs:
+    #         primary_stress_indicies = [i for i,phon in enumerate(phoneme_repr) if self.PRIMARY_STRESS in phon ]
+    #         if len(primary_stress_indicies) > 1:
+    #             for idx in reversed(primary_stress_indicies):
+    #                 phoneme_repr_copy = [phon for phon in phoneme_repr]
+    #                 # print("copy: ",phoneme_repr_copy)
+    #                 phoneme_repr_copy[idx] = phoneme_repr_copy[idx][:-1] + self.SECONDARY_STRESS
+    #                 updated_phoneme_reprs.append(phoneme_repr_copy)
+    #             updated_phoneme_reprs.append(phoneme_repr)
+    #             # print("updated compound repr: ", updated_phoneme_reprs)
+    #             return updated_phoneme_reprs
+    #     # print("unmodified compound repr: ", phoneme_reprs)
+    #     return phoneme_reprs
 
 
     # @args_logger
@@ -74,7 +74,7 @@ class Token(RepresenterMixin):
         # phoneme_reprs = fsm.dispatch()
         phoneme_reprs = fsm.final_phoneme_repr
         print("phoneme_reprs from Token: ", phoneme_reprs)
-        self.phoneme_reprs = self.handle_compounds(phoneme_reprs)
+        self.phoneme_reprs = phoneme_reprs #self.handle_compounds(phoneme_reprs)
         # print(fsm)
         self.modified_token = fsm.normalized_spelling
        

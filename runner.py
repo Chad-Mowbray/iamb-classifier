@@ -45,23 +45,24 @@ if __name__ == "__main__":
         # print(contents)
         # print(type(contents))
 
-        contents = "disceased to pass address the earth aspect\n"  
+        # contents = "disceased to pass address the earth aspect\n"  
         # contents = "the expeditious pass address within\n"  
         # contents = "abbreviated once for this I strike"
         # contents = "disceased to pass address the earth respect\n"  
         # contents = "disceased to pass address the earth aspect\nthe expeditious pass address within\ndisceased to pass address the earth respect\n" 
         # contents = "But we have left those gentle haunts to pass\n"
-        # contents = "Sees his own face, self-slain Humanity,\n"
+        contents = "Sees his own face, self-slain Humanity,\n"
         # contents = "humanity itself the race to pass"
         # contents = "the lamp-sun lamps beyond the earth respect\n"
         # contents = "Lamp lit his face, moon-river hit his side\n"
         # contents = "Both must alike from Heav'n derive their light,\nBoth must alike from Heaven derive their light,\nBoth must alike from Heav'n derive their light,\nBoth must alike from Heaven derive their light,\n"
         # contents = "Both must alike from Heaven derive their light,\nBoth must alike from Heav'n derive their light,\n"
-        # contents = "Both must alike from Heav'n derive their light,"
+        # contents = "Both deregulatory Heav'n their light,"
 
         # contents = "silver-smithes"
         # contents = "Of Oreb, or of Sinai, didst inspire"
         # contents = "moonfaced"
+        # contents= "deregulatory"
 # 
 
         r = Runner(contents)

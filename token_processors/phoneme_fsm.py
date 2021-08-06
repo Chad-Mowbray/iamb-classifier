@@ -149,6 +149,7 @@ class PhonemeFSM():
             # TODO: should final form be one or two words?
             # self.final_phoneme_repr = [self.left_compound[0] + self.right_compound[0]]
             self.final_phoneme_repr = [lt + rt for lt in self.left_compound for rt in self.right_compound]
+            print("final compound repr:!!!! ", self.final_phoneme_repr)
             return
 
         elif self.has_apostrophe:

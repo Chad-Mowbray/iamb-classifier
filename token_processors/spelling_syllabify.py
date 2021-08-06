@@ -21,6 +21,7 @@ class SpellingSyllabifier:
         "YV": r'y[aeiou]',
         "EA": r'ea',
         "ED": r'[^aeiou]ed$',
+        # TODO: cious - voraciously
     }
 
     def __init__(self, token):
