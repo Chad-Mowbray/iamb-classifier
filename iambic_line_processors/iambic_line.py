@@ -1,5 +1,6 @@
 from itertools import product
 from pprint import pprint
+from iambic_line_processors.combinations_graph import CombinationsGraph
 
 
 
@@ -40,7 +41,9 @@ class IambicLine():
     def test_base_pattern(self):
         for potential in self.unique_dict_of_realized_stress_patterns:
             if len(potential) != len(self.BASE_PATTERN): continue
-            comparison = [syl for i,syl in enumerate(potential) if i % 2 == 0 and syl in [0,2] or i % 2 == 1 and syl == self.BASE_PATTERN[i] ]
+            # comparison = [syl for i,syl in enumerate(potential) if i % 2 == 0 and syl in [0,2] or i % 2 == 1 and syl == self.BASE_PATTERN[i] ]
+            comparison = [syl for i,syl in enumerate(potential) if i % 2 == 0 and syl in [0,2] or i % 2 == 1 and syl in [1,2] ] # Should secondary work for either position?
+
             if len(comparison) == len(self.BASE_PATTERN):
                 return True
         return False
@@ -151,17 +154,24 @@ class IambicLine():
 
     def promote_monosyllable_stresses(self):
         print("promote_monosyllable_stresses")
-        new_combinations = [] # List[Tuples(Lists)]
-        i = 0
+        new_combinations = []
+        monosyllable_nonprimary_count = 0
+        line_i = 0
         for line in self.get_baseline_before_alteration():
-            # print(line)
-            reconstituted_line = []
-            for word in line:
-                reconstituted_line.append([1 if s == 0 and len(word) == 1 and i % 2 == 1 else s for s in word]) 
-                i = i + len(word)
-            new_combinations.append(tuple(reconstituted_line))
-            i = 0
-
+            monosyllable_nonprimary_idxs = []
+            for i, word in enumerate(line):
+                if len(word) == 1 and word[0] in [0,2] and line_i % 2 == 1:
+                    monosyllable_nonprimary_count += 1
+                    monosyllable_nonprimary_idxs.append(i)
+                line_i += len(word)
+            line_i = 0
+            if monosyllable_nonprimary_idxs:
+                for possible in product([1,0],repeat=len(monosyllable_nonprimary_idxs)):
+                    line_copy = [w for w in line]
+                    for i,val in enumerate(possible):
+                        line_copy[monosyllable_nonprimary_idxs[i]] = [val]
+                    new_combinations.append(tuple(line_copy))
+        # print("promote monosyllables: ", new_combinations)
         return self.check_validity_and_continue(new_combinations)
 
 
@@ -266,20 +276,7 @@ class IambicLine():
                     for i,val in enumerate(possible):
                         line_copy[monosyllable_primary_idxs[i]] = [val]
                     new_combinations.append(tuple(line_copy))
-
-
-
-
-        # new_combinations = []
-        # i = 0
-        # for line in self.get_baseline_before_alteration():
-        #     reconstituted_line = []
-        #     for w in line:
-        #         reconstituted_line.append([0 if s == 1 and len(w) == 1 and i % 2 == 0 else s for s in w])
-        #         i = i + len(w)
-        #     new_combinations.append(tuple(reconstituted_line))
-        #     i = 0
-        print("demote monosyllables: ", new_combinations)
+        # print("demote monosyllables: ", new_combinations)
         return self.check_validity_and_continue(new_combinations)
 
 
@@ -316,26 +313,28 @@ class IambicLine():
         can promote appropriate 0s to 2s
         """
         print('promote_polysyllabic_zero_stresses called')
-        new_combinations = []
-        i = 0
-        for line in self.get_baseline_before_alteration():
-            reconstituted_line = []
-            for word in line:
+        cg = CombinationsGraph(self.get_baseline_before_alteration())
+        new_combinations = cg.new_combinations
+        # new_combinations = []
+        # i = 0
+        # for line in self.get_baseline_before_alteration():
+        #     reconstituted_line = []
+        #     for word in line:
                 
-                # if len(word) == 3 and i % 2 == 1:
-                #     pass
-                #     print("three letter word needs two syllables")
-                #     print(word)
-                if len(word) >= 3:
-                    # print(word, line)
-                    multi_stressed = self.get_polysyllabic_stress_possibilities(word) # TODO what about multiple variations?
-                    # print("multi_stressed", multi_stressed)
-                    reconstituted_line.append(multi_stressed)
-                else:
-                    reconstituted_line.append(word)
-                i = i + len(word)
-            new_combinations.append(tuple(reconstituted_line))
-            i = 0
+        #         # if len(word) == 3 and i % 2 == 1:
+        #         #     pass
+        #         #     print("three letter word needs two syllables")
+        #         #     print(word)
+        #         if len(word) >= 3:
+        #             # print(word, line)
+        #             multi_stressed = self.get_polysyllabic_stress_possibilities(word) # TODO what about multiple variations?
+        #             # print("multi_stressed", multi_stressed)
+        #             reconstituted_line.append(multi_stressed)
+        #         else:
+        #             reconstituted_line.append(word)
+        #         i = i + len(word)
+        #     new_combinations.append(tuple(reconstituted_line))
+        #     i = 0
 
         return self.check_validity_and_continue(new_combinations)
 
