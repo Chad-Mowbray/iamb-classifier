@@ -1,5 +1,6 @@
 import re
 from copy import deepcopy
+from nltk import pos_tag
 
 class SpellingSyllabifier:
     """
@@ -111,8 +112,13 @@ class SpellingSyllabifier:
 
 
     #TODO
-    def complicated_stressor(self):
-        pass
+    def complicated_stressor(self, POS):
+        if POS == "V":
+            # initial stress 
+            return [[self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count) ]]
+        if POS in ["N", "J"]:
+            # final stress 
+            return [[self.DUMMY_STRESSED if i == self.syllable_count - 1 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count) ]]
 
     
     def check_ed(self, phonemes):
@@ -132,7 +138,15 @@ class SpellingSyllabifier:
 
 
     def create_phoneme_repr(self):
-        self.tentative_phonemes = self.simple_stressor()
+        """
+        Check POS, if none, use simple_stressor, otherwise, use complicated_stressor
+        """
+        tag = pos_tag([self.token])[0][1]
+        print("****************", tag)
+        if tag.startswith("V"): #or tag.startswith("N") or tag.startswith("J") 
+            self.tentative_phonemes = self.complicated_stressor(tag[0])
+        else:
+            self.tentative_phonemes = self.simple_stressor()
 
 
     def main(self):

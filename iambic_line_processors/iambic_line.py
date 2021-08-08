@@ -131,13 +131,13 @@ class IambicLine():
             else:
                 self.unique_dict_of_realized_stress_patterns[entry["formatted"]] = [entry["original"]]
         print("initial unique_dict: ")
-        pprint(self.unique_dict_of_realized_stress_patterns)
+        # pprint(self.unique_dict_of_realized_stress_patterns)
 
 
 
     def get_syllables_per_line(self):
         print("from get_syllables_per_line: ")
-        pprint(self.unique_dict_of_realized_stress_patterns)
+        # pprint(self.unique_dict_of_realized_stress_patterns)
         for pattern in self.unique_dict_of_realized_stress_patterns:
             if len(pattern) not in self.syllables_per_line:
                 self.syllables_per_line.append(len(pattern))
