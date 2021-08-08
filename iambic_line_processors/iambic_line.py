@@ -24,6 +24,7 @@ class IambicLine():
 
     def __init__(self, tokens, DEV=False):
         self.tokens = tokens
+        self.original_stress_patterns_per_token = []
         self.formatted_list_of_realized_stress_patterns = []
         self.unique_dict_of_realized_stress_patterns = {}
         self.is_valid_pattern = False
@@ -32,21 +33,63 @@ class IambicLine():
         self.rules_applied = []
         self.syllables_per_line = []
         self.altered_pattern = []
+        self.changed_word = ''
 
         if not DEV: self.main()
 
     def __str__(self):
-        return f"{self.is_valid_pattern}, {len(self.rules_applied)}, {self.syllables_per_line}, {self.altered_pattern}"
+        return f"{self.is_valid_pattern}, {len(self.rules_applied)}, {self.syllables_per_line}, {self.altered_pattern}, {self.changed_word}"
+
+    
+    def get_transformed_words(self, comparisons):
+        # TODO 
+        """
+        This is still very approximate
+        """
+        print("get_transformed_words called")
+        # pprint(comparisons)
+        for comparison in comparisons:
+            abstract,detailed = comparison
+            # print(abstract, detailed)
+            detailed = [x for y in detailed for x in y]
+            # print(detailed)
+            original = [x for x in [x for y in self.original_stress_patterns_per_token for x in y] if type(x) == list]
+            # print("O:",original, "D", detailed)
+            for i,word_group in enumerate(original):
+                if detailed[i] in word_group or len(detailed[i]) < 2 or self.current_state <= 5:
+                    continue
+                    # print("match")
+                else:
+                    # print('novel')
+                    # print('\t', detailed[i], word_group)
+                    changed_word = self.original_stress_patterns_per_token[i][1]
+                    # print("changed word", changed_word)
+                    self.changed_word = changed_word
+                    self.altered_pattern = detailed[i]
+
+
+
+
 
 
     def test_base_pattern(self):
-        for potential in self.unique_dict_of_realized_stress_patterns:
+        comparisons = []
+        for potential,original in self.unique_dict_of_realized_stress_patterns.items():
             if len(potential) != len(self.BASE_PATTERN): continue
             # comparison = [syl for i,syl in enumerate(potential) if i % 2 == 0 and syl in [0,2] or i % 2 == 1 and syl == self.BASE_PATTERN[i] ]
             comparison = [syl for i,syl in enumerate(potential) if i % 2 == 0 and syl in [0,2] or i % 2 == 1 and syl in [1,2] ] # Should secondary work for either position?
 
             if len(comparison) == len(self.BASE_PATTERN):
-                return True
+                # print("comparison: ", comparison)
+                # print("formatted_list_of_realized_stress_patterns:")
+                # pprint(self.formatted_list_of_realized_stress_patterns)
+                comparisons.append([comparison, original])
+        if comparisons: 
+            # print("))))))))))))")
+            self.get_transformed_words(comparisons)
+            # print(self.original_stress_patterns_per_token)
+            # pprint(comparisons)
+            return True
         return False
 
 
@@ -104,10 +147,9 @@ class IambicLine():
         self.get_syllables_per_line()
         if self.test_base_pattern():
             print("##"*60, self.current_state)
-            print(f"{self.is_valid_pattern}, {len(self.rules_applied)}, {self.syllables_per_line}, {self.altered_pattern}")
-            if self.current_state == 6: 
-                # self.altered_pattern = self.unique_dict_of_realized_stress_patterns[self.BASE_PATTERN]
-                self.altered_pattern = "apple"
+            # if self.current_state == 6: 
+            #     # self.altered_pattern = self.unique_dict_of_realized_stress_patterns[self.BASE_PATTERN]
+            #     self.altered_pattern = "apple"
             return True
         else:
             # print("INVALID"*80)
@@ -340,9 +382,9 @@ class IambicLine():
 
 
     def main(self):
-        original_stress_patterns_per_token = self.get_original_stress_patterns_per_token()
-        print("original stress patterns per token: ", original_stress_patterns_per_token)
-        possible_stress_patterns_per_token = self.get_possible_stress_patterns_per_token(original_stress_patterns_per_token)
+        self.original_stress_patterns_per_token = self.get_original_stress_patterns_per_token()
+        print("original stress patterns per token: ", self.original_stress_patterns_per_token)
+        possible_stress_patterns_per_token = self.get_possible_stress_patterns_per_token(self.original_stress_patterns_per_token)
         print("LLLLLLLLLLLLL: ", possible_stress_patterns_per_token)
         self.is_valid_pattern = self.check_validity_and_continue(possible_stress_patterns_per_token)
         # print(self.is_valid_pattern)
