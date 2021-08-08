@@ -1,6 +1,7 @@
 from itertools import product
 from pprint import pprint
 from iambic_line_processors.combinations_graph import CombinationsGraph
+from iambic_line_processors.demote_combinations_graph import DemoteCombinationsGraph
 
 
 
@@ -102,9 +103,11 @@ class IambicLine():
     def is_valid_IP(self):
         self.get_syllables_per_line()
         if self.test_base_pattern():
-            print("##"*80)
+            print("##"*60, self.current_state)
+            print(f"{self.is_valid_pattern}, {len(self.rules_applied)}, {self.syllables_per_line}, {self.altered_pattern}")
             if self.current_state == 6: 
-                self.altered_pattern = self.unique_dict_of_realized_stress_patterns[self.BASE_PATTERN]
+                # self.altered_pattern = self.unique_dict_of_realized_stress_patterns[self.BASE_PATTERN]
+                self.altered_pattern = "apple"
             return True
         else:
             # print("INVALID"*80)
@@ -120,10 +123,11 @@ class IambicLine():
     def fit_to_IP(self):
         """
         After the initial check:
-            1. Promote secondary Stresses
-            2. Demote compound stresses
-            3. Demote monosyllabic stresses
-            4. Promote polysyllabic zero stresses
+            1. Demote compound-word stresses
+            2. Demote monosyllable stresses
+            3. Promote monosyllable stresses
+            4. Promote polysyllabic zero stresses 
+            5. Demote polysyllabic zero stresses
         """
         # phases = {
         #     1: self.promote_secondary_stresses,
@@ -136,10 +140,9 @@ class IambicLine():
             1: self.demote_compound_stress,
             2: self.demote_monosyllable_stress,
             3: self.promote_monosyllable_stresses,
-            # TODO: promote_monosyllable_stress
             4: self.promote_polysyllabic_zero_stresses, #TODO but only to 2?
-            5: self.promote_secondary_stresses,
-            # 6: self.alter_primary_stresses
+            5: self.demote_polysyllabic_primary_stresses,
+            # 6: self.alter_primary_stresses # demote polysyllable stress
         }
         self.rules_applied.append(phases[self.current_state].__name__)
         try:
@@ -175,46 +178,46 @@ class IambicLine():
         return self.check_validity_and_continue(new_combinations)
 
 
-    def promote_secondary_stresses(self):
-        #TODO: should this run at the end? 
-        """
-        Works on a List[Tuples(Lists)]
-        Creates a new List[Tuples(Lists)]
-        """
-        print('promote_secondary_stress called')
-        new_combinations = [] # List[Tuples(Lists)]
+    # def promote_secondary_stresses(self):
+    #     #TODO: should this run at the end? 
+    #     """
+    #     Works on a List[Tuples(Lists)]
+    #     Creates a new List[Tuples(Lists)]
+    #     """
+    #     print('promote_secondary_stress called')
+    #     new_combinations = [] # List[Tuples(Lists)]
         
-        for line in self.get_baseline_before_alteration():
-            # print(line)
-            reconstituted_line = []
-            for i,word in enumerate(line):
-                try:
-                    primary_idx = word.index(1)
-                except ValueError:
-                    primary_idx = 0
-                secondary_idxs = [i for i,syl in enumerate(word) if syl == 2]
-                if len(secondary_idxs) < 2: 
-                    reconstituted_line.append(word)
-                    continue
-                multiples = []
-                for secondary_idx in secondary_idxs:
-                    word_copy = [s for s in word]
-                    word_copy[secondary_idx], word_copy[primary_idx] = word_copy[primary_idx], word_copy[secondary_idx]
-                    multiples.append(word_copy)
-                reconstituted_line.append(multiples)
-            print("@@@@@@ ", reconstituted_line)
+    #     for line in self.get_baseline_before_alteration():
+    #         # print(line)
+    #         reconstituted_line = []
+    #         for i,word in enumerate(line):
+    #             try:
+    #                 primary_idx = word.index(1)
+    #             except ValueError:
+    #                 primary_idx = 0
+    #             secondary_idxs = [i for i,syl in enumerate(word) if syl == 2]
+    #             if len(secondary_idxs) < 2: 
+    #                 reconstituted_line.append(word)
+    #                 continue
+    #             multiples = []
+    #             for secondary_idx in secondary_idxs:
+    #                 word_copy = [s for s in word]
+    #                 word_copy[secondary_idx], word_copy[primary_idx] = word_copy[primary_idx], word_copy[secondary_idx]
+    #                 multiples.append(word_copy)
+    #             reconstituted_line.append(multiples)
+    #         print("@@@@@@ ", reconstituted_line)
 
-                #TODO: create a new line for each new word
+    #             #TODO: create a new line for each new word
 
 
-                # reconstituted_line.append([1 if s == 2 and len(word) > 2 else s for s in word]) # should prevent [1,1]?
-                # reconstituted_line.append([1 if s == 2 else s for s in w])
-            new_combinations.append(tuple(reconstituted_line))
-        print()
-        print(new_combinations)
-        print()
+    #             # reconstituted_line.append([1 if s == 2 and len(word) > 2 else s for s in word]) # should prevent [1,1]?
+    #             # reconstituted_line.append([1 if s == 2 else s for s in w])
+    #         new_combinations.append(tuple(reconstituted_line))
+    #     print()
+    #     print(new_combinations)
+    #     print()
 
-        return self.check_validity_and_continue(new_combinations)
+    #     return self.check_validity_and_continue(new_combinations)
 
     @staticmethod
     def create_demoted_compound_variations(word):
@@ -280,32 +283,6 @@ class IambicLine():
         return self.check_validity_and_continue(new_combinations)
 
 
-    #helper
-    def get_polysyllabic_stress_possibilities(self, word):
-        print('get_polysyllabic_stress_possibilities called with: ', word)
-
-        new_polysyllabic_stresses = []
-        primary_index = word.index(1)
-        if primary_index == 0:
-            new_polysyllabic_stresses.append(1)
-        elif primary_index % 2 == 0:
-            new_polysyllabic_stresses.append(2)
-        else:
-            new_polysyllabic_stresses.append(0)
-
-        # TODO should return list of lists with all possible combinations
-        for i in range(1,len(word)):
-            if new_polysyllabic_stresses[i - 1] == 0 and word[i] == 0:
-                new_polysyllabic_stresses.append(2)
-            else:
-                new_polysyllabic_stresses.append(word[i])
-            # else:
-            #     new_polysyllabic_stresses.append(0)
-            # print(new_polysyllabic_stresses)
-
-        return new_polysyllabic_stresses
-
-
     def promote_polysyllabic_zero_stresses(self):
         #TODO: bisyllabic words should get promoted first, this should promote to 2
         """
@@ -313,45 +290,42 @@ class IambicLine():
         can promote appropriate 0s to 2s
         """
         print('promote_polysyllabic_zero_stresses called')
-        cg = CombinationsGraph(self.get_baseline_before_alteration())
-        new_combinations = cg.new_combinations
-        # new_combinations = []
-        # i = 0
-        # for line in self.get_baseline_before_alteration():
-        #     reconstituted_line = []
-        #     for word in line:
-                
-        #         # if len(word) == 3 and i % 2 == 1:
-        #         #     pass
-        #         #     print("three letter word needs two syllables")
-        #         #     print(word)
-        #         if len(word) >= 3:
-        #             # print(word, line)
-        #             multi_stressed = self.get_polysyllabic_stress_possibilities(word) # TODO what about multiple variations?
-        #             # print("multi_stressed", multi_stressed)
-        #             reconstituted_line.append(multi_stressed)
-        #         else:
-        #             reconstituted_line.append(word)
-        #         i = i + len(word)
-        #     new_combinations.append(tuple(reconstituted_line))
-        #     i = 0
-
-        return self.check_validity_and_continue(new_combinations)
-
-
-    def alter_primary_stresses(self):
-        print("alter_primary_stresses called")
         new_combinations = []
         for line in self.get_baseline_before_alteration():
-            for i,word in enumerate(line):
-                print(word)
-                if len(word) > 1:
-                    for variant in self.WORD_STRESS_PATTERNS[len(word)]:
-                        line_copy = [*line]
-                        line_copy[i] = variant
-                        new_combinations.append(tuple(line_copy))
+            cg = CombinationsGraph([line])
+            single_combinations = cg.new_combinations
+            for single_combination in single_combinations:
+                new_combinations.append(single_combination)
 
         return self.check_validity_and_continue(new_combinations)
+
+
+    def demote_polysyllabic_primary_stresses(self):
+        print("demote_polysyllabic_primary_stresses called")
+        print(self.tokens)
+        new_combinations = []
+        for line in self.get_baseline_before_alteration():
+            dcg = DemoteCombinationsGraph([line])
+            single_combinations = dcg.new_combinations
+            for single_combination in single_combinations:
+                new_combinations.append(single_combination)
+
+        return self.check_validity_and_continue(new_combinations)
+
+
+    # def alter_primary_stresses(self):
+    #     print("alter_primary_stresses called")
+    #     new_combinations = []
+    #     for line in self.get_baseline_before_alteration():
+    #         for i,word in enumerate(line):
+    #             print(word)
+    #             if len(word) > 1:
+    #                 for variant in self.WORD_STRESS_PATTERNS[len(word)]:
+    #                     line_copy = [*line]
+    #                     line_copy[i] = variant
+    #                     new_combinations.append(tuple(line_copy))
+
+    #     return self.check_validity_and_continue(new_combinations)
 
 
     def get_baseline_before_alteration(self):
@@ -370,6 +344,6 @@ class IambicLine():
         print("original stress patterns per token: ", original_stress_patterns_per_token)
         possible_stress_patterns_per_token = self.get_possible_stress_patterns_per_token(original_stress_patterns_per_token)
         print("LLLLLLLLLLLLL: ", possible_stress_patterns_per_token)
-        self.is_valid_pattrn = self.check_validity_and_continue(possible_stress_patterns_per_token)
+        self.is_valid_pattern = self.check_validity_and_continue(possible_stress_patterns_per_token)
         # print(self.is_valid_pattern)
         

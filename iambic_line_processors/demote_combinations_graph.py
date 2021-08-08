@@ -1,7 +1,7 @@
 from copy import deepcopy
 import itertools
 
-class CombinationsGraph:
+class DemoteCombinationsGraph:
 
     def __init__(self, lines):
         self.all_paths = []
@@ -12,13 +12,13 @@ class CombinationsGraph:
 
         self.main()
 
-    def get_word_combinations(self, word, zero_stress_idxs):
+    def get_word_combinations(self, word, primary_stress_idxs):
         possible_words = []
-        for possible in itertools.product([0,2],repeat=len(zero_stress_idxs)):
+        for possible in itertools.product([2, 1],repeat=len(primary_stress_idxs)):
             word_copy = [s for s in word]
             for i,p in enumerate(possible):
                 for j,s in enumerate(word_copy):
-                    if j != zero_stress_idxs[i]:
+                    if j != primary_stress_idxs[i]:
                         word_copy[j] = s
                     else:
                         word_copy[j] = p            
@@ -35,9 +35,9 @@ class CombinationsGraph:
                     line_pos += len(word)
                     temp_line.append([word])
                     continue
-                zero_stress_idxs = [i for i,syl in enumerate(word) if (i + line_pos) % 2 == 1 and syl == 0]
-                if zero_stress_idxs:
-                    word_combinations = self.get_word_combinations(word, zero_stress_idxs)
+                primary_stress_idxs = [i for i,syl in enumerate(word) if (i + line_pos) % 2 == 0 and syl == 1]
+                if primary_stress_idxs:
+                    word_combinations = self.get_word_combinations(word, primary_stress_idxs)
                     temp_line.append(word_combinations)
                 else:
                     temp_line.append([word])
@@ -86,12 +86,12 @@ if __name__ == "__main__":
     from pprint import pprint
 
     lines = [
-            ([0], [0], [0], [1], [1, 1], [0, 1, 0, 0]),
-            ([0], [0], [0], [1], [1, 2], [0, 1, 0, 0]),
+            # ([0], [0], [0], [1], [0, 1], [0, 1, 0, 0]),
+            ([1], [0, 1, 2, 0, 2], [1], [1], [1, 2]),
             ]
     all_lines = []
     for line in lines:
-        cg = CombinationsGraph([line])
+        cg = DemoteCombinationsGraph([line])
         new_combos = cg.new_combinations
         for new_combo in new_combos:
             all_lines.append(new_combo)

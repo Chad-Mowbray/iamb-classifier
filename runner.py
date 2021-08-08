@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
         # contents = "disceased to pass address the earth aspect\n"  
         # contents = "the expeditious pass address within\n"  
-        contents = "abbreviated once for this I strike"
+        # contents = "abbreviated once for this I strike"
         # contents = "disceased to pass address the earth respect\n"  
         # contents = "disceased to pass address the earth aspect\nthe expeditious pass address within\ndisceased to pass address the earth respect\n" 
         # contents = "But we have left those gentle haunts to pass\n"

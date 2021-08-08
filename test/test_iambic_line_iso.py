@@ -154,6 +154,48 @@ class TestIambicLineIso(unittest.TestCase):
             ([1], [1, 1, 2, 0, 2], [1], [1], [1], [1])
         ])  
 
+    def test_demote_polysyllabic_primary_stresses(self):
+        self.il.unique_dict_of_realized_stress_patterns = {
+            (1, 0, 0, 0, 0, 2, 1, 1, 1, 1): [([1], [1, 1, 2, 0, 2], [1], [1], [1], [1])],
+
+            }
+        self.il.promote_polysyllabic_zero_stresses()
+        self.m.check_validity_and_continue.assert_called()
+        self.m.check_validity_and_continue.assert_called_with([
+            ([1], [1, 1, 2, 0, 2], [1], [1], [1], [1])
+        ])     
+
+
+    def test_promote_polysyllabic_zero_stresses_multiple_lines(self):
+        self.il.unique_dict_of_realized_stress_patterns = {
+            (0, 0, 0, 1, 1, 1, 0, 1, 0, 0): [([0], [0], [0], [1], [1, 1], [0, 1, 0, 0])],
+            (0, 0, 0, 1, 1, 2, 0, 1, 0, 0): [([0], [0], [0], [1], [1, 2], [0, 1, 0, 0])],
+            (0, 0, 0, 1, 1, 1, 0, 1, 0, 0): [([0], [0], [0], [1], [1, 1], [0, 1, 0, 0])],
+            }
+        self.il.promote_polysyllabic_zero_stresses()
+        self.m.check_validity_and_continue.assert_called()
+        self.m.check_validity_and_continue.assert_called_with([
+            ([0], [0], [0], [1], [1, 1], [0, 1, 0, 0]),
+            ([0], [0], [0], [1], [1, 1], [0, 1, 0, 2]),
+            ([0], [0], [0], [1], [1, 2], [0, 1, 0, 0]),
+            ([0], [0], [0], [1], [1, 2], [0, 1, 0, 2])
+        ])  
+
+
+    def test_demote_polysyllabic_primary_stresses(self):
+        self.il.unique_dict_of_realized_stress_patterns = {
+            (1, 0, 0, 0, 0, 2, 1, 1, 1, 0): [([1], [1, 1, 2, 0, 2], [1], [1], [1, 2])],
+
+            }
+        self.il.demote_polysyllabic_primary_stresses()
+        self.m.check_validity_and_continue.assert_called()
+        self.m.check_validity_and_continue.assert_called_with([
+            ([1], [1, 2, 2, 0, 2], [1], [1], [2, 2]), 
+            ([1], [1, 2, 2, 0, 2], [1], [1], [1, 2]), 
+            ([1], [1, 1, 2, 0, 2], [1], [1], [2, 2]), 
+            ([1], [1, 1, 2, 0, 2], [1], [1], [1, 2])
+        ])   
+
 
 
 if __name__ == "__main__":
