@@ -32,7 +32,9 @@ class Runner(RepresenterMixin):
             iambic_line = IambicLine(line)
             truth.append(str(iambic_line))
         pprint(truth)
-
+        total_valid_lines = len([x for x in truth if x[0].startswith("T")])
+        total_lines = len(truth)
+        print("Total samples: ", total_lines, "Total valid lines: ", total_valid_lines, "success rate: ", total_valid_lines / total_lines)
 
 
 
