@@ -29,7 +29,9 @@ class PhonemeFSM():
         print("check_ed called")
         print(phonemes, self.initial_token)
 
-        if self.initial_token.endswith("ed") and len(self.initial_token) > 4:
+        if self.initial_token.endswith("ed") and len(self.initial_token) > 4 and not self.is_compound[0]:
+            print("left compound: ", self.left_compound)
+            print(self.is_compound)
             print("\tnot a short word")
             antepenult_letter = self.initial_token[-3]
             if antepenult_letter not in "aeiou":
@@ -143,23 +145,27 @@ class PhonemeFSM():
 
 
     def check_stress_reduction(self, phonemes):
+        #TODO make more general -> two consecutive stresses can be reduced
         """
         [['K', 'AA1', 'N', 'JH', 'ER0', 'IH0', 'NG']] ->
         [['K', 'AA1', 'N', 'JH', 'ER0', 'IH0', 'NG'], ['K', 'AA1', 'N', 'JH', 'IH0', 'NG']]
         """
         print("check stress reduction called with: ", phonemes)
-       
-        for phoneme in phonemes:
-            if len(phoneme) < 4: return phonemes
-            if phoneme[-2][-1] == "0" and phoneme[-3][-1] == "0":
-                print('hi')
-                word_copy = deepcopy(phoneme) 
-                word_copy.pop(-3)
-                print(word_copy, phoneme)
-                phonemes.append(word_copy)
-        print(phonemes)
-        return phonemes
-
+        new_phonemes = []
+        for word in phonemes:
+            print(word)
+            for i in range(len(word) - 1):
+                print(word[i])
+                if word[i][-1].isdigit() and word[i+1][-1].isdigit():
+                    print(word[i], word[i+1])
+                    word_copy = deepcopy(word)
+                    word_copy.pop(i + 1)
+                    new_phonemes.append(word_copy)
+                    break
+            new_phonemes.append(word)
+        print(new_phonemes)
+        return new_phonemes
+            
 
     def handle_success(self, phonemes):
         print("handle_success called with: ", phonemes)

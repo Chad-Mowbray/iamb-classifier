@@ -45,6 +45,8 @@ class Tokenizer(RepresenterMixin):
     # @args_logger
     def clean(self, word):
         word = word.lower()
+        if word.endswith("'s"):
+            word = word[:-2] + word[-1:]
         return word
 
     # @args_logger

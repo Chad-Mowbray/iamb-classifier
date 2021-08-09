@@ -21,13 +21,13 @@ class IambicLine():
         self.current_state = 0
         self.rules_applied = []
         self.syllables_per_line = []
-        self.altered_pattern = []
-        self.changed_word = ''
+        self.altered_patterns = []
+        self.changed_words = []
 
         if not DEV: self.main()
 
     def __str__(self):
-        return f"{self.is_valid_pattern}, {len(self.rules_applied)}, {self.syllables_per_line}, {self.altered_pattern}, {self.changed_word}"
+        return f"{self.is_valid_pattern}, {len(self.rules_applied)}, {self.syllables_per_line}, {self.altered_patterns}, {self.changed_words}"
 
     
     def get_transformed_words(self, comparisons):
@@ -49,12 +49,12 @@ class IambicLine():
                     continue
                     # print("match")
                 else:
-                    # print('novel')
-                    # print('\t', detailed[i], word_group)
+                    print('novel')
+                    print('\t', detailed[i], word_group)
                     changed_word = self.original_stress_patterns_per_token[i][1]
-                    # print("changed word", changed_word)
-                    self.changed_word = changed_word
-                    self.altered_pattern = detailed[i]
+                    print("changed word", changed_word)
+                    self.changed_words.append(changed_word)
+                    self.altered_patterns.append(detailed[i])
 
 
     def test_base_pattern(self):

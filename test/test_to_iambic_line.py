@@ -72,7 +72,7 @@ class TestToIambicLine(unittest.TestCase):
 
     def test_11_syllables(self):
         is_valid_ip = self.ibls[8].is_valid_pattern
-        self.assertFalse(is_valid_ip)  
+        self.assertTrue(is_valid_ip)  
 
     def test_compound_false_alarm(self):
         is_valid_ip = self.ibls[9].is_valid_pattern
@@ -88,7 +88,11 @@ class TestToIambicLine(unittest.TestCase):
 
     def test_optional_penultimate_stress_removal_with_stress_alteration(self):
         is_valid_ip = self.ibls[12].is_valid_pattern
-        self.assertTrue(is_valid_ip)       
+        self.assertTrue(is_valid_ip)  
+
+    def test_possessive_apostrophe_s_removed(self):
+        is_valid_ip = self.ibls[13].is_valid_pattern
+        self.assertTrue(is_valid_ip)        
 
 
 class TestToIambicLineFromFile(unittest.TestCase):

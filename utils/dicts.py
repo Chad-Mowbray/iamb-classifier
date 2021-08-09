@@ -24,6 +24,7 @@ class DictsSingleton():
             cls._instance.cmudict["choir"] = [['K', 'W', 'AY1', 'ER0'], ['K', 'W', 'AY1', 'R']]
             cls._instance.cmudict["choirs"] = [['K', 'W', 'AY1', 'ER0', 'Z'], ['K', 'W', 'AY1', 'R', 'Z']]
             cls._instance.cmudict["forsooth"] = [[ 'F', 'ER0', 'S', 'OW1', 'TH']]
+            cls._instance.cmudict["moon"] = [['M', 'UW1', 'N']]
             
         return cls._instance
 
