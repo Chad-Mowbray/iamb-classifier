@@ -64,7 +64,7 @@ if __name__ == "__main__":
         # contents = "silver-smithes"
         # contents = "Of Oreb, or of Sinai, didst inspire"
         # contents = "moonfaced"
-        # contents= "Forty-fold proof against the conjuring means"
+        # contents= "Forsooth, that they had seen my mistress' face. "
         # contents = "conjuring"
 # 
 

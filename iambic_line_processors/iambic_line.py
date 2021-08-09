@@ -4,7 +4,6 @@ from iambic_line_processors.combinations_graph import CombinationsGraph
 
 
 
-
 class IambicLine():
 
     #TODO: to manage state, create an object {0: unmodified, 1: promote_secondary...}
@@ -56,10 +55,6 @@ class IambicLine():
                     # print("changed word", changed_word)
                     self.changed_word = changed_word
                     self.altered_pattern = detailed[i]
-
-
-
-
 
 
     def test_base_pattern(self):
@@ -122,7 +117,6 @@ class IambicLine():
                 self.unique_dict_of_realized_stress_patterns[entry["formatted"]] = [entry["original"]]
         print("initial unique_dict: ")
         # pprint(self.unique_dict_of_realized_stress_patterns)
-
 
 
     def get_syllables_per_line(self):
@@ -291,6 +285,7 @@ class IambicLine():
 
     def get_baseline_before_alteration(self):
         return (l for line in self.unique_dict_of_realized_stress_patterns.values() for l in line)
+
 
     def check_validity_and_continue(self, new_combinations):
         self.create_formatted_list_of_realized_stress_patterns(new_combinations)
