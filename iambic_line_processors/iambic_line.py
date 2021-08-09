@@ -1,7 +1,6 @@
 from itertools import product
 from pprint import pprint
 from iambic_line_processors.combinations_graph import CombinationsGraph
-from iambic_line_processors.demote_combinations_graph import DemoteCombinationsGraph
 
 
 
@@ -269,7 +268,7 @@ class IambicLine():
         print('promote_polysyllabic_zero_stresses called')
         new_combinations = []
         for line in self.get_baseline_before_alteration():
-            cg = CombinationsGraph([line])
+            cg = CombinationsGraph([line], [0,2], True, 0)
             single_combinations = cg.new_combinations
             for single_combination in single_combinations:
                 new_combinations.append(single_combination)
@@ -282,8 +281,8 @@ class IambicLine():
         print(self.tokens)
         new_combinations = []
         for line in self.get_baseline_before_alteration():
-            dcg = DemoteCombinationsGraph([line])
-            single_combinations = dcg.new_combinations
+            cg = CombinationsGraph([line], [2, 1], False, 1)
+            single_combinations = cg.new_combinations
             for single_combination in single_combinations:
                 new_combinations.append(single_combination)
 

@@ -1,7 +1,6 @@
 import unittest
 from pprint import pprint, pformat
 from iambic_line_processors.combinations_graph import CombinationsGraph
-from iambic_line_processors.demote_combinations_graph import DemoteCombinationsGraph
 
 unittest.TestCase.maxDiff=None
 
@@ -15,7 +14,7 @@ class TestCombinationsGraph(unittest.TestCase):
 
 
     def test_single_two_slots(self):
-        cg = CombinationsGraph([([1], [0, 1, 0, 0, 2], [1], [1], [1], [1])])
+        cg = CombinationsGraph([([1], [0, 1, 0, 0, 2], [1], [1], [1], [1])], [0,2], True, 0)
         self.assertEqual(cg.new_combinations, [
             ([1], [0, 1, 0, 0, 2], [1], [1], [1], [1]),
             ([1], [0, 1, 2, 0, 2], [1], [1], [1], [1]),
@@ -26,7 +25,7 @@ class TestCombinationsGraph(unittest.TestCase):
     def test_one_slot(self):
         cg = CombinationsGraph([
             ([0], [0], [0], [1], [1, 1], [0, 1, 0, 0]),
-            ])
+            ], [0,2], True, 0)
         equal(cg.new_combinations, [
             ([0], [0], [0], [1], [1, 1], [0, 1, 0, 0]),
             ([0], [0], [0], [1], [1, 1], [0, 1, 0, 2]),
@@ -35,7 +34,7 @@ class TestCombinationsGraph(unittest.TestCase):
 
 
 
-        ([0], [0], [0], [1], [1, 0], [0, 1, 0, 0])
+        # ([0], [0], [0], [1], [1, 0], [0, 1, 0, 0])
 
         # ([1], [0, 1, 2, 0, 2], [1], [1], [1, 2]),
 
@@ -44,11 +43,11 @@ class TestDemoteCombinationsGraph(unittest.TestCase):
 
 
     def test_single_two_slots(self):
-        dcg = DemoteCombinationsGraph([
+        cg = CombinationsGraph([
             ([1], [0, 1, 2, 0, 2], [1], [1], [1, 2])
-            ])
+            ], [2, 1], False, 1)
 
-        equal(dcg.new_combinations, [
+        equal(cg.new_combinations, [
             ([1], [0, 2, 2, 0, 2], [1], [1], [2, 2]),
             ([1], [0, 2, 2, 0, 2], [1], [1], [1, 2]),
             ([1], [0, 1, 2, 0, 2], [1], [1], [2, 2]),
@@ -57,20 +56,20 @@ class TestDemoteCombinationsGraph(unittest.TestCase):
 
 
     def test_one_slot(self):
-        dcg = DemoteCombinationsGraph([
+        cg = CombinationsGraph([
             ([0], [0], [0], [1], [1, 0], [0, 1, 0, 0]),
-            ])
-        equal(dcg.new_combinations, [
+            ], [2, 1], False, 1)
+        equal(cg.new_combinations, [
             ([0], [0], [0], [1], [2, 0], [0, 1, 0, 0]),
             ([0], [0], [0], [1], [1, 0], [0, 1, 0, 0])
         ])
 
 
     def test_two_words(self):
-        dcg = DemoteCombinationsGraph([
+        cg = CombinationsGraph([
             ([0], [0], [0], [1], [1, 0], [1, 0, 0, 0]),
-            ])
-        equal(dcg.new_combinations, [
+            ], [2, 1], False, 1)
+        equal(cg.new_combinations, [
             ([0], [0], [0], [1], [2, 0], [2, 0, 0, 0]),
             ([0], [0], [0], [1], [2, 0], [1, 0, 0, 0]),
             ([0], [0], [0], [1], [1, 0], [2, 0, 0, 0]),
