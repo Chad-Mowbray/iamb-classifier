@@ -43,10 +43,11 @@ class PhonemeFSM():
         
 
     def lookup(self, called_by_normalize=False, compound_token=None):
-        print("lookup called")
+        
         # print("compound_token: ", compound_token)
         token = self.normalized_spelling if self.normalized_spelling else self.initial_token
         token = compound_token if compound_token else token
+        print("lookup called with: ", token )
         # print("token: ", token)
         try:
             phonemes = self.cmudict.get(token, None)
@@ -101,6 +102,7 @@ class PhonemeFSM():
             self.is_compound[0] = True
             self.lookup(compound_token=left)
             print("left checked")
+            if self.stress_assigned_diy: return
 
             print("right about to be checked with:", right)
             self.is_compound[1] = True
@@ -138,19 +140,41 @@ class PhonemeFSM():
         print("tentative_phonemes: ", tentative_phonemes)
         print(self.is_compound, self.left_compound, self.right_compound)
         self.stress_assigned_diy = True
-        # self.left_compound = []
-        # self.right_compound = []
-        # return 
-        # self.is_compound = [False, False]
+
         self.handle_success(tentative_phonemes)
+
+
+    def check_stress_reduction(self, phonemes):
+        """
+        [['K', 'AA1', 'N', 'JH', 'ER0', 'IH0', 'NG']] ->
+        [['K', 'AA1', 'N', 'JH', 'ER0', 'IH0', 'NG'], ['K', 'AA1', 'N', 'JH', 'IH0', 'NG']]
+        """
+        print("check stress reduction called with: ", phonemes)
+       
+        for phoneme in phonemes:
+            if len(phoneme) < 4: return phonemes
+            if phoneme[-2][-1] == "0" and phoneme[-3][-1] == "0":
+                print('hi')
+                word_copy = deepcopy(phoneme) 
+                word_copy.pop(-3)
+                print(word_copy, phoneme)
+                phonemes.append(word_copy)
+        print(phonemes)
+        return phonemes
+
 
 
 
     def handle_success(self, phonemes):
         print("handle_success called with: ", phonemes)
+
+        phonemes = self.check_stress_reduction(phonemes)
+
+
         if self.stress_assigned_diy: 
             print("handle_success stress assigned diy: ", phonemes)
             print("handle_success stress assigned diy final_phoneme_repr before: ", self.final_phoneme_repr)
+            self.final_phoneme_repr = []
             if self.final_phoneme_repr:
                 return
             else:

@@ -62,8 +62,8 @@ if __name__ == "__main__":
         # contents = "silver-smithes"
         # contents = "Of Oreb, or of Sinai, didst inspire"
         # contents = "moonfaced"
-        # contents= "That harbingered thy birth, Thou Man of Woes!"
-        # contents = "pities"
+        # contents= "Forty-fold proof against the conjuring means"
+        # contents = "conjuring"
 # 
 
         r = Runner(contents)

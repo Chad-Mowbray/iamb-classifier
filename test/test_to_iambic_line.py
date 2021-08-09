@@ -72,7 +72,15 @@ class TestToIambicLine(unittest.TestCase):
 
     def test_11_syllables(self):
         is_valid_ip = self.ibls[8].is_valid_pattern
-        self.assertFalse(is_valid_ip)       
+        self.assertFalse(is_valid_ip)  
+
+    def test_compound_false_alarm(self):
+        is_valid_ip = self.ibls[9].is_valid_pattern
+        self.assertTrue(is_valid_ip)   
+
+    def test_compound_false_alarm_stress_alteration(self):
+        is_valid_ip = self.ibls[10].is_valid_pattern
+        self.assertTrue(is_valid_ip)         
 
 
 class TestToIambicLineFromFile(unittest.TestCase):
