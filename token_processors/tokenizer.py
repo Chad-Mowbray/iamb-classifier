@@ -28,27 +28,23 @@ class Tokenizer(RepresenterMixin):
         # print("Tokenizer instance created: ", self.lines)
 
     def tokenize_line(self, line):
-        return re.split("[ \n!\"#$%&-()*+,./:;<=>?@[\]^_`{|}~  \t]", line)
+        return re.split("[ \n!\"#$%&()*+,./:;<=>?@[\]^_`{|}~  \t]", line)
 
     # @args_logger
     def make_initial_tokens(self):
         initial_tokens = [self.tokenize_line(line) for line in self.lines]
-        print(initial_tokens)
+        # print(initial_tokens)
         return initial_tokens
 
     # @args_logger
     def process_lines(self):
         initial_tokens = self.make_initial_tokens()
         cleaned_tokens = [ [self.clean(token) for token in line if token not in self.remove] for line in initial_tokens]
-        cleaned_tokens = [ [token for token in line if token] for line in cleaned_tokens]
-        print(cleaned_tokens)
         return cleaned_tokens
 
     # @args_logger
     def clean(self, word):
         word = word.lower()
-        word = word if word.isalpha() else ''
-        print("word: ", word)
         return word
 
     # @args_logger
