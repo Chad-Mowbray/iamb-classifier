@@ -41,7 +41,6 @@ class Runner(RepresenterMixin):
 
 
 
-
 if __name__ == "__main__":
     with open("poems/test_poem.txt") as f:
         contents = f.read()
