@@ -14,6 +14,7 @@ class PhonemeFSM():
         self.cmudict = self.dicts.cmudict
         self.normalized_spelling = ''
         self.has_apostrophe = False
+        self.apostrophe_position = ''
         self.is_compound = [False, False]
         self.final_phoneme_repr = []
         self.left_compound = ''
@@ -37,6 +38,7 @@ class PhonemeFSM():
                 phonemes_copy.insert(-1,'EH0')
                 print("\t", phonemes_copy)
                 phonemes.append(phonemes_copy)
+        print("check_ed result: ", phonemes)
         return phonemes
         
 
@@ -55,11 +57,14 @@ class PhonemeFSM():
             self.handle_success(phonemes)
         except KeyError:
             if called_by_normalize and self.count < 1:
+                print('will call compound')
                 self.count += 1
                 self.compound()
             elif called_by_normalize and self.count > 2:
+                print('will call handle failure')
                 self.handle_failure()
             else:
+                print('will call normalize')
                 self.count += 1
                 self.normalize(token)
 
@@ -68,9 +73,10 @@ class PhonemeFSM():
     def normalize(self, token):
         print("normalize called")
         # if any(self.is_compound): self.
-        spelling_normalized, has_apostrophe = SpellingNormalizer(token).modernized_word
+        spelling_normalized, has_apostrophe, apostrophe_position = SpellingNormalizer(token).modernized_word
         if has_apostrophe: self.has_apostrophe = True
         if spelling_normalized: self.normalized_spelling = spelling_normalized
+        if apostrophe_position: self.apostrophe_position = apostrophe_position
         if spelling_normalized:
             # print("spelling normalized: ", spelling_normalized, "has_apostrophe:", self.has_apostrophe)
             self.lookup(called_by_normalize=True)
@@ -91,10 +97,12 @@ class PhonemeFSM():
             left, right = compound[0], compound[1]
             # print(left, right)
 
+            print("left about to be checked with:", left)
             self.is_compound[0] = True
             self.lookup(compound_token=left)
             print("left checked")
 
+            print("right about to be checked with:", right)
             self.is_compound[1] = True
             self.lookup(compound_token=right)
             print("right checked")
@@ -106,45 +114,64 @@ class PhonemeFSM():
 
 
     def apostrophe(self, phonemes):
+        print("apostrophe called")
+        pop_position = 0 if self.apostrophe_position == "initial" else -1
+        print(self.apostrophe_position)
         phonemes_copy = deepcopy(phonemes)
         reduced = []
         for word in phonemes_copy:
             filtered = [i for i,v in enumerate(word) if v[-1].isdigit()]
-            word.pop(filtered[-1])
+            word.pop(filtered[pop_position])
             reduced.append(word)
         return reduced
 
     def diy_stress_assignment(self):
         print("God help you...")
+
+        # clear out compound residue
+        self.is_compound = [False, False]
+        self.left_compound = None
+        self.right_compound = None
         
         spelling_syllabifier = SpellingSyllabifier(self.initial_token)
         tentative_phonemes = spelling_syllabifier.tentative_phonemes
         print("tentative_phonemes: ", tentative_phonemes)
         print(self.is_compound, self.left_compound, self.right_compound)
         self.stress_assigned_diy = True
+        # self.left_compound = []
+        # self.right_compound = []
+        # return 
         # self.is_compound = [False, False]
         self.handle_success(tentative_phonemes)
 
 
 
     def handle_success(self, phonemes):
-        # print("handle_success called with: ", phonemes)
+        print("handle_success called with: ", phonemes)
         if self.stress_assigned_diy: 
-            if not self.final_phoneme_repr:
+            print("handle_success stress assigned diy: ", phonemes)
+            print("handle_success stress assigned diy final_phoneme_repr before: ", self.final_phoneme_repr)
+            if self.final_phoneme_repr:
+                return
+            else:
                 self.final_phoneme_repr = phonemes
+            print("handle_success stress assigned diy final_phoneme_repr after: ", self.final_phoneme_repr)
             return
 
         if any(self.is_compound):
-            # print("checking compound: ", self.is_compound)
+            print("checking compound: ", self.is_compound)
             if self.is_compound[0]:
+                print("left compound: ", phonemes)
                 self.left_compound = phonemes
                 self.is_compound[0] = False
                 # print("left_compound:", self.left_compound)
             if self.is_compound[1]:
+                print("right compound: ", phonemes)
                 self.right_compound = phonemes
                 self.is_compound[1] = False
                 # print("right_compound:", self.right_compound)
         if self.left_compound and self.right_compound:
+            print("both left and right are valid")
             # print("Will be a valid compound")
             # TODO: should final form be one or two words?
             # self.final_phoneme_repr = [self.left_compound[0] + self.right_compound[0]]
@@ -167,7 +194,7 @@ class PhonemeFSM():
 
     def handle_failure(self):
         # print("handle_failure called...")
-        print("*" * 80, "Unable to parse token ", self.initial_token, self.final_phoneme_repr)
+        print("*" * 80, "Unable to parse token ", self.initial_token, "final_phoneme_repr", self.final_phoneme_repr)
         self.diy_stress_assignment()
         return
 

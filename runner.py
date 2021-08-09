@@ -63,6 +63,7 @@ if __name__ == "__main__":
         # contents = "Of Oreb, or of Sinai, didst inspire"
         # contents = "moonfaced"
         # contents= "That harbingered thy birth, Thou Man of Woes!"
+        # contents = "pities"
 # 
 
         r = Runner(contents)
