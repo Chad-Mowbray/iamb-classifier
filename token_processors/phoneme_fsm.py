@@ -43,7 +43,6 @@ class PhonemeFSM():
         
 
     def lookup(self, called_by_normalize=False, compound_token=None):
-        
         # print("compound_token: ", compound_token)
         token = self.normalized_spelling if self.normalized_spelling else self.initial_token
         token = compound_token if compound_token else token
@@ -69,7 +68,6 @@ class PhonemeFSM():
                 self.count += 1
                 self.normalize(token)
 
-
     
     def normalize(self, token):
         print("normalize called")
@@ -87,7 +85,6 @@ class PhonemeFSM():
             else:
                 self.compound()
         
-
 
     def compound(self):
         print("compound called...")
@@ -127,6 +124,7 @@ class PhonemeFSM():
             reduced.append(word)
         return reduced
 
+
     def diy_stress_assignment(self):
         print("God help you...")
 
@@ -163,13 +161,10 @@ class PhonemeFSM():
         return phonemes
 
 
-
-
     def handle_success(self, phonemes):
         print("handle_success called with: ", phonemes)
 
         phonemes = self.check_stress_reduction(phonemes)
-
 
         if self.stress_assigned_diy: 
             print("handle_success stress assigned diy: ", phonemes)
@@ -215,7 +210,6 @@ class PhonemeFSM():
         return
 
         
-
     def handle_failure(self):
         # print("handle_failure called...")
         print("*" * 80, "Unable to parse token ", self.initial_token, "final_phoneme_repr", self.final_phoneme_repr)
