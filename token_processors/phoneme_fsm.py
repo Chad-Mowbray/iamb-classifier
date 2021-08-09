@@ -115,6 +115,7 @@ class PhonemeFSM():
 
 
     def apostrophe(self, phonemes):
+        if not self.has_apostrophe: return phonemes
         print("apostrophe called")
         pop_position = 0 if self.apostrophe_position == "initial" else -1
         print(self.apostrophe_position)
@@ -150,6 +151,7 @@ class PhonemeFSM():
         [['K', 'AA1', 'N', 'JH', 'ER0', 'IH0', 'NG']] ->
         [['K', 'AA1', 'N', 'JH', 'ER0', 'IH0', 'NG'], ['K', 'AA1', 'N', 'JH', 'IH0', 'NG']]
         """
+        if self.stress_assigned_diy: return phonemes
         print("check stress reduction called with: ", phonemes)
         new_phonemes = []
         for word in phonemes:
@@ -200,7 +202,8 @@ class PhonemeFSM():
             # print("Will be a valid compound")
             # TODO: should final form be one or two words?
             # self.final_phoneme_repr = [self.left_compound[0] + self.right_compound[0]]
-            self.final_phoneme_repr = [lt + rt for lt in self.left_compound for rt in self.right_compound]
+            combined = [lt + rt for lt in self.left_compound for rt in self.right_compound]
+            self.final_phoneme_repr = self.apostrophe(combined)
             print("final compound repr:!!!! ", self.final_phoneme_repr)
             return
 

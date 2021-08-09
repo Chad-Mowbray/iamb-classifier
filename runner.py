@@ -12,6 +12,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(message)s')
 
 # import nltk
 # nltk.download('wordnet')
+from collections import Counter
 
 
 class Runner(RepresenterMixin):
@@ -22,6 +23,14 @@ class Runner(RepresenterMixin):
     def __init__(self, raw_file_contents):
         self.raw_file_contents = raw_file_contents
         self.sentences = Sentencizer(self.raw_file_contents).main()
+
+    @staticmethod
+    def get_stats(truth):
+        rules = [int(x.split(', ')[1]) for x in truth]
+        total = len(rules)
+        res_dict = Counter(rules)
+        return {k: str(v/total * 100)[:4] + "%" for k,v in res_dict.items()}
+        
 
     # @args_logger
     def initial_process_contents(self):
@@ -34,7 +43,10 @@ class Runner(RepresenterMixin):
         pprint(truth)
         total_valid_lines = len([x for x in truth if x[0].startswith("T")])
         total_lines = len(truth)
-        print("Total samples: ", total_lines, "Total valid lines: ", total_valid_lines, "success rate: ", total_valid_lines / total_lines)
+        print()
+        print("Total samples: ", total_lines, "\nTotal valid lines: ", total_valid_lines, "\nsuccess rate: ", total_valid_lines / total_lines)
+        ratios = self.get_stats(truth)
+        print("\npercent of rule 0: ", ratios.get(0,0),"\npercent of rule 1: ", ratios.get(1,0),"\npercent of rule 2: ", ratios.get(2,0),"\npercent of rule 3: ", ratios.get(3,0), "\npercent of rule 4: ", ratios.get(4,0),"\npercent of rule 5: ", ratios.get(5,0))
 
 
 
@@ -64,7 +76,7 @@ if __name__ == "__main__":
         # contents = "silver-smithes"
         # contents = "Of Oreb, or of Sinai, didst inspire"
         # contents = "moonfaced"
-        # contents= "As with a Cherub's trump: and high upborne,"
+        # contents= "And see thy blood warm when thou feel'st it cold."
         # contents = "moonfaced"
 # 
 
