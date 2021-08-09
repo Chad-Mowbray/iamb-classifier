@@ -80,7 +80,15 @@ class TestToIambicLine(unittest.TestCase):
 
     def test_compound_false_alarm_stress_alteration(self):
         is_valid_ip = self.ibls[10].is_valid_pattern
-        self.assertTrue(is_valid_ip)         
+        self.assertTrue(is_valid_ip)    
+
+    def test_optional_penultimate_stress_removal(self):
+        is_valid_ip = self.ibls[11].is_valid_pattern
+        self.assertTrue(is_valid_ip)  
+
+    def test_optional_penultimate_stress_removal_with_stress_alteration(self):
+        is_valid_ip = self.ibls[12].is_valid_pattern
+        self.assertTrue(is_valid_ip)       
 
 
 class TestToIambicLineFromFile(unittest.TestCase):
