@@ -78,7 +78,7 @@ if __name__ == "__main__":
         # contents = "Of Oreb, or of Sinai, didst inspire"
         # contents = "moonfaced"
         # contents= "And see thy blood warm when thou feel'st it cold."
-        # contents = "Where Goneril's soul made chill and foul the mist,"
+        # contents = "Frighted away the Dryads and the Fauns"
 # 
 
         r = Runner(contents)

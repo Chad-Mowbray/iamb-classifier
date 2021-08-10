@@ -32,6 +32,7 @@ class SpellingSyllabifier:
         self.syllable_count = 0
         self.modified_word = ''
         self.tentative_phonemes = [[]]
+        self.reduced_syllables = 0
 
         self.main()
 
@@ -48,11 +49,13 @@ class SpellingSyllabifier:
         indicies = indicies[::-1] if rev else indicies
         for idx in indicies:
             word = word[:idx] + word[idx + 1:]
+            self.reduced_syllables += 1
         return word
 
     def find_single(self, letter, word):
         idx = word.rindex(letter)
         word = word[:idx] + word[idx + 1:]
+        self.reduced_syllables += 1
         return word
 
 
@@ -113,22 +116,22 @@ class SpellingSyllabifier:
         return self.modified_word
 
     
-    def simple_stressor(self):
+    def simple_stressor(self, restore_syllables=0):
         count = self.syllable_count
         if count == 1:
             return [[self.DUMMY_STRESSED]]
         else:
-            return [[self.DUMMY_STRESSED if i == self.syllable_count - 2 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count) ]]
+            return [[self.DUMMY_STRESSED if i == self.syllable_count - 2 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count + restore_syllables) ]]
 
 
     #TODO
-    def complicated_stressor(self, POS):
+    def complicated_stressor(self, POS, restore_syllables=0):
         if POS == "V" or self.token.endswith("est") or self.token.endswith("eth"):
             # initial stress 
-            return [[self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count) ]]
+            return [[self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count + restore_syllables) ]]
         if POS in ["N", "J"]:
             # final stress 
-            return [[self.DUMMY_STRESSED if i == self.syllable_count - 1 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count) ]]
+            return [[self.DUMMY_STRESSED if i == self.syllable_count - 1 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count + restore_syllables) ]]
 
     
     def check_ed(self, phonemes):
@@ -144,6 +147,7 @@ class SpellingSyllabifier:
                 phonemes_copy.insert(-1,'EH0')
                 print("\t", phonemes_copy)
                 phonemes.append(phonemes_copy)
+                self.reduced_syllables -= 1
         return phonemes
 
 
@@ -155,8 +159,15 @@ class SpellingSyllabifier:
         print("****************", tag)
         if tag.startswith("V"): #or tag.startswith("N") or tag.startswith("J") 
             self.tentative_phonemes = self.complicated_stressor(tag[0])
+            if self.modified_word:
+                print("asdf")
+                print(self.tentative_phonemes)
+                print(self.complicated_stressor(tag[0]))
+                self.tentative_phonemes.append(self.complicated_stressor(tag[0], self.reduced_syllables)[0])
         else:
             self.tentative_phonemes = self.simple_stressor()
+            if self.modified_word:
+                self.tentative_phonemes.append(self.simple_stressor(self.reduced_syllables)[0])
 
 
     def main(self):
@@ -169,10 +180,14 @@ class SpellingSyllabifier:
 if __name__ == "__main__":
     from pprint import pprint
 
-    words = ["quality", "inspections", "aeneidae", "look", "question", "thought", "thou", "linsey-woolsey", "pixie", "pixies", "yea", "treat", "galilaean", "harbingered", "yeoman"]
+    # words = ["quality", "inspections", "aeneidae", "look", "question", "thought", "thou", "linsey-woolsey", "pixie", "pixies", "yea", "treat", "galilaean", "harbingered", "yeoman"]
 
-    res = []
-    for word in words:
-        ss = SpellingSyllabifier(word)
-        res.append([word, ss.modified_word, ss.syllable_count])
-    pprint(res)
+    # res = []
+    # for word in words:
+    #     ss = SpellingSyllabifier(word)
+    #     res.append([word, ss.modified_word, ss.syllable_count])
+    # pprint(res)
+
+    ss = SpellingSyllabifier("frighted")
+    print(ss.token, ss.modified_word, ss.syllable_count, ss.tentative_phonemes)
+    print(ss.tentative_phonemes)
