@@ -92,7 +92,15 @@ class TestToIambicLine(unittest.TestCase):
 
     def test_possessive_apostrophe_s_removed(self):
         is_valid_ip = self.ibls[13].is_valid_pattern
-        self.assertTrue(is_valid_ip)        
+        self.assertTrue(is_valid_ip)    
+
+    def test_anapest(self):
+        is_valid_ip = self.ibls[14].is_valid_pattern
+        self.assertFalse(is_valid_ip)    
+
+    def test_multiple_reductions(self):
+        is_valid_ip = self.ibls[15].is_valid_pattern
+        self.assertTrue(is_valid_ip)    
 
 
 class TestToIambicLineFromFile(unittest.TestCase):

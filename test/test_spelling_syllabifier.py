@@ -56,13 +56,17 @@ class TestSpellingSyllabifier(unittest.TestCase):
         ss = SpellingSyllabifier("yeoman")
         self.assertEqual(ss.syllable_count, 2)
 
-    
-
-
+    def test_oldfashioned_est_count(self):
+        ss = SpellingSyllabifier("renewest")
+        self.assertEqual(ss.syllable_count, 2)
 
     def test_ey_and_repeated_vowel_count(self):
         ss = SpellingSyllabifier("linsey-woolsey")
         self.assertEqual(ss.syllable_count, 4)
+
+    def test_ey_and_repeated_vowel_count(self):
+        ss = SpellingSyllabifier("raiment")
+        self.assertEqual(ss.syllable_count, 2)
 
 if __name__ == "__main__":
     unittest.main()

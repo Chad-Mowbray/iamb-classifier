@@ -23,6 +23,8 @@ class SpellingSyllabifier:
         "EA": r'ea',
         "ED": r'[^aeiou]ed$',
         # TODO: cious - voraciously
+        "EST": r'.{2,}est$',
+        "AI": r'ai'
     }
 
     def __init__(self, token):
@@ -56,6 +58,14 @@ class SpellingSyllabifier:
 
     def check_special_cases(self, word=None):
         word = word if word else self.token
+
+        if re.search(self.REGEX["EST"], word):
+            word = self.find_single("e", word)
+            return self.check_special_cases(word)
+
+        if re.search(self.REGEX["AI"], word):
+            word = self.find_multiple(self.REGEX["AI"], word)
+            return self.check_special_cases(word)
 
         if re.search(self.REGEX["QU"], word):
             word = self.find_multiple(self.REGEX["QU"], word)
@@ -113,7 +123,7 @@ class SpellingSyllabifier:
 
     #TODO
     def complicated_stressor(self, POS):
-        if POS == "V":
+        if POS == "V" or self.token.endswith("est") or self.token.endswith("eth"):
             # initial stress 
             return [[self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count) ]]
         if POS in ["N", "J"]:

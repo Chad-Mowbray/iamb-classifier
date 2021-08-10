@@ -163,6 +163,8 @@ class IambicLine():
                 return False
         except KeyError:
             print("Ran out of transformations")
+            self.current_state += 1
+            self.rules_applied.append("FAILURE")
             return False
 
 

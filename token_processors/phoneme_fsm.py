@@ -12,6 +12,7 @@ class PhonemeFSM():
         self.initial_token = token
         self.dicts = DictsSingleton()
         self.cmudict = self.dicts.cmudict
+        self.uk_us_dict = self.dicts.uk_us_dict
         self.normalized_spelling = ''
         self.has_apostrophe = False
         self.apostrophe_position = ''
@@ -42,7 +43,7 @@ class PhonemeFSM():
                 phonemes.append(phonemes_copy)
         print("check_ed result: ", phonemes)
         return phonemes
-        
+
 
     def lookup(self, called_by_normalize=False, compound_token=None):
         # print("compound_token: ", compound_token)
@@ -74,7 +75,7 @@ class PhonemeFSM():
     def normalize(self, token):
         print("normalize called")
         # if any(self.is_compound): self.
-        spelling_normalized, has_apostrophe, apostrophe_position = SpellingNormalizer(token).modernized_word
+        spelling_normalized, has_apostrophe, apostrophe_position = SpellingNormalizer(token, self.uk_us_dict).modernized_word
         if has_apostrophe: self.has_apostrophe = True
         if spelling_normalized: self.normalized_spelling = spelling_normalized
         if apostrophe_position: self.apostrophe_position = apostrophe_position
@@ -91,7 +92,7 @@ class PhonemeFSM():
     def compound(self):
         print("compound called...")
         token = self.normalized_spelling if self.normalized_spelling else self.initial_token
-        compound = Compounds(token, self.dicts.words, self.dicts.lemmatizer).find_compound_in_wordlist()
+        compound = Compounds(token, self.dicts.words, self.dicts.lemmatizer, self.uk_us_dict).find_compound_in_wordlist()
         # print("compound: ", compound)
         if compound:
             left, right = compound[0], compound[1]

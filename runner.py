@@ -46,7 +46,8 @@ class Runner(RepresenterMixin):
         print()
         print("Total samples: ", total_lines, "\nTotal valid lines: ", total_valid_lines, "\nsuccess rate: ", total_valid_lines / total_lines)
         ratios = self.get_stats(truth)
-        print("\npercent of rule 0: ", ratios.get(0,0),"\npercent of rule 1: ", ratios.get(1,0),"\npercent of rule 2: ", ratios.get(2,0),"\npercent of rule 3: ", ratios.get(3,0), "\npercent of rule 4: ", ratios.get(4,0),"\npercent of rule 5: ", ratios.get(5,0))
+        print(ratios)
+        print("\npercent of rule 0: ", ratios.get(0,0),"\npercent of rule 1: ", ratios.get(1,0),"\npercent of rule 2: ", ratios.get(2,0),"\npercent of rule 3: ", ratios.get(3,0), "\npercent of rule 4: ", ratios.get(4,0),"\npercent of rule 5: ", ratios.get(5,0), "\npercent failed:", ratios.get(6,0))
 
 
 
@@ -77,7 +78,7 @@ if __name__ == "__main__":
         # contents = "Of Oreb, or of Sinai, didst inspire"
         # contents = "moonfaced"
         # contents= "And see thy blood warm when thou feel'st it cold."
-        # contents = "moonfaced"
+        # contents = "Where Goneril's soul made chill and foul the mist,"
 # 
 
         r = Runner(contents)
