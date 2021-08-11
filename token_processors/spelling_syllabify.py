@@ -24,7 +24,8 @@ class SpellingSyllabifier:
         "ED": r'[^aeiou]ed$',
         # TODO: cious - voraciously
         "EST": r'.{2,}est$',
-        "AI": r'ai'
+        "AI": r'ai',
+        "IZE": r'i[sz]es?$'
     }
 
     def __init__(self, token):
@@ -63,6 +64,10 @@ class SpellingSyllabifier:
         word = word if word else self.token
 
         if re.search(self.REGEX["EST"], word):
+            word = self.find_single("e", word)
+            return self.check_special_cases(word)
+        
+        if re.search(self.REGEX["IZE"], word):
             word = self.find_single("e", word)
             return self.check_special_cases(word)
 
@@ -126,7 +131,7 @@ class SpellingSyllabifier:
 
     #TODO
     def complicated_stressor(self, POS, restore_syllables=0):
-        if POS == "V" or self.token.endswith("est") or self.token.endswith("eth"):
+        if POS == "V" or any([self.token.endswith(ending) for ending in ["est", "eth", "ise", "ize"] ]):
             # initial stress 
             return [[self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count + restore_syllables) ]]
         if POS in ["N", "J"]:
@@ -157,10 +162,9 @@ class SpellingSyllabifier:
         """
         tag = pos_tag([self.token])[0][1]
         print("****************", tag)
-        if tag.startswith("V"): #or tag.startswith("N") or tag.startswith("J") 
+        if tag.startswith("V") or any([self.token.endswith(ending) for ending in ["est", "eth", "ise", "ize"] ]): #or tag.startswith("N") or tag.startswith("J") 
             self.tentative_phonemes = self.complicated_stressor(tag[0])
             if self.modified_word:
-                print("asdf")
                 print(self.tentative_phonemes)
                 print(self.complicated_stressor(tag[0]))
                 self.tentative_phonemes.append(self.complicated_stressor(tag[0], self.reduced_syllables)[0])

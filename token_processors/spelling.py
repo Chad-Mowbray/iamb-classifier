@@ -19,6 +19,9 @@ class SpellingNormalizer(RepresenterMixin):
 
     # @args_logger
     def get_modernized_spelling(self):
+        print("#### get modernized spelling called", self.unknown_word )
+        # self.apostrophe_check()
+        print("#### after apostrophe checcked", self.unknown_word )
         self.modernized = reg.modernize(self.unknown_word) or self.brittish_converter()
         print("$$$ modernized spelling", self.modernized)
         self.apostrophe_check()
@@ -45,14 +48,20 @@ class SpellingNormalizer(RepresenterMixin):
     def handle_not_found(self):
         if self.unknown_word[0] == "'":
             self.modernized_word = [self.handle_initial_apostrophe(), self.has_apostrophe, "initial"]
+        elif self.unknown_word[-1] =="'":
+            self.modernized_word = [self.handle_final_apostrophe(), self.has_apostrophe, "final"]
         elif "'" in self.unknown_word[1:-2]:
-            self.modernized_word = [self.handle_non_initial_apostrophe(), self.has_apostrophe, "medial"]
+            self.modernized_word = [self.handle_medial_apostrophe(), self.has_apostrophe, "medial"]
         else:
             self.modernized_word = [self.modernized, self.has_apostrophe, '']
 
 
     def apostrophe_check(self):
-        if "'" in self.unknown_word[0:-1]: #if "'" in self.unknown_word[1:-1]:
+        print("apostrophe check called")
+        if self.unknown_word[-1] == "'":
+            self.has_apostrophe = True
+            self.apostrophe_position = "final" 
+        elif "'" in self.unknown_word[0:-1]: #if "'" in self.unknown_word[1:-1]:
             self.has_apostrophe = True
             print("has an apostrophe: ", self.unknown_word)
             if self.unknown_word[0] == "'":
@@ -61,12 +70,16 @@ class SpellingNormalizer(RepresenterMixin):
                 self.apostrophe_position = "medial"
 
 
-    def handle_non_initial_apostrophe(self): # TODO: make more robust
+    def handle_medial_apostrophe(self): # TODO: make more robust
         return re.sub("'", "e", self.unknown_word)
 
 
     def handle_initial_apostrophe(self):
         return self.unknown_word[1:]
+    
+
+    def handle_final_apostrophe(self):
+        return self.unknown_word[:-1]
 
 
     def main(self):

@@ -15,6 +15,10 @@ class TestSpellingNormalizer(unittest.TestCase):
         sn = SpellingNormalizer("'tis", self.uk_us_dict)
         self.assertEqual(sn.modernized_word, ["tis", True, 'initial'])
 
+    def test_apostrophe_th(self):
+        sn = SpellingNormalizer("th'", self.uk_us_dict)
+        self.assertEqual(sn.modernized_word, ["the", True, 'final'])
+
     def test_apostrophe_s(self):
         sn = SpellingNormalizer("heav'n", self.uk_us_dict)
         self.assertEqual(sn.modernized_word, ["heaven", True, 'medial'])
