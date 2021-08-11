@@ -102,6 +102,11 @@ class TestToIambicLine(unittest.TestCase):
         is_valid_ip = self.ibls[15].is_valid_pattern
         self.assertTrue(is_valid_ip)    
 
+    def test_multiple_elided_the(self):
+        is_valid_ip = self.ibls[16].is_valid_pattern
+        self.assertTrue(is_valid_ip)    
+
+
 
 class TestToIambicLineFromFile(unittest.TestCase):
 

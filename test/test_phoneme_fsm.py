@@ -38,6 +38,10 @@ class TestPhonemeFSM(unittest.TestCase):
             ['M', 'UW1', 'N', 'F', 'EY1', 'S', 'EH0', 'T'], 
         ])
 
+    def test_elided_the(self):
+        fsm = PhonemeFSM("th'")
+        analyzed = fsm.final_phoneme_repr
+        self.assertEqual(analyzed, [['DH', 'AH0'], ['DH', 'AH1'], ['DH', 'IY0'], ['DH']])
         
 
 

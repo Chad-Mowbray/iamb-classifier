@@ -118,6 +118,8 @@ class PhonemeFSM():
     def apostrophe(self, phonemes):
         if not self.has_apostrophe: return phonemes
         print("apostrophe called")
+        print(phonemes, self.normalized_spelling)
+        if self.normalized_spelling == "the": return phonemes + [['DH']]
         pop_position = 0 if self.apostrophe_position == "initial" else -1
         print(self.apostrophe_position)
         phonemes_copy = deepcopy(phonemes)

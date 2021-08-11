@@ -25,7 +25,8 @@ class SpellingSyllabifier:
         # TODO: cious - voraciously
         "EST": r'.{2,}est$',
         "AI": r'ai',
-        "IZE": r'i[sz]es?$'
+        "IZE": r'i[sz]es?$',
+        "AU": r'au'
     }
 
     def __init__(self, token):
@@ -69,6 +70,10 @@ class SpellingSyllabifier:
         
         if re.search(self.REGEX["IZE"], word):
             word = self.find_single("e", word)
+            return self.check_special_cases(word)
+    
+        if re.search(self.REGEX["AU"], word):
+            word = self.find_multiple(self.REGEX["AU"], word)
             return self.check_special_cases(word)
 
         if re.search(self.REGEX["AI"], word):

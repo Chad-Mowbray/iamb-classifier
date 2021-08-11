@@ -78,7 +78,7 @@ if __name__ == "__main__":
         # contents = "Of Oreb, or of Sinai, didst inspire"
         # contents = "moonfaced"
         # contents= "And see thy blood warm when thou feel'st it cold."
-        contents = "That were an ignominy and shame beneath"
+        # contents = "Vaunting aloud, but racked with deep despair;"
 
 # 
 

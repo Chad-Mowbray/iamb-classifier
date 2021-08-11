@@ -77,6 +77,10 @@ class TestSpellingSyllabifier(unittest.TestCase):
         ss = SpellingSyllabifier("melodise")
         self.assertEqual(ss.syllable_count, 3)
 
+    def test_vaunting(self):
+        ss = SpellingSyllabifier("vaunting")
+        self.assertEqual(ss.syllable_count, 2)
+
         
 
 if __name__ == "__main__":
