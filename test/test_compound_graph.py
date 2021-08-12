@@ -12,7 +12,6 @@ def equal(expected, actual):
 
 class TestCombinationsGraph(unittest.TestCase):
 
-
     def test_single_two_slots(self):
         cg = CombinationsGraph([([1], [0, 1, 0, 0, 2], [1], [1], [1], [1])], [0,2], True, 0)
         self.assertEqual(cg.new_combinations, [
@@ -33,14 +32,7 @@ class TestCombinationsGraph(unittest.TestCase):
 
 
 
-
-        # ([0], [0], [0], [1], [1, 0], [0, 1, 0, 0])
-
-        # ([1], [0, 1, 2, 0, 2], [1], [1], [1, 2]),
-
-
 class TestDemoteCombinationsGraph(unittest.TestCase):
-
 
     def test_single_two_slots(self):
         cg = CombinationsGraph([

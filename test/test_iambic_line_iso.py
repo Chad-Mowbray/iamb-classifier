@@ -3,8 +3,6 @@ from unittest.mock import MagicMock
 from iambic_line_processors.iambic_line import IambicLine
 
 
-
-
 class TestIambicLineIso(unittest.TestCase):
 
     def setUp(self):
