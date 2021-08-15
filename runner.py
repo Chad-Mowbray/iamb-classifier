@@ -62,7 +62,7 @@ if __name__ == "__main__":
     filename = os.path.join(os.path.dirname(__file__), "poems/test_poem.txt")
     rfp = RawFileProcessor(filename)
     contents = rfp.cleaned_contents
-    # contents = ["Shall sum my count and make my old excuse,'\n"]
+    # contents = ["That led th' embattled Seraphim to war\n"]
    
 # 
 

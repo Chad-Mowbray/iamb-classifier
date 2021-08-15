@@ -1,5 +1,6 @@
 from itertools import product
 from pprint import pprint
+from copy import deepcopy
 from iambic_line_processors.combinations_graph import CombinationsGraph
 
 
@@ -36,25 +37,91 @@ class IambicLine():
         This is still very approximate
         """
         print("get_transformed_words called")
-        # pprint(comparisons)
+        pprint(comparisons)
         for comparison in comparisons:
-            abstract,detailed = comparison
-            # print(abstract, detailed)
-            detailed = [x for y in detailed for x in y]
-            # print(detailed)
-            original = [x for x in [x for y in self.original_stress_patterns_per_token for x in y] if type(x) == list]
-            # print("O:",original, "D", detailed)
-            for i,word_group in enumerate(original):
-                if detailed[i] in word_group or len(detailed[i]) < 2 or self.current_state <= 5:
-                    continue
-                    # print("match")
-                else:
-                    print('novel')
-                    print('\t', detailed[i], word_group)
-                    changed_word = self.original_stress_patterns_per_token[i][1]
-                    print("changed word", changed_word)
-                    self.changed_words.append(changed_word)
-                    self.altered_patterns.append(detailed[i])
+            abstract,realized = comparison
+            original = self.unique_dict_of_realized_stress_patterns[abstract]
+            print("original: ", original)
+            
+            lines = self.get_possible_stress_patterns_per_token(self.get_original_stress_patterns_per_token())
+            realized = original
+            iterations = len(realized[0])
+            # print(iterations)
+            words = []
+            for i in range(iterations):
+                intermediate = []
+                for line in lines:
+                    intermediate.append(line[i])
+                words.append(intermediate)
+            # pprint(words)
+
+            def finder_real(word_variations, realized):
+                print("finder_read, word_variations, realized", word_variations, realized)
+                if len(realized) <= 1: return False
+                for word in word_variations:
+                    if len(word) != len(realized): continue
+                    print("word:", word, "realized:",realized)
+                    for i in range(len(realized)):
+                        if word[i] == 1:
+                            if realized[i] == 1:
+                                return False
+                return True
+            changed = [finder_real(words[i], realized[0][i]) for i in range(len(words)) ]
+            print(changed)
+            print(self.original_stress_patterns_per_token)
+            res = [pair[1] for i,pair in enumerate(self.original_stress_patterns_per_token) if changed[i]]
+            print(res)
+            self.changed_words = res
+
+
+
+
+
+            # print("original stress patterns per token: ", pos)
+            # for i,word_group in enumerate(original):
+            #     if realized[i] in word_group or len(realized[i]) < 2:
+            #         print('match')
+            #         continue
+            #     else:
+            #         print(realized[i], ":", word_group)
+            #         x = []
+            #         realized_word_copy = deepcopy(realized[i])
+            #         for word in word_group:
+            #             if len(word) != len(realized_word_copy): continue
+            #             for i in range(len(word)):
+            #                 if word[i] == 1 and realized_word_copy[i] != 1:
+            #                     realized_word_copy[i] = 1
+
+            #         print(realized_word_copy)
+            #         changed = False
+            #         for j in range(len(realized_word_copy)):
+            #             if realized_word_copy[j] == 1:
+            #                 if realized[i][j] == 1:
+            #                     changed = False
+            #                 else:
+            #                     changed = True
+            #     print(changed)
+            #     changed_word = self.original_stress_patterns_per_token[i][1]
+            #     print("changed word", )
+            #     self.changed_words.append(changed_word)
+            #     self.altered_patterns.append(realized[i])
+            # print(abstract, realized)
+            # realized = [x for y in realized for x in y]
+            # print(realized)
+            # original = [x for x in [x for y in self.original_stress_patterns_per_token for x in y] if type(x) == list]
+            # print("O:",original)
+            # print("D", realized)
+            # for i,word_group in enumerate(original):
+            #     if realized[i] in word_group or len(realized[i]) < 2 or self.current_state <= 5:
+            #         continue
+            #         # print("match")
+            #     else:
+            #         print('novel')
+            #         print('\t', realized[i], word_group)
+            #         changed_word = self.original_stress_patterns_per_token[i][1]
+                    # print("changed word", changed_word)
+                    # self.changed_words.append(changed_word)
+                    # self.altered_patterns.append(realized[i])
 
 
     def test_base_pattern(self):
@@ -68,10 +135,10 @@ class IambicLine():
                 # print("comparison: ", comparison)
                 # print("formatted_list_of_realized_stress_patterns:")
                 # pprint(self.formatted_list_of_realized_stress_patterns)
-                comparisons.append([comparison, original])
+                comparisons.append([potential, original])
         if comparisons: 
             # print("))))))))))))")
-            self.get_transformed_words(comparisons)
+            if len(self.rules_applied) >= 5: self.get_transformed_words(comparisons)
             # print(self.original_stress_patterns_per_token)
             # pprint(comparisons)
             return True
