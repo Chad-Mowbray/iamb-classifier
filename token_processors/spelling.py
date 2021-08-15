@@ -79,7 +79,8 @@ class SpellingNormalizer(RepresenterMixin):
     
 
     def handle_final_apostrophe(self):
-        return self.unknown_word[:-1]
+        # return self.unknown_word[:-1]
+        return self.unknown_word
 
 
     def main(self):
