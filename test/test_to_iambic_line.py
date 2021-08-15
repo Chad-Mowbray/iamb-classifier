@@ -108,26 +108,26 @@ class TestToIambicLine(unittest.TestCase):
 
 
 
-class TestToIambicLineFromFile(unittest.TestCase):
+# class TestToIambicLineFromFile(unittest.TestCase):
 
-    def setUp(self):
-        self.ibls = []
-        with open("poems/test_poem.txt") as f:
-            contents = f.read()
-            sentencizer = Sentencizer(contents)
-            lines = sentencizer.main()
-            tokenizer = Tokenizer(lines)
-            line_tokens = tokenizer.create_tokens()
-            for line in line_tokens:
-                iambic_line_tokens = IambicLine(line)
-                self.ibls.append(iambic_line_tokens)
+#     def setUp(self):
+#         self.ibls = []
+#         with open("poems/test_poem.txt") as f:
+#             contents = f.read()
+#             sentencizer = Sentencizer(contents)
+#             lines = sentencizer.main()
+#             tokenizer = Tokenizer(lines)
+#             line_tokens = tokenizer.create_tokens()
+#             for line in line_tokens:
+#                 iambic_line_tokens = IambicLine(line)
+#                 self.ibls.append(iambic_line_tokens)
 
-    def test_exists(self):
-        self.assertTrue(self.ibls)
-        self.assertGreater(len(self.ibls), 1)
+#     def test_exists(self):
+#         self.assertTrue(self.ibls)
+#         self.assertGreater(len(self.ibls), 1)
 
-        is_valid_ip = self.ibls[1].is_valid_pattern
-        self.assertTrue(is_valid_ip)
+#         is_valid_ip = self.ibls[1].is_valid_pattern
+#         self.assertTrue(is_valid_ip)
 
 
 if __name__ == "__main__":

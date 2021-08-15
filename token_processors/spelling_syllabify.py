@@ -26,7 +26,8 @@ class SpellingSyllabifier:
         "EST": r'.{2,}est$',
         "AI": r'ai',
         "IZE": r'i[sz]es?$',
-        "AU": r'au'
+        "AU": r'au',
+        "IAN": r'ianS?$'
     }
 
     def __init__(self, token):
@@ -70,6 +71,10 @@ class SpellingSyllabifier:
         
         if re.search(self.REGEX["IZE"], word):
             word = self.find_single("e", word)
+            return self.check_special_cases(word)
+
+        if re.search(self.REGEX["IAN"], word):
+            word = self.find_single("i", word)
             return self.check_special_cases(word)
     
         if re.search(self.REGEX["AU"], word):
@@ -197,6 +202,6 @@ if __name__ == "__main__":
     #     res.append([word, ss.modified_word, ss.syllable_count])
     # pprint(res)
 
-    ss = SpellingSyllabifier("frighted")
+    ss = SpellingSyllabifier("latian")
     print(ss.token, ss.modified_word, ss.syllable_count, ss.tentative_phonemes)
     print(ss.tentative_phonemes)

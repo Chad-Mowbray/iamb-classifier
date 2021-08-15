@@ -81,6 +81,11 @@ class TestSpellingSyllabifier(unittest.TestCase):
         ss = SpellingSyllabifier("vaunting")
         self.assertEqual(ss.syllable_count, 2)
 
+    def test_latian(self):
+        ss = SpellingSyllabifier("latian")
+        self.assertEqual(ss.syllable_count, 2)
+        self.assertEqual(len(ss.tentative_phonemes), 2)
+
         
 
 if __name__ == "__main__":
