@@ -17,10 +17,10 @@ class TestCompounds(unittest.TestCase):
         compound = c.find_compound_in_wordlist()
         self.assertIsNone(compound)
 
-    def test_compound_moonfaced(self):
+    def test_compound_moonfaced_intercepted(self):
         c = Compounds("moonfaced", self.words, self.lemmatizer, self.uk_us_dict)
         compound = c.find_compound_in_wordlist()
-        self.assertEqual(compound, ['moon', 'faced'])  
+        self.assertIsNone(compound)
 
     def test_compound_lampshine(self):
         c = Compounds("lampshine", self.words, self.lemmatizer, self.uk_us_dict)

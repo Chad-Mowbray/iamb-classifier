@@ -19,25 +19,6 @@ class TestToIambicLine(unittest.TestCase):
                 self.ibls.append(iambic_line)
 
 
-        # self.ibls = []
-        # for l in [
-        #     "disceased to pass address the earth aspect\n", 
-        #     "the expeditious pass address within\n", 
-        #     "disceased to pass address the earth respect\n", 
-        #     "abbreviated\n"
-        #     "But we have left those gentle haunts to pass\n",
-        #     "humanity itself the race to pass\n",
-        #     "Both must alike from Heaven derive their light,\n",
-        #     "Both must alike from Heav'n derive their light,\n"
-        #     ]:
-        #     sentencizer = Sentencizer(l)
-        #     lines = sentencizer.main()
-        #     tokenizer = Tokenizer(lines)
-        #     line_tokens = tokenizer.create_tokens()
-            # for line in line_tokens:
-            #     iambic_line_tokens = IambicLine(line)
-            #     self.ibls.append(iambic_line_tokens)
-
     def test_simple_case(self):
         is_valid_ip = self.ibls[2].is_valid_pattern
         self.assertTrue(is_valid_ip) 

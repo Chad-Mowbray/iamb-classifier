@@ -1,4 +1,5 @@
 from token_processors.spelling import SpellingNormalizer
+from nltk.corpus import words as nltk_wordlist
 
 
 
@@ -11,6 +12,12 @@ class Compounds:
         self.uk_us_dict = uk_us_dict
         # print("Compound instance created: ", self.original_word)
 
+    def should_proceed_to_compound_analysis(self):
+        if self.original_word in nltk_wordlist.words() or self.original_word[:-1] in nltk_wordlist.words():
+            return False
+        return True
+
+
     def find_compound_in_wordlist(self, initial=2):
 
         # print("find_compound_in_wordlist called")
@@ -19,6 +26,8 @@ class Compounds:
             # print(dashed_word)
             return dashed_word
 
+        if not self.should_proceed_to_compound_analysis():
+            return None
 
         median = len(self.original_word) // 2
         current_split_idx = 0

@@ -62,7 +62,7 @@ if __name__ == "__main__":
     filename = os.path.join(os.path.dirname(__file__), "poems/test_poem.txt")
     rfp = RawFileProcessor(filename)
     contents = rfp.cleaned_contents
-    contents = ["I swear by him, who fills Olympus' throne!\n"]
+    # contents = ["The voice of Adoration rouses me,\n"]
    
 # 
 

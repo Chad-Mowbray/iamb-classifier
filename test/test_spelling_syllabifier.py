@@ -86,7 +86,13 @@ class TestSpellingSyllabifier(unittest.TestCase):
         self.assertEqual(ss.syllable_count, 2)
         self.assertEqual(len(ss.tentative_phonemes), 2)
 
-        
+    def test_insubmissive(self):
+        ss = SpellingSyllabifier("insubmissive")
+        self.assertEqual(ss.syllable_count, 4)
+
+    def test_rouses(self):
+        ss = SpellingSyllabifier("rouses")
+        self.assertEqual(ss.syllable_count, 2)     
 
 if __name__ == "__main__":
     unittest.main()

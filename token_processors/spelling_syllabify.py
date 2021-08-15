@@ -12,22 +12,25 @@ class SpellingSyllabifier:
     DUMMY_STRESSED = "AH1"
     DUMMY_UNSTRESSED = "AH0"
     REGEX = {
-        "QU": r'qu',
+        # Endings
+        "IES": r'ies?$',
         "ION": r'[st]{1}ions?$',
+        "ED": r'[^aeiou]ed$',
+        "EST": r'.{2,}est$',
+        "IZE": r'i[sz]es?$',
+        "E": r'[^aeio]es?$',
+        "SES": r'[sz]es$',
+        "IAN": r'ianS?$',
+        # Non-Endings
+        "QU": r'qu',
         "AE": r'ae',
         "DOUBLE": r'([eiouy])\1',  # no double a
         "OU": r'ou',
         "EY": r'ey\W?',
-        "IES": r'ies?$',
         "YV": r'y[aeiou]',
         "EA": r'ea',
-        "ED": r'[^aeiou]ed$',
-        # TODO: cious - voraciously
-        "EST": r'.{2,}est$',
         "AI": r'ai',
-        "IZE": r'i[sz]es?$',
         "AU": r'au',
-        "IAN": r'ianS?$'
     }
 
     def __init__(self, token):
@@ -41,7 +44,8 @@ class SpellingSyllabifier:
 
     
     def get_syllable_count(self):
-        word = self.check_special_cases()
+        word = self.check_endings()
+        word = self.check_special_cases(word)
         syllables = [w for w in word if w in self.VOWELS]
         self.syllable_count = len(syllables)
         print(self.syllable_count)
@@ -61,21 +65,47 @@ class SpellingSyllabifier:
         self.reduced_syllables += 1
         return word
 
-
-    def check_special_cases(self, word=None):
-        word = word if word else self.token
+    def check_endings(self):
+        word = self.token
 
         if re.search(self.REGEX["EST"], word):
             word = self.find_single("e", word)
-            return self.check_special_cases(word)
-        
+            return word
+
         if re.search(self.REGEX["IZE"], word):
             word = self.find_single("e", word)
-            return self.check_special_cases(word)
+            return word
 
         if re.search(self.REGEX["IAN"], word):
             word = self.find_single("i", word)
-            return self.check_special_cases(word)
+            return word
+
+        if re.search(self.REGEX["IES"], word):
+            word = self.find_single("e", word)
+            return word
+       
+        if re.search(self.REGEX["SES"], word):
+            return word
+
+        if re.search(self.REGEX["E"], word):
+            word = self.find_single("e", word)
+            return word
+
+        if re.search(self.REGEX["ION"], word)  and len(word) > 4:
+            word = self.find_single("i", word)
+            return word
+
+        if re.search(self.REGEX["ED"], word)  and len(word) >= 4:
+            word = self.find_single("e", word)
+            return word
+
+
+
+        return word
+
+
+    def check_special_cases(self, word=None):
+        word = word if word else self.token
     
         if re.search(self.REGEX["AU"], word):
             word = self.find_multiple(self.REGEX["AU"], word)
@@ -87,10 +117,6 @@ class SpellingSyllabifier:
 
         if re.search(self.REGEX["QU"], word):
             word = self.find_multiple(self.REGEX["QU"], word)
-            return self.check_special_cases(word)
-
-        elif re.search(self.REGEX["ION"], word)  and len(word) > 4:
-            word = self.find_single("i", word)
             return self.check_special_cases(word)
 
         elif re.search(self.REGEX["AE"], word):
@@ -109,10 +135,6 @@ class SpellingSyllabifier:
             word = self.find_multiple(self.REGEX["EY"], word)
             return self.check_special_cases(word)
 
-        elif re.search(r'ies?$', word):
-            word = self.find_single("e", word)
-            return self.check_special_cases(word)
-
         elif re.search(self.REGEX["YV"], word):
             word = self.find_multiple(self.REGEX["YV"], word)
             return self.check_special_cases(word)
@@ -120,11 +142,6 @@ class SpellingSyllabifier:
         elif re.search(self.REGEX["EA"], word):
             word = self.find_multiple(self.REGEX["EA"], word)
             return self.check_special_cases(word)
-
-        elif re.search(r'[^aeiou]ed$', word)  and len(word) >= 4:
-            word = self.find_single("e", word)
-            return self.check_special_cases(word)
-
 
         # print("^^^^^^^^^^^", word)
         self.modified_word = word
@@ -193,6 +210,10 @@ class SpellingSyllabifier:
 
 if __name__ == "__main__":
     from pprint import pprint
+
+    # casque
+    # upborne
+
 
     # words = ["quality", "inspections", "aeneidae", "look", "question", "thought", "thou", "linsey-woolsey", "pixie", "pixies", "yea", "treat", "galilaean", "harbingered", "yeoman"]
 
