@@ -37,6 +37,7 @@ class RawFileProcessor:
             cleaned_line = line.strip()
             cleaned_line = re.sub(r'([!"#$%&\()*+,.\/:;<=>?@[\]^_{|}~\d])|(\'+$)', "", cleaned_line)
             cleaned_line = re.sub(r'(\s{2,})+|(-{2,})+', " ", cleaned_line)
+            cleaned_line = re.sub(r"[\'\’]s\s{1}", " ", cleaned_line)
             cleaned.append(cleaned_line + "\n")
         self.cleaned_contents = cleaned
 

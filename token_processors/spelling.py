@@ -17,12 +17,20 @@ class SpellingNormalizer(RepresenterMixin):
         self.main()
         # print("SpellingNormalizer instance created")
 
+    def local_list(self):
+        print("local_list called")
+        local_list = {
+            "o’er": "or"
+        }
+        return local_list.get(self.unknown_word, None)
+
+
     # @args_logger
     def get_modernized_spelling(self):
         print("#### get modernized spelling called", self.unknown_word )
         # self.apostrophe_check()
         print("#### after apostrophe checcked", self.unknown_word )
-        self.modernized = reg.modernize(self.unknown_word) or self.brittish_converter()
+        self.modernized = reg.modernize(self.unknown_word) or self.brittish_converter() or self.local_list()
         print("$$$ modernized spelling", self.modernized)
         self.apostrophe_check()
 
