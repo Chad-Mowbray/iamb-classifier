@@ -55,7 +55,7 @@ class Compounds:
     def handle_dashed_word(self):
         # print("handle_dashed_word called")
         if "-" in self.original_word:
-            left, right = self.original_word.split("-")
+            left, right = self.original_word.split("-")[0], "".join([*self.original_word.split('-')[1:]])
             # print("left, right in compounds, handle dashed: ", left, right)
             left = SpellingNormalizer(left, self.uk_us_dict).modernized_word[0] or left
             right = SpellingNormalizer(self.lemmatizer.lemmatize(right), self.uk_us_dict).modernized_word[0] or self.lemmatizer.lemmatize(right)

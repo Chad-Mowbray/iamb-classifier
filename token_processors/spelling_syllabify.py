@@ -99,8 +99,6 @@ class SpellingSyllabifier:
             word = self.find_single("e", word)
             return word
 
-
-
         return word
 
 
@@ -168,11 +166,11 @@ class SpellingSyllabifier:
     
     def check_ed(self, phonemes):
         print("check_ed called")
-        print(phonemes, self.initial_token)
+        print(phonemes, self.token)
 
-        if self.initial_token.endswith("ed") and len(self.initial_token) > 4:
+        if self.token.endswith("ed") and len(self.token) > 4:
             print("\tnot a short word")
-            antepenult_letter = self.initial_token[-3]
+            antepenult_letter = self.token[-3]
             if antepenult_letter not in "aeiou":
                 phonemes_copy = deepcopy(phonemes[0])
                 print("\t", antepenult_letter, phonemes_copy)
@@ -187,16 +185,24 @@ class SpellingSyllabifier:
         """
         Check POS, if none, use simple_stressor, otherwise, use complicated_stressor
         """
+
         tag = pos_tag([self.token])[0][1]
         print("****************", tag)
         if tag.startswith("V") or any([self.token.endswith(ending) for ending in ["est", "eth", "ise", "ize"] ]): #or tag.startswith("N") or tag.startswith("J") 
             self.tentative_phonemes = self.complicated_stressor(tag[0])
+            if self.token.endswith('ed'):
+                print("ends with ed...", self.tentative_phonemes)
+                self.tentative_phonemes = self.check_ed(self.tentative_phonemes)
             if self.modified_word:
                 print(self.tentative_phonemes)
                 print(self.complicated_stressor(tag[0]))
                 self.tentative_phonemes.append(self.complicated_stressor(tag[0], self.reduced_syllables)[0])
         else:
             self.tentative_phonemes = self.simple_stressor()
+            if self.token.endswith('ed'):
+                print("ends with ed else...", self.tentative_phonemes)
+                self.tentative_phonemes = self.check_ed(self.tentative_phonemes)
+                print("ends with ed else 2...", self.tentative_phonemes)
             if self.modified_word:
                 self.tentative_phonemes.append(self.simple_stressor(self.reduced_syllables)[0])
 

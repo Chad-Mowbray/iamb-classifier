@@ -117,8 +117,9 @@ def two_word_check(word):
 	if word.startswith("t'") or word.startswith("th'") and word != "th'":
 
 		words = word.split("'")
-		firstword = lookup(words[0]+"'")
-		secondword = lookup(words[1])
+		firstword = lookup(words[0]+"'") if lookup(words[0]+"'") is not None else ''
+		secondword = lookup(words[1]) if lookup(words[1]) is not None else ''
+		print(firstword, secondword)
 		return firstword+" "+secondword
 	else:
 		return lookup(word)

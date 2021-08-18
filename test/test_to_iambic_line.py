@@ -87,7 +87,9 @@ class TestToIambicLine(unittest.TestCase):
         is_valid_ip = self.ibls[16].is_valid_pattern
         self.assertTrue(is_valid_ip)    
 
-
+    def test_ed_ending(self):
+        is_valid_ip = self.ibls[17].is_valid_pattern
+        self.assertTrue(is_valid_ip)    
 
 # class TestToIambicLineFromFile(unittest.TestCase):
 

@@ -1,0 +1,809 @@
+<Text id=MarHero>
+<Author>Marlowe, Christopher</Author>
+<Title>Hero and Leander</Title>
+<Edition>The Complete Works of Christopher Marlowe.  Fredson Bowers, ed.  Cambridge, England: The University Press, 1973</Edition>
+<Date>1593</Date>
+<body>
+<loc><locdoc>MarHero</locdoc>
+<div0>
+<l>On hellespont, guilty of truelove's blood,</l>
+<l>In view and opposite two cities stood,</l>
+<l>Seaborderers, disjoined by neptune's might;</l>
+<l>The one abydos, the other sestos hight.</l>
+<l>At sestos Hero dwelt; Hero the fair,</l>
+<l>Whom young apollo courted for her hair,</l>
+<l>And offered as a dower his burning throne,</l>
+<l>Where she should sit for men to gaze upon.</l>
+<l>The outside of her garments were of lawn,</l>
+<l>The lining purple silk, with gilt stars drawn;</l>
+<l>Her wide sleeves green, and bordered with a grove,</l>
+<l>Where venus in her naked glory strove</l>
+<l>To please the careless and disdainful eyes</l>
+<l>Of proud adonis, that before her lies.</l>
+<l>Her kirtle blue, whereon was many a stain,</l>
+<l>Made with the blood of wretched lovers slain.</l>
+<l>Upon her head she ware a myrtle wreath,</l>
+<l>From whence her veil reached to the ground beneath.</l>
+<l>Her veil was artificial flowers and leaves</l>
+<l>Whose workmanship both man and beast deceives.</l>
+<l>Many would praise the sweet smell as she passed,</l>
+<l>When 'twas the odor which her breath forth cast;</l>
+<l>And there for honey bees have sought in vain,</l>
+<l>And, beat from thence, have lighted there again.</l>
+<l>About her neck hung chains of pebblestone,</l>
+<l>Which, lightened by her neck, like diamonds shone.</l>
+<l>She ware no gloves; for neither sun nor wind</l>
+<l>Would burn or parch her hands, but to her mind,</l>
+<l>Or warm or cool them, for they took delight</l>
+<l>To play upon those hands, they were so white.</l>
+<l>Buskins of shells, all silvered used she,</l>
+<l>And branched with blushing coral to the knee;</l>
+<l>Where sparrows perched of hollow pearl and gold,</l>
+<l>Such as the world would wonder to behold.</l>
+<l>Those with sweet water oft her handmaid fills,</l>
+<l>Which, as she went, would chirrup through the bills.</l>
+<l>Some say for her the fairest cupid pined</l>
+<l>And looking in her face was strooken blind.</l>
+<l>But this is true: so like was one the other,</l>
+<l>As he imagined Hero was his mother.</l>
+<l>And oftentimes into her bosom flew,</l>
+<l>And laid his childish head upon her breast,</l>
+<l>And, with still panting rocked, there took his rest.</l>
+<l>So lovely fair was Hero, venus' nun,</l>
+<l>As nature wept, thinking she was undone,</l>
+<l>Because she took more from her than she left,</l>
+<l>And of such wondrous beauty her bereft.</l>
+<l>Therefore, in sign her treasure suffered wrack,</l>
+<l>Since Hero's time hath half the world been black.</l>
+<l>Amorous Leander, beautiful and young,</l>
+<l>(whose tragedy divine musaeus sung,)</l>
+<l>Dwelt at abydos; since him dwelt there none</l>
+<l>For whom succeeding times make greater moan.</l>
+<l>His dangling tresses, that were never shorn,</l>
+<l>Had they been cut, and unto colchos borne,</l>
+<l>Would have allured the vent'rous youth of greece</l>
+<l>To hazard more than for the golden fleece.</l>
+<l>Fair cynthia wished his arms might be her sphere;</l>
+<l>Grief makes her pale, because she moves not there.</l>
+<l>His body was as straight as circe's wand;</l>
+<l>Jove might have sipped out nectar from his hand.</l>
+<l>Even as delicious meat is to the taste,</l>
+<l>So was his neck in touching, and surpassed</l>
+<l>The white of pelops' shoulder.  i could tell ye</l>
+<l>How smooth his breast was and how white his belly;</l>
+<l>And whose immortal fingers did imprint</l>
+<l>That heavenly path with many a curious dint</l>
+<l>That runs along his back, but my rude pen</l>
+<l>Can hardly blazon forth the loves of men,</l>
+<l>Much less of powerful gods.  let it suffice</l>
+<l>That my slack muse sings of Leander's eyes,</l>
+<l>Those orient cheeks and lips, exceeding his</l>
+<l>That leaped into the water for a kiss</l>
+<l>Of his own shadow and, despising many,</l>
+<l>Died ere he could enjoy the love of any.</l>
+<l>Had wild hippolytus Leander seen</l>
+<l>Enamored of his beauty had he been.</l>
+<l>His presence made the rudest peasant melt</l>
+<l>That in the vast uplandish country dwelt.</l>
+<l>The barbarous thracian soldier, moved with nought,</l>
+<l>Was moved with him and for his favor sought.</l>
+<l>Some swore he was a maid in man's attire,</l>
+<l>For in his looks were all that men desire,</l>
+<l>A pleasant smiling cheek, a speaking eye,</l>
+<l>And such as knew he was a man, would say,</l>
+<l>"Leander, thou art made for amorous play.</l>
+<l>Why art thou not in love, and loved of all?</l>
+<l>Though thou be fair, yet be not thine own thrall."</l>
+<l>  the men of wealthy sestos every year,</l>
+<l>(for his sake whom their goddess held so dear,</l>
+<l>Rose-cheeked adonis) kept a solemn feast.</l>
+<l>Thither resorted many a wandering guest</l>
+<l>To meet their loves.  such as had none at all,</l>
+<l>Came lovers home from this great festival.</l>
+<l>For every street like to a firmament</l>
+<l>Glistered with breathing stars who, where they went,</l>
+<l>Frighted the melancholy earth which deemed</l>
+<l>Eternal heaven to burn, for so it seemed,</l>
+<l>As if another phaeton had got</l>
+<l>The guidance of the sun's rich chariot.</l>
+<l>But far above the loveliest Hero shined</l>
+<l>And stole away th' enchanted gazer's mind,</l>
+<l>For like sea nymphs' enveigling harmony,</l>
+<l>So was her beauty to the standers by.</l>
+<l>Nor that night-wandering, pale, and wat'ry star</l>
+<l>(when yawning dragons draw her thirling car</l>
+<l>From latmus' mount up to the gloomy sky</l>
+<l>Where, crowned with blazing light and majesty,</l>
+<l>She proudly sits) more overrules the flood</l>
+<l>Than she the hearts of those that near her stood.</l>
+<l>Even as, when gaudy nymphs pursue the chase,</l>
+<l>Wretched ixion's shaggy footed race,</l>
+<l>Incensed with savage heat, gallop amain</l>
+<l>From steep pine-bearing mountains to the plain.</l>
+<l>So ran the people forth to gaze upon her,</l>
+<l>And all that viewed her were enamored on her.</l>
+<l>And as in fury of a dreadful fight,</l>
+<l>Their fellows being slain or put to flight,</l>
+<l>Poor soldiers stand with fear of death dead strooken,</l>
+<l>So at her presence all surprised and tooken,</l>
+<l>Await the sentence of her scornful eyes.</l>
+<l>He whom she favors lives, the other dies.</l>
+<l>There might you see one sigh, another rage;</l>
+<l>And some, (their violent passions to assuage)</l>
+<l>Compile sharp satires, but alas too late,</l>
+<l>For faithful love will never turn to hate.</l>
+<l>And many seeing great princes were denied</l>
+<l>On this feast day, o cursed day and hour,</l>
+<l>Went Hero thorough sestos from her tower</l>
+<l>To venus' temple, where unhappily</l>
+<l>As after chanced, they did each other spy.</l>
+<l>So fair a church as this had venus none.</l>
+<l>The walls were of discolored jasper stone</l>
+<l>Wherein was proteus carved, and o'erhead</l>
+<l>A lively vine of green sea agate spread,</l>
+<l>Where by one hand lightheaded bacchus hung,</l>
+<l>And, with the other, wine from grapes out wrung.</l>
+<l>Of crystal shining fair the pavement was.</l>
+<l>The town of sestos called it venus' glass.</l>
+<l>There might you see the gods in sundry shapes</l>
+<l>Committing heady riots, incest, rapes.</l>
+<l>For know, that underneath this radiant floor</l>
+<l>Was danae's statue in a brazen tower,</l>
+<l>Jove slyly stealing from his sister's bed,</l>
+<l>To dally with idalian ganymede,</l>
+<l>And for his love europa bellowing loud,</l>
+<l>And tumbling with the rainbow in a cloud;</l>
+<l>Blood quaffing mars heaving the iron net</l>
+<l>Which limping vulcan and his cyclops set;</l>
+<l>Love kindling fire to burn such towns as troy;</l>
+<l>Sylvanus weeping for the lovely boy</l>
+<l>That now is turned into a cypress tree,</l>
+<l>Under whose shade the wood gods love to be.</l>
+<l>And in the midst a silver altar stood.</l>
+<l>There Hero, sacrificing turtle's blood,</l>
+<l>Vailed to the ground, vailing her eyelids close,</l>
+<l>And modestly they opened as she rose.</l>
+<l>Thence flew love's arrow with the golden head,</l>
+<l>And thus Leander was enamored.</l>
+<l>Stone still he stood, and evermore he gazed</l>
+<l>Till with the fire that from his countenance blazed</l>
+<l>Relenting Hero's gentle heart was strook.</l>
+<l>Such force and virtue hath an amorous look.</l>
+<l>  it lies not in our power to love or hate,</l>
+<l>For will in us is overruled by fate.</l>
+<l>When two are stripped, long ere the course begin</l>
+<l>We wish that one should lose, the other win.</l>
+<l>And one especially do we affect</l>
+<l>Of two gold ingots like in each respect.</l>
+<l>The reason no man knows; let it suffice</l>
+<l>What we behold is censured by our eyes.</l>
+<l>Who ever loved, that loved not at first sight?</l>
+<l> he kneeled, but unto her devoutly prayed.</l>
+<l>Chaste Hero to herself thus softly said,</l>
+<l>"were i the saint he worships, i would hear him;"</l>
+<l>And, as she spake those words, came somewhat near him.</l>
+<l>He started up, she blushed as one ashamed,</l>
+<l>Wherewith Leander much more was inflamed.</l>
+<l>He touched her hand; in touching it she trembled.</l>
+<l>Love deeply grounded, hardly is dissembled.</l>
+<l>These lovers parleyed by the touch of hands;</l>
+<l>True love is mute, and oft amazed stands.</l>
+<l>Thus while dumb signs their yielding hearts entangled,</l>
+<l>The air with sparks of living fire was spangled,</l>
+<l>And night, deep drenched in misty acHeron,</l>
+<l>Heaved up her head, and half the world upon</l>
+<l>Breathed darkness forth (dark night is cupid's day).</l>
+<l>And now begins Leander to display</l>
+<l>Love's holy fire, with words, with sighs, and tears,</l>
+<l>Which like sweet music entered Hero's ears,</l>
+<l>And yet at every word she turned aside,</l>
+<l>And always cut him off as he replied.</l>
+<l>At last, like to a bold sharp sophister,</l>
+<l>With cheerful hope thus he accosted her.</l>
+<l>  "fair creature, let me speak without offense.</l>
+<l>I would my rude words had the influence</l>
+<l>To lead thy thoughts as thy fair looks do mine,</l>
+<l>Then shouldst thou be his prisoner, who is thine.</l>
+<l>Be not unkind and fair; misshapen stuff</l>
+<l>Are of behavior boisterous and rough.</l>
+<l>O shun me not, but hear me ere you go.</l>
+<l>God knows i cannot force love as you do.</l>
+<l>My words shall be as spotless as my youth,</l>
+<l>Full of simplicity and naked truth.</l>
+<l>This sacrifice, (whose sweet perfume descending</l>
+<l>From venus' altar, to your footsteps bending)</l>
+<l>Doth testify that you exceed her far,</l>
+<l>To whom you offer, and whose nun you are.</l>
+<l>Why should you worship her?  her you surpass</l>
+<l>As much as sparkling diamonds flaring glass.</l>
+<l>A diamond set in lead his worth retains;</l>
+<l>A heavenly nymph, beloved of human swains,</l>
+<l>Receives no blemish, but ofttimes more grace;</l>
+<l>Base in respect of thee divine and pure,</l>
+<l>Dutiful service may thy love procure.</l>
+<l>And i in duty will excel all other,</l>
+<l>As thou in beauty dost exceed love's mother.</l>
+<l>Nor heaven, nor thou, were made to gaze upon,</l>
+<l>As heaven preserves all things, so save thou one.</l>
+<l>A stately builded ship, well rigged and tall,</l>
+<l>The ocean maketh more majestical.</l>
+<l>Why vowest thou then to live in sestos here</l>
+<l>Who on love's seas more glorious wouldst appear?</l>
+<l>Like untuned golden strings all women are,</l>
+<l>Which long time lie untouched, will harshly jar.</l>
+<l>Vessels of brass, oft handled, brightly shine.</l>
+<l>What difference betwixt the richest mine</l>
+<l>And basest mold, but use?  for both, not used,</l>
+<l>Are of like worth.  then treasure is abused</l>
+<l>When misers keep it;  being put to loan,</l>
+<l>In time it will return us two for one.</l>
+<l>Rich robes themselves and others do adorn;</l>
+<l>Neither themselves nor others, if not worn.</l>
+<l>Who builds a palace and rams up the gate</l>
+<l>Shall see it ruinous and desolate.</l>
+<l>Ah, simple Hero, learn thyself to cherish.</l>
+<l>Lone women like to empty houses perish.</l>
+<l>Less sins the poor rich man that starves himself</l>
+<l>In heaping up a mass of drossy pelf,</l>
+<l>Than such as you.  his golden earth remains</l>
+<l>Which, after his decease, some other gains.</l>
+<l>But this fair gem, sweet in the loss alone,</l>
+<l>When you fleet hence, can be bequeathed to none.</l>
+<l>Or, if it could, down from th' enameled sky</l>
+<l>All heaven would come to claim this legacy,</l>
+<l>And with intestine broils the world destroy,</l>
+<l>And quite confound nature's sweet harmony.</l>
+<l>Well therefore by the gods decreed it is</l>
+<l>We human creatures should enjoy that bliss.</l>
+<l>One is no number; maids are nothing then</l>
+<l>Without the sweet society of men.</l>
+<l>Wilt thou live single still?  one shalt thou be,</l>
+<l>Though never singling hymen couple thee.</l>
+<l>Wild savages, that drink of running springs,</l>
+<l>Think water far excels all earthly things,</l>
+<l>But they that daily taste neat wine despise it.</l>
+<l>Compared with marriage, had you tried them both,</l>
+<l>Differs as much as wine and water doth.</l>
+<l>Base bullion for the stamp's sake we allow;</l>
+<l>Even so for men's impression do we you,</l>
+<l>By which alone, our reverend fathers say,</l>
+<l>Women receive perfection every way.</l>
+<l>This idol which you term virginity</l>
+<l>Is neither essence subject to the eye</l>
+<l>No, nor to any one exterior sense,</l>
+<l>Nor hath it any place of residence,</l>
+<l>Nor is't of earth or mold celestial,</l>
+<l>Or capable of any form at all.</l>
+<l>Of that which hath no being do not boast;</l>
+<l>Things that are not at all are never lost.</l>
+<l>Men foolishly do call it virtuous;</l>
+<l>What virtue is it that is born with us?</l>
+<l>Much less can honor be ascribed thereto;</l>
+<l>Honor is purchased by the deeds we do.</l>
+<l>Believe me, Hero, honor is not won</l>
+<l>Until some honorable deed be done.</l>
+<l>Seek you for chastity, immortal fame,</l>
+<l>And know that some have wronged diana's name?</l>
+<l>Whose name is it, if she be false or not</l>
+<l>So she be fair, but some vile tongues will blot?</l>
+<l>But you are fair, (ay me) so wondrous fair,</l>
+<l>So young, so gentle, and so debonair,</l>
+<l>As greece will think if thus you live alone</l>
+<l>Some one or other keeps you as his own.</l>
+<l>Then, Hero, hate me not nor from me fly</l>
+<l>To follow swiftly blasting infamy.</l>
+<l>Perhaps thy sacred priesthood makes thee loath.</l>
+<l>Tell me, to whom mad'st thou that heedless oath?"</l>
+<l>  "to venus," answered she and, as she spake,</l>
+<l>Forth from those two tralucent cisterns brake</l>
+<l>A stream of liquid pearl, which down her face</l>
+<l>Made milk-white paths, whereon the gods might trace</l>
+<l>To jove's high court.  he thus replied:  "the rites</l>
+<l>In which love's beauteous empress most delights</l>
+<l>Are banquets, doric music, midnight revel,</l>
+<l>Plays, masks, and all that stern age counteth evil.</l>
+<l>Thee as a holy idiot doth she scorn</l>
+<l>For thou in vowing chastity hast sworn</l>
+<l>To rob her name and honor, and thereby</l>
+<l>Committ'st a sin far worse than perjury,</l>
+<l>Even sacrilege against her deity,</l>
+<l>To expiate which sin, kiss and shake hands.</l>
+<l>Such sacrifice as this venus demands."</l>
+<l>  thereat she smiled and did deny him so,</l>
+<l>As put thereby, yet might he hope for moe.</l>
+<l>Which makes him quickly re-enforce his speech,</l>
+<l>And her in humble manner thus beseech.</l>
+<l>  "though neither gods nor men may thee deserve,</l>
+<l>Yet for her sake, whom you have vowed to serve,</l>
+<l>Abandon fruitless cold virginity,</l>
+<l>The gentle queen of love's sole enemy.</l>
+<l>Then shall you most resemble venus' nun,</l>
+<l>When venus' sweet rites are performed and done.</l>
+<l>Flint-breasted pallas joys in single life,</l>
+<l>But pallas and your mistress are at strife.</l>
+<l>Love, Hero, then, and be not tyrannous,</l>
+<l>But heal the heart that thou hast wounded thus,</l>
+<l>Nor stain thy youthful years with avarice.</l>
+<l>Fair fools delight to be accounted nice.</l>
+<l>The richest corn dies, if it be not reaped;</l>
+<l>Beauty alone is lost, too warily kept."</l>
+<l>These arguments he used, and many more,</l>
+<l>Wherewith she yielded, that was won before.</l>
+<l>Hero's looks yielded but her words made war.</l>
+<l>Women are won when they begin to jar.</l>
+<l>Thus, having swallowed cupid's golden hook,</l>
+<l>The more she strived, the deeper was she strook.</l>
+<l>Yet, evilly feigning anger, strove she still</l>
+<l>And would be thought to grant against her will.</l>
+<l>So having paused a while at last she said,</l>
+<l>"who taught thee rhetoric to deceive a maid?</l>
+<l>Ay me, such words as these should i abhor</l>
+<l>And yet i like them for the orator."</l>
+<l>  with that Leander stooped to have embraced her</l>
+<l>But from his spreading arms away she cast her,</l>
+<l>And thus bespake him:  "gentle youth, forbear</l>
+<l>To touch the sacred garments which i wear.</l>
+<l>Upon a rock and underneath a hill</l>
+<l>Far from the town (where all is whist and still,</l>
+<l>Save that the sea, playing on yellow sand,</l>
+<l>Sends forth a rattling murmur to the land,</l>
+<l>Whose sound allures the golden morpheus</l>
+<l>In silence of the night to visit us,)</l>
+<l>My turret stands and there, god knows, i play</l>
+<l>A dwarfish beldam bears me company,</l>
+<l>That hops about the chamber where i lie,</l>
+<l>And spends the night (that might be better spent)</l>
+<l>In vain discourse and apish merriment.</l>
+<l>Come thither."  as she spake this, her tongue tripped,</l>
+<l>For unawares "come thither" from her slipped.</l>
+<l>And suddenly her former color changed,</l>
+<l>And here and there her eyes through anger ranged.</l>
+<l>And like a planet, moving several ways,</l>
+<l>At one self instant she, poor soul, assays,</l>
+<l>Loving, not to love at all, and every part</l>
+<l>Strove to resist the motions of her heart.</l>
+<l>And hands so pure, so innocent, nay, such</l>
+<l>As might have made heaven stoop to have a touch,</l>
+<l>Did she uphold to venus, and again</l>
+<l>Vowed spotless chastity, but all in vain.</l>
+<l>Cupid beats down her prayers with his wings,</l>
+<l>Her vows above the empty air he flings,</l>
+<l>All deep enraged, his sinewy bow he bent,</l>
+<l>And shot a shaft that burning from him went,</l>
+<l>Wherewith she strooken, looked so dolefully,</l>
+<l>As made love sigh to see his tyranny.</l>
+<l>And as she wept her tears to pearl he turned,</l>
+<l>And wound them on his arm and for her mourned.</l>
+<l>Then towards the palace of the destinies</l>
+<l>Laden with languishment and grief he flies,</l>
+<l>And to those stern nymphs humbly made request</l>
+<l>Both might enjoy each other, and be blest.</l>
+<l>But with a ghastly dreadful countenance,</l>
+<l>Threatening a thousand deaths at every glance,</l>
+<l>They answered love, nor would vouchsafe so much</l>
+<l>As one poor word, their hate to him was such.</l>
+<l>Hearken a while and i will tell you why.</l>
+<l>Heaven's winged herald, jove-borne mercury,</l>
+<l>The selfsame day that he asleep had laid</l>
+<l>Enchanted argus, spied a country maid</l>
+<l>Whose careless hair instead of pearl t' adorn it</l>
+<l>Glistered with dew, as one that seemed to scorn it;</l>
+<l>Her breath as fragrant as the morning rose,</l>
+<l>Her mind pure, and her tongue untaught to gloze.</l>
+<l>Yet proud she was (for lofty pride that dwells</l>
+<l>In towered courts is oft in shepherds' cells.)</l>
+<l>And silver tincture of her cheeks, that drew</l>
+<l>The love of every swain.  on her this god</l>
+<l>Enamored was, and with his snaky rod</l>
+<l>Did charm her nimble feet, and made her stay,</l>
+<l>The while upon a hillock down he lay</l>
+<l>And sweetly on his pipe began to play,</l>
+<l>And with smooth speech her fancy to assay,</l>
+<l>Till in his twining arms he locked her fast</l>
+<l>And then he wooed with kisses; and at last,</l>
+<l>As shepherds do, her on the ground he laid</l>
+<l>And, tumbling in the grass, he often strayed</l>
+<l>Beyond the bounds of shame, in being bold</l>
+<l>To eye those parts which no eye should behold.</l>
+<l>And, like an insolent commanding lover</l>
+<l>Boasting his parentage, would needs discover</l>
+<l>The way to new elysium,  but she,</l>
+<l>Whose only dower was her chastity,</l>
+<l>Having striv'n in vain was now about to cry</l>
+<l>And crave the help of shepherds that were nigh.</l>
+<l>Herewith he stayed his fury, and began</l>
+<l>To give her leave to rise.  away she ran;</l>
+<l>After went mercury who used such cunning</l>
+<l>As she, to hear his tale, left off her running.</l>
+<l>Maids are not won by brutish force and might,</l>
+<l>But speeches full of pleasure, and delight.</l>
+<l>And, knowing hermes courted her, was glad</l>
+<l>That she such loveliness and beauty had</l>
+<l>As could provoke his liking, yet was mute</l>
+<l>And neither would deny nor grant his suit.</l>
+<l>Still vowed he love.  she, wanting no excuse</l>
+<l>To feed him with delays, as women use,</l>
+<l>Or thirsting after immortality, -</l>
+<l>All women are ambitious naturally,  -</l>
+<l>Imposed upon her lover such a task</l>
+<l>As he ought not perform nor yet she ask.</l>
+<l>A draught of flowing nectar she requested,</l>
+<l>Wherewith the king of gods and men is feasted.</l>
+<l>He, ready to accomplish what she willed,</l>
+<l>Stole some from hebe (hebe jove's cup filled)</l>
+<l>And gave it to his simple rustic love.</l>
+<l>Which being known (as what is hid from jove)</l>
+<l>He inly stormed and waxed more furious</l>
+<l>Than for the fire filched by prometheus,</l>
+<l>And thrusts him down from heaven.  he, wandering here,</l>
+<l>Complained to cupid.  cupid for his sake,</l>
+<l>To be revenged on jove did undertake.</l>
+<l>And those on whom heaven, earth, and hell relies,</l>
+<l>I mean the adamantine destinies,</l>
+<l>He wounds with love, and forced them equally</l>
+<l>To dote upon deceitful mercury.</l>
+<l>They offered him the deadly fatal knife</l>
+<l>That shears the slender threads of human life.</l>
+<l>At his fair feathered feet the engines laid</l>
+<l>Which th' earth from ugly chaos' den upweighed.</l>
+<l>These he regarded not but did entreat</l>
+<l>That jove, usurper of his father's seat,</l>
+<l>Might presently be banished into hell,</l>
+<l>And aged saturn in olympus dwell.</l>
+<l>They granted what he craved, and once again</l>
+<l>Saturn and ops began their golden reign.</l>
+<l>Murder, rape, war, lust, and treachery,</l>
+<l>Were with jove closed in stygian empery.</l>
+<l>But long this blessed time continued not.</l>
+<l>As soon as he his wished purpose got</l>
+<l>He reckless of his promise did despise</l>
+<l>The love of th' everlasting destinies.</l>
+<l>They seeing it both love and him abhorred</l>
+<l>And jupiter unto his place restored.</l>
+<l>And but that learning in despite of fate</l>
+<l>Will mount aloft and enter heaven gate</l>
+<l>And to the seat of jove itself advance,</l>
+<l>Hermes had slept in hell with ignorance.</l>
+<l>Yet as a punishment they added this,</l>
+<l>That he and poverty should always kiss.</l>
+<l>And to this day is every scholar poor;</l>
+<l>Gross gold from them runs headlong to the boor.</l>
+<l>Likewise the angry sisters thus deluded,</l>
+<l>To venge themselves on hermes, have concluded</l>
+<l>That midas' brood shall sit in honor's chair,</l>
+<l>To which the muses' sons are only heir;</l>
+<l>And fruitful wits, that in aspiring are,</l>
+<l>Shall discontent run into regions far;</l>
+<l>And few great lords in virtuous deeds shall joy</l>
+<l>But be surprised with every garish toy,</l>
+<l>And still enrich the lofty servile clown,</l>
+<l>Who with encroaching guile keeps learning down.</l>
+<l>Then muse not cupid's suit no better sped,</l>
+<l>Seeing in their loves the fates were injured.</l>
+<l>Viewing Leander's face, fell down and fainted.</l>
+<l>He kissed her and breathed life into her lips,</l>
+<l>Wherewith as one displeased away she trips.</l>
+<l>Yet, as she went, full often looked behind,</l>
+<l>And many poor excuses did she find</l>
+<l>To linger by the way, and once she stayed,</l>
+<l>And would have turned again, but was afraid,</l>
+<l>In offering parley, to be counted light.</l>
+<l>So on she goes and in her idle flight</l>
+<l>Her painted fan of curled plumes let fall,</l>
+<l>Thinking to train Leander therewithal.</l>
+<l>He, being a novice, knew not what she meant</l>
+<l>But stayed, and after her a letter sent,</l>
+<l>Which joyful Hero answered in such sort,</l>
+<l>As he had hope to scale the beauteous fort</l>
+<l>Wherein the liberal graces locked their wealth,</l>
+<l>And therefore to her tower he got by stealth.</l>
+<l>Wide open stood the door, he need not climb,</l>
+<l>And she herself before the pointed time</l>
+<l>Had spread the board, with roses strowed the room,</l>
+<l>And oft looked out, and mused he did not come.</l>
+<l>At last he came.  o who can tell the greeting</l>
+<l>These greedy lovers had at their first meeting.</l>
+<l>He asked, she gave, and nothing was denied.</l>
+<l>Both to each other quickly were affied.</l>
+<l>Look how their hands, so were their hearts united,</l>
+<l>And what he did she willingly requited.</l>
+<l>(sweet are the kisses, the embracements sweet,</l>
+<l>When like desires and affections meet,</l>
+<l>For from the earth to heaven is cupid raised,</l>
+<l>Where fancy is in equal balance peised.)</l>
+<l>Yet she this rashness suddenly repented</l>
+<l>And turned aside, and to herself lamented</l>
+<l>As if her name and honor had been wronged</l>
+<l>By being possessed of him for whom she longed.</l>
+<l>Ay, and she wished, albeit not from her heart</l>
+<l>That he would leave her turret and depart.</l>
+<l>The mirthful god of amorous pleasure smiled</l>
+<l>To see how he this captive nymph beguiled.</l>
+<l>For hitherto he did but fan the fire,</l>
+<l>And kept it down that it might mount the higher.</l>
+<l>Now waxed she jealous lest his love abated,</l>
+<l>Therefore unto him hastily she goes</l>
+<l>And, like light salmacis, her body throws</l>
+<l>Upon his bosom where with yielding eyes</l>
+<l>She offers up herself a sacrifice</l>
+<l>To slake his anger if he were displeased.</l>
+<l>O, what god would not therewith be appeased?</l>
+<l>Like aesop's cock this jewel he enjoyed</l>
+<l>And as a brother with his sister toyed</l>
+<l>Supposing nothing else was to be done,</l>
+<l>Now he her favor and good will had won.</l>
+<l>But know you not that creatures wanting sense</l>
+<l>By nature have a mutual appetence,</l>
+<l>And, wanting organs to advance a step,</l>
+<l>Moved by love's force unto each other lep?</l>
+<l>Much more in subjects having intellect</l>
+<l>Some hidden influence breeds like effect.</l>
+<l>Albeit Leander rude in love and raw,</l>
+<l>Long dallying with Hero, nothing saw</l>
+<l>That might delight him more, yet he suspected</l>
+<l>Some amorous rites or other were neglected.</l>
+<l>Therefore unto his body hers he clung.</l>
+<l>She, fearing on the rushes to be flung,</l>
+<l>Strived with redoubled strength; the more she strived</l>
+<l>The more a gentle pleasing heat revived,</l>
+<l>Which taught him all that elder lovers know.</l>
+<l>And now the same gan so to scorch and glow</l>
+<l>As in plain terms (yet cunningly) he craved it.</l>
+<l>Love always makes those eloquent that have it.</l>
+<l>She, with a kind of granting, put him by it</l>
+<l>And ever, as he thought himself most nigh it,</l>
+<l>Like to the tree of tantalus, she fled</l>
+<l>And, seeming lavish, saved her maidenhead.</l>
+<l>Ne'er king more sought to keep his diadem,</l>
+<l>Than Hero this inestimable gem.</l>
+<l>Above our life we love a steadfast friend,</l>
+<l>Yet when a token of great worth we send,</l>
+<l>We often kiss it, often look thereon,</l>
+<l>And stay the messenger that would be gone.</l>
+<l>No marvel then, though Hero would not yield</l>
+<l>So soon to part from that she dearly held.</l>
+<l>Jewels being lost are found again, this never;</l>
+<l>'tis lost but once, and once lost, lost forever.</l>
+<l>  now had the morn espied her lover's steeds,</l>
+<l>Whereat she starts, puts on her purple weeds,</l>
+<l>All headlong throws herself the clouds among.</l>
+<l>And now Leander, fearing to be missed,</l>
+<l>Embraced her suddenly, took leave, and kissed.</l>
+<l>Long was he taking leave, and loath to go,</l>
+<l>And kissed again as lovers use to do.</l>
+<l>Sad Hero wrung him by the hand and wept</l>
+<l>Saying, "let your vows and promises be kept."</l>
+<l>Then standing at the door she turned about</l>
+<l>As loath to see Leander going out.</l>
+<l>And now the sun that through th' horizon peeps,</l>
+<l>As pitying these lovers, downward creeps,</l>
+<l>So that in silence of the cloudy night,</l>
+<l>Though it was morning, did he take his flight.</l>
+<l>But what the secret trusty night concealed</l>
+<l>Leander's amorous habit soon revealed.</l>
+<l>With cupid's myrtle was his bonnet crowned,</l>
+<l>About his arms the purple riband wound</l>
+<l>Wherewith she wreathed her largely spreading hair.</l>
+<l>Nor could the youth abstain, but he must wear</l>
+<l>The sacred ring wherewith she was endowed</l>
+<l>When first religious chastity she vowed.</l>
+<l>Which made his love through sestos to be known,</l>
+<l>And thence unto abydos sooner blown</l>
+<l>Than he could sail; for incorporeal fame</l>
+<l>Whose weight consists in nothing but her name,</l>
+<l>Is swifter than the wind, whose tardy plumes</l>
+<l>Are reeking water and dull earthly fumes.</l>
+<l>Home when he came, he seemed not to be there,</l>
+<l>But, like exiled air thrust from his sphere,</l>
+<l>Set in a foreign place; and straight from thence,</l>
+<l>Alcides like, by mighty violence</l>
+<l>He would have chased away the swelling main</l>
+<l>That him from her unjustly did detain.</l>
+<l>Like as the sun in a diameter</l>
+<l>Fires and inflames objects removed far,</l>
+<l>And heateth kindly, shining laterally,</l>
+<l>So beauty sweetly quickens when 'tis nigh,</l>
+<l>But being separated and removed,</l>
+<l>Burns where it cherished, murders where it loved.</l>
+<l>Therefore even as an index to a book,</l>
+<l>So to his mind was young Leander's look.</l>
+<l>O, none but gods have power their love to hide,</l>
+<l>Affection by the countenance is descried.</l>
+<l>The light of hidden fire itself discovers,</l>
+<l>His secret flame apparently was seen.</l>
+<l>Leander's father knew where he had been</l>
+<l>And for the same mildly rebuked his son,</l>
+<l>Thinking to quench the sparkles new begun.</l>
+<l>But love resisted once grows passionate,</l>
+<l>And nothing more than counsel lovers hate.</l>
+<l>For as a hot proud horse highly disdains</l>
+<l>To have his head controlled, but breaks the reins,</l>
+<l>Spits forth the ringled bit, and with his hooves</l>
+<l>Checks the submissive ground; so he that loves,</l>
+<l>The more he is restrained, the worse he fares.</l>
+<l>What is it now, but mad Leander dares?</l>
+<l>"o Hero, Hero!" thus he cried full oft;</l>
+<l>And then he got him to a rock aloft,</l>
+<l>Where having spied her tower, long stared he on't,</l>
+<l>And prayed the narrow toiling hellespont</l>
+<l>To part in twain, that he might come and go;</l>
+<l>But still the rising billows answered, "no."</l>
+<l>With that he stripped him to the ivory skin</l>
+<l>And, crying "love, i come," leaped lively in.</l>
+<l>Whereat the sapphire visaged god grew proud,</l>
+<l>And made his capering triton sound aloud,</l>
+<l>Imagining that ganymede, displeased,</l>
+<l>Had left the heavens; therefore on him he seized.</l>
+<l>Leander strived; the waves about him wound,</l>
+<l>And pulled him to the bottom, where the ground</l>
+<l>Was strewed with pearl, and in low coral groves</l>
+<l>Sweet singing mermaids sported with their loves</l>
+<l>On heaps of heavy gold, and took great pleasure</l>
+<l>To spurn in careless sort the shipwrack treasure.</l>
+<l>For here the stately azure palace stood</l>
+<l>Where kingly neptune and his train abode.</l>
+<l>The lusty god embraced him, called him "love,"</l>
+<l>And swore he never should return to jove.</l>
+<l>But when he knew it was not ganymede,</l>
+<l>For under water he was almost dead,</l>
+<l>He heaved him up and, looking on his face,</l>
+<l>Beat down the bold waves with his triple mace,</l>
+<l>Which mounted up, intending to have kissed him,</l>
+<l>And fell in drops like tears because they missed him.</l>
+<l>Leander, being up, began to swim</l>
+<l>And, looking back, saw neptune follow him,</l>
+<l>"o, let me visit Hero ere i die!"</l>
+<l>The god put helle's bracelet on his arm,</l>
+<l>And swore the sea should never do him harm.</l>
+<l>He clapped his plump cheeks, with his tresses played</l>
+<l>And, smiling wantonly, his love bewrayed.</l>
+<l>He watched his arms and, as they opened wide</l>
+<l>At every stroke, betwixt them would he slide</l>
+<l>And steal a kiss, and then run out and dance,</l>
+<l>And, as he turned, cast many a lustful glance,</l>
+<l>And threw him gaudy toys to please his eye,</l>
+<l>And dive into the water, and there pry</l>
+<l>Upon his breast, his thighs, and every limb,</l>
+<l>And up again, and close beside him swim,</l>
+<l>And talk of love.  Leander made reply,</l>
+<l>"you are deceived; i am no woman, i."</l>
+<l>Thereat smiled neptune, and then told a tale,</l>
+<l>How that a shepherd, sitting in a vale,</l>
+<l>Played with a boy so fair and kind,</l>
+<l>As for his love both earth and heaven pined;</l>
+<l>That of the cooling river durst not drink,</l>
+<l>Lest water nymphs should pull him from the brink.</l>
+<l>And when he sported in the fragrant lawns,</l>
+<l>Goat footed satyrs and upstaring fawns</l>
+<l>Would steal him thence.  ere half this tale was done,</l>
+<l>"ay me,"  Leander cried, "th' enamored sun</l>
+<l>That now should shine on thetis' glassy bower,</l>
+<l>Descends upon my radiant Hero's tower.</l>
+<l>O, that these tardy arms of mine were wings!"</l>
+<l>And, as he spake, upon the waves he springs.</l>
+<l>Neptune was angry that he gave no ear,</l>
+<l>And in his heart revenging malice bare.</l>
+<l>He flung at him his mace but, as it went,</l>
+<l>He called it in, for love made him repent.</l>
+<l>The mace, returning back, his own hand hit</l>
+<l>As meaning to be venged for darting it.</l>
+<l>When this fresh bleeding wound Leander viewed,</l>
+<l>His color went and came, as if he rued</l>
+<l>The grief which neptune felt.  in gentle breasts</l>
+<l>Relenting thoughts, remorse, and pity rests.</l>
+<l>And who have hard hearts and obdurate minds,</l>
+<l>But vicious, harebrained, and illiterate hinds?</l>
+<l>The god, seeing him with pity to be moved,</l>
+<l>Thereon concluded that he was beloved.</l>
+<l>With folly and false hope deluding us.)</l>
+<l>Wherefore, Leander's fancy to surprise,</l>
+<l>To the rich ocean for gifts he flies.</l>
+<l>'tis wisdom to give much; a gift prevails</l>
+<l>When deep persuading oratory fails.</l>
+<l>By this Leander, being near the land,</l>
+<l>Cast down his weary feet and felt the sand.</l>
+<l>Breathless albeit he were he rested not</l>
+<l>Till to the solitary tower he got,</l>
+<l>And knocked and called.  at which celestial noise</l>
+<l>The longing heart of Hero much more joys</l>
+<l>Than nymphs and shepherds when the timbrel rings,</l>
+<l>Or crooked dolphin when the sailor sings.</l>
+<l>She stayed not for her robes but straight arose</l>
+<l>And, drunk with gladness, to the door she goes,</l>
+<l>Where seeing a naked man, she screeched for fear,</l>
+<l>(such sights as this to tender maids are rare,)</l>
+<l>And ran into the dark herself to hide.</l>
+<l>(rich jewels in the dark are soonest spied).</l>
+<l>Unto her was he led, or rather drawn</l>
+<l>By those white limbs which sparkled through the lawn.</l>
+<l>The nearer that he came, the more she fled,</l>
+<l>And, seeking refuge, slipped into her bed.</l>
+<l>Whereon Leander sitting thus began,</l>
+<l>Through numbing cold, all feeble, faint, and wan.</l>
+<l>  "if not for love, yet, love, for pity sake,</l>
+<l>Me in thy bed and maiden bosom take.</l>
+<l>At least vouchsafe these arms some little room,</l>
+<l>Who, hoping to embrace thee, cheerly swum.</l>
+<l>This head was beat with many a churlish billow,</l>
+<l>And therefore let it rest upon thy pillow."</l>
+<l>Herewith affrighted, Hero shrunk away,</l>
+<l>And in her lukewarm place Leander lay,</l>
+<l>Whose lively heat, like fire from heaven fet,</l>
+<l>Would animate gross clay and higher set</l>
+<l>The drooping thoughts of base declining souls</l>
+<l>Than dreary mars carousing nectar bowls.</l>
+<l>His hands he cast upon her like a snare.</l>
+<l>She, overcome with shame and sallow fear,</l>
+<l>Like chaste diana when actaeon spied her,</l>
+<l>Being suddenly betrayed, dived down to hide her.</l>
+<l>And, as her silver body downward went,</l>
+<l>With both her hands she made the bed a tent,</l>
+<l>O'ercast with dim and darksome coverture.</l>
+<l>And now she lets him whisper in her ear,</l>
+<l>Flatter, entreat, promise, protest and swear;</l>
+<l>Yet ever, as he greedily assayed</l>
+<l>To touch those dainties, she the harpy played,</l>
+<l>And every limb did, as a soldier stout,</l>
+<l>Defend the fort, and keep the foeman out.</l>
+<l>For though the rising ivory mount he scaled,</l>
+<l>Which is with azure circling lines empaled,</l>
+<l>Much like a globe (a globe may i term this,</l>
+<l>By which love sails to regions full of bliss,)</l>
+<l>Yet there with sisyphus he toiled in vain,</l>
+<l>Till gentle parley did the truce obtain.</l>
+<l>Wherein Leander on her quivering breast</l>
+<l>Breathless spoke something, and sighed out the rest;</l>
+<l>Which so prevailed, as he with small ado</l>
+<l>Enclosed her in his arms and kissed her too.</l>
+<l>And every kiss to her was as a charm,</l>
+<l>And to Leander as a fresh alarm,</l>
+<l>So that the truce was broke and she, alas,</l>
+<l>(poor silly maiden) at his mercy was.</l>
+<l>Love is not full of pity (as men say)</l>
+<l>But deaf and cruel where he means to prey.</l>
+<l>Even as a bird, which in our hands we wring,</l>
+<l>Forth plungeth and oft flutters with her wing,</l>
+<l>She trembling strove.  this strife of hers (like that</l>
+<l>Which made the world) another world begat</l>
+<l>Of unknown joy.  treason was in her thought,</l>
+<l>And cunningly to yield herself she sought.</l>
+<l>Seeming not won, yet won she was at length.</l>
+<l>In such wars women use but half their strength.</l>
+<l>Leander now, like theban hercules,</l>
+<l>Entered the orchard of th' hesperides;</l>
+<l>Whose fruit none rightly can describe but he</l>
+<l>That pulls or shakes it from the golden tree.</l>
+<l>And now she wished this night were never done,</l>
+<l>And sighed to think upon th' approaching sun;</l>
+<l>For much it grieved her that the bright daylight</l>
+<l>Should know the pleasure of this blessed night,</l>
+<l>And them, like mars and erycine, display</l>
+<l>Both in each other's arms chained as they lay.</l>
+<l>Again, she knew not how to frame her look,</l>
+<l>Or speak to him, who in a moment took</l>
+<l>And fain by stealth away she would have crept,</l>
+<l>And to some corner secretly have gone,</l>
+<l>Leaving Leander in the bed alone.</l>
+<l>But as her naked feet were whipping out,</l>
+<l>He on the sudden clinged her so about,</l>
+<l>That, mermaidlike, unto the floor she slid.</l>
+<l>One half appeared, the other half was hid.</l>
+<l>Thus near the bed she blushing stood upright,</l>
+<l>And from her countenance behold ye might</l>
+<l>A kind of twilight break, which through the hair,</l>
+<l>As from an orient cloud, glimpsed here and there,</l>
+<l>And round about the chamber this false morn</l>
+<l>Brought forth the day before the day was born.</l>
+<l>So Hero's ruddy cheek Hero betrayed,</l>
+<l>And her all naked to his sight displayed,</l>
+<l>Whence his admiring eyes more pleasure took</l>
+<l>Than dis, on heaps of gold fixing his look.</l>
+<l>By this, apollo's golden harp began</l>
+<l>To sound forth music to the ocean,</l>
+<l>Which watchful hesperus no sooner heard</l>
+<l>But he the bright day-bearing car prepared</l>
+<l>And ran before, as harbinger of light,</l>
+<l>And with his flaring beams mocked ugly night,</l>
+<l>Till she, o'ercome with anguish, shame, and rage,</l>
+<l>Danged down to hell her loathsome carriage.</l>
+</div0></loc></body></Text>

@@ -39,12 +39,15 @@ class Runner(RepresenterMixin):
     # @args_logger
     def initial_process_contents(self):
         truth = []
+        truth_and_lines = []
         tokenizer = Tokenizer(self.sentences)
         line_tokens = tokenizer.create_tokens()
         for line in line_tokens:
             iambic_line = IambicLine(line)
             truth.append(str(iambic_line))
+            truth_and_lines.append( (str(iambic_line), [str(tkn) for tkn in line] ))
         pprint(truth)
+        pprint([x for x in truth_and_lines if x[0][0].startswith("F")])
         total_valid_lines = len([x for x in truth if x[0].startswith("T")])
         total_lines = len(truth)
         print()
@@ -59,10 +62,10 @@ class Runner(RepresenterMixin):
 
 
 if __name__ == "__main__":
-    filename = os.path.join(os.path.dirname(__file__), "poems/test_poem.txt")
+    filename = os.path.join(os.path.dirname(__file__), "poems/investigate.txt")
     rfp = RawFileProcessor(filename)
     contents = rfp.cleaned_contents
-    # contents = ["Be flooded o’er with her own effluences,\n"]
+    # contents = ["Where it should not be quenched day nor night\n"]
    
 # 
 

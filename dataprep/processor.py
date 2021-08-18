@@ -1,16 +1,11 @@
-import argparse
 import re
 from pprint import pprint
 
 class RawFileProcessor:
 
-    """
-    
 
-    """
-
-    def __init__(self, filename):
-        self.filename = filename
+    def __init__(self, src_filename):
+        self.src_filename = src_filename
         self.raw_contents = ''
         self.cleaned_contents = []
 
@@ -18,7 +13,7 @@ class RawFileProcessor:
 
 
     def read_file(self):
-        with open(f"{self.filename}", "r") as f:
+        with open(f"{self.src_filename}", "r") as f:
             self.raw_contents = (line for line in f.readlines())
 
 
@@ -27,8 +22,9 @@ class RawFileProcessor:
             print(line)
 
 
-    def write_file(self):
-        pass
+    def write_file(self, dest_filename):
+        with open(dest_filename, 'a') as f:
+            f.writelines(self.cleaned_contents)
 
 
     def clean_contents(self):
@@ -38,6 +34,7 @@ class RawFileProcessor:
             cleaned_line = re.sub(r'([!"#$%&\()*+,.\/:;<=>?@[\]^_{|}~\d])|(\'+$)', "", cleaned_line)
             cleaned_line = re.sub(r'(\s{2,})+|(-{2,})+', " ", cleaned_line)
             cleaned_line = re.sub(r"[\'\’]s\s{1}", " ", cleaned_line)
+            cleaned_line = re.sub(r'th?\'\w+', "th' ", cleaned_line)
             cleaned.append(cleaned_line + "\n")
         self.cleaned_contents = cleaned
 
@@ -45,16 +42,17 @@ class RawFileProcessor:
     def main(self):
         self.read_file()
         self.clean_contents()
-        self.write_file()
+        # self.write_file()
 
         
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Input a raw iambic pentameter file to be processed')
-    parser.add_argument("file")
-    args = parser.parse_args()
-    # print(args.file)
-    rfp = RawFileProcessor(args.file)
-    rfp.read_file()
-    cleaned = rfp.clean_contents()
-    print(cleaned)
+# if __name__ == "__main__":
+    # parser = argparse.ArgumentParser(description='Input a raw iambic pentameter file to be processed')
+    # parser.add_argument("file")
+    # args = parser.parse_args()
+    # # print(args.file)
+    # for filename in ["eliz1.txt", "eliz2.txt", "eliz3.txt", "eliz4.txt", "eliz5.txt", "eliz6.txt"]:
+    #     rfp = RawFileProcessor(filename)
+        # rfp.read_file()
+        # rfp.clean_contents()
+        # rfp.write_file("elizabethan_poems.txt")
