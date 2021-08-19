@@ -75,7 +75,7 @@ class Token(RepresenterMixin):
         for stress_repr in self.phoneme_reprs:
             # print("&&&&&&&&&&&&&&&&&&&&&&&&& get_syllabification: ", stress_repr)
             syllabified = pprint(syllabify(stress_repr, 0)).split('.')
-            # print("########### syllabified: ", syllabified)
+            print("########### syllabified: ", syllabified)
             syllabifications.append(syllabified)
         self.syllabifications = syllabifications
 

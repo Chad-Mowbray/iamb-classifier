@@ -62,10 +62,10 @@ class Runner(RepresenterMixin):
 
 
 if __name__ == "__main__":
-    filename = os.path.join(os.path.dirname(__file__), "poems/investigate.txt")
+    filename = os.path.join(os.path.dirname(__file__), "poems/romantic_poems.txt")
     rfp = RawFileProcessor(filename)
     contents = rfp.cleaned_contents
-    # contents = ["Where it should not be quenched day nor night\n"]
+    # contents = ["A well-bred Lord t' assault a gentle Belle\n"]
    
 # 
 

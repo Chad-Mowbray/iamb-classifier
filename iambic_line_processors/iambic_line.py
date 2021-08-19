@@ -366,7 +366,7 @@ class IambicLine():
 
     def main(self):
         print("main called")
-        self.tokens = [t for t in self.tokens if t.token != "th'"]  # remove elided "the"
+        self.tokens = [t for t in self.tokens if t.token not in ["th'", "t'"]]  # remove elided "the"
         self.original_stress_patterns_per_token = self.get_original_stress_patterns_per_token()
         print("original stress patterns per token: ", self.original_stress_patterns_per_token)
         possible_stress_patterns_per_token = self.get_possible_stress_patterns_per_token(self.original_stress_patterns_per_token)

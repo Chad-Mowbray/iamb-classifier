@@ -35,7 +35,7 @@ class TestPhonemeFSM(unittest.TestCase):
         fsm = PhonemeFSM("moonfaced")
         analyzed = fsm.final_phoneme_repr
         self.assertEqual(analyzed, [
-            ['AH1', 'AH0'], ['AH1', 'AH0', 'AH0', 'AH0']
+           ['AH1', 'AH0'], ['AH1', 'EH0', 'AH0'], ['AH1', 'AH0', 'AH0']
         ])
 
     def test_elided_the(self):

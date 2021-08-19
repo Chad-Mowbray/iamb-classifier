@@ -175,7 +175,7 @@ def syllabify(pron, alaska_rule=True):
     if flat_output != mypron:
         print(f"could not syllabify {mypron}, got {flat_output}")
         # raise ValueError(f"could not syllabify {mypron}, got {flat_output}")
-    print("output:", output)
+    print("syllabify output:", output)
     return output
 
 

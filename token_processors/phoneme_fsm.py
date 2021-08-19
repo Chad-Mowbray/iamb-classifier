@@ -59,6 +59,7 @@ class PhonemeFSM():
             print(phonemes)
             self.handle_success(phonemes)
         except KeyError:
+            print(token ,"not found in cmudict")
             if called_by_normalize and self.count < 1:
                 print('will call compound')
                 self.count += 1
@@ -80,7 +81,7 @@ class PhonemeFSM():
         if spelling_normalized: self.normalized_spelling = spelling_normalized
         if apostrophe_position: self.apostrophe_position = apostrophe_position
         if spelling_normalized:
-            # print("spelling normalized: ", spelling_normalized, "has_apostrophe:", self.has_apostrophe)
+            print("spelling normalized: ", spelling_normalized, "has_apostrophe:", self.has_apostrophe)
             self.lookup(called_by_normalize=True)
         else:
             if any(self.is_compound):
@@ -120,6 +121,7 @@ class PhonemeFSM():
         print("apostrophe called")
         print(phonemes, self.normalized_spelling)
         if self.normalized_spelling == "the": return phonemes + [['DH']]
+        if self.normalized_spelling == "to": return phonemes + [['T']]
         pop_position = 0 if self.apostrophe_position == "initial" else -1
         print(self.apostrophe_position)
         phonemes_copy = deepcopy(phonemes)
@@ -128,7 +130,8 @@ class PhonemeFSM():
             filtered = [i for i,v in enumerate(word) if v[-1].isdigit()]
             word.pop(filtered[pop_position])
             reduced.append(word)
-        return reduced
+        print(phonemes + reduced)
+        return phonemes + reduced
 
 
     def diy_stress_assignment(self):

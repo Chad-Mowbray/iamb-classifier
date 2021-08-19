@@ -30,6 +30,8 @@ class DictsSingleton():
             cls._instance.cmudict["moon"] = [['M', 'UW1', 'N']]
             cls._instance.cmudict["dryad"] = [['D', 'R', "AY1", "AE0", "D"]]
             cls._instance.cmudict["dryads"] = [['D', 'R', "AY1", "AE0", "D", "Z"]]
+            cls._instance.cmudict["bene"] = [['B', 'EH1', 'N', 'AH0'], ['B', 'EH1', 'N']]
+            cls._instance.cmudict["wherefore"] = [["W", "EH1", "R", "F", "ER0"]]
             
         return cls._instance
 

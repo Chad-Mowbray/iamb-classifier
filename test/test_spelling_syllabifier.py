@@ -71,7 +71,7 @@ class TestSpellingSyllabifier(unittest.TestCase):
     def test_frighted(self):
         ss = SpellingSyllabifier("frighted")
         self.assertEqual(ss.syllable_count, 1)
-        self.assertEqual(len(ss.tentative_phonemes), 2)
+        self.assertEqual(len(ss.tentative_phonemes), 3)
 
     def test_melodise(self):
         ss = SpellingSyllabifier("melodise")

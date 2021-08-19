@@ -34,7 +34,9 @@ class RawFileProcessor:
             cleaned_line = re.sub(r'([!"#$%&\()*+,.\/:;<=>?@[\]^_{|}~\d])|(\'+$)', "", cleaned_line)
             cleaned_line = re.sub(r'(\s{2,})+|(-{2,})+', " ", cleaned_line)
             cleaned_line = re.sub(r"[\'\’]s\s{1}", " ", cleaned_line)
-            cleaned_line = re.sub(r'th?\'\w+', "th' ", cleaned_line)
+            cleaned_line = re.sub(r'th\'\w+', "th' ", cleaned_line)
+            cleaned_line = re.sub(r'^[MXLICV]+$|(CANTO|Book).*[MXLICV]+', '', cleaned_line)
+
             cleaned.append(cleaned_line + "\n")
         self.cleaned_contents = cleaned
 
@@ -46,13 +48,13 @@ class RawFileProcessor:
 
         
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
     # parser = argparse.ArgumentParser(description='Input a raw iambic pentameter file to be processed')
     # parser.add_argument("file")
     # args = parser.parse_args()
-    # # print(args.file)
-    # for filename in ["eliz1.txt", "eliz2.txt", "eliz3.txt", "eliz4.txt", "eliz5.txt", "eliz6.txt"]:
-    #     rfp = RawFileProcessor(filename)
-        # rfp.read_file()
-        # rfp.clean_contents()
-        # rfp.write_file("elizabethan_poems.txt")
+    # print(args.file)
+    for filename in ["neo1.txt", "neo2.txt", "neo3.txt", "neo4.txt", "neo5.txt"]:
+        rfp = RawFileProcessor(filename)
+        rfp.read_file()
+        rfp.clean_contents()
+        rfp.write_file("neoclassical_poems.txt")

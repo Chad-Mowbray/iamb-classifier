@@ -31,6 +31,7 @@ class SpellingSyllabifier:
         "EA": r'ea',
         "AI": r'ai',
         "AU": r'au',
+        "UI": r'ui'
     }
 
     def __init__(self, token):
@@ -117,28 +118,32 @@ class SpellingSyllabifier:
             word = self.find_multiple(self.REGEX["QU"], word)
             return self.check_special_cases(word)
 
-        elif re.search(self.REGEX["AE"], word):
+        if re.search(self.REGEX["AE"], word):
             word = self.find_multiple(self.REGEX["AE"], word, rev=True)
             return self.check_special_cases(word)
 
-        elif re.search(self.REGEX["DOUBLE"], word):
+        if re.search(self.REGEX["DOUBLE"], word):
             word = self.find_multiple(self.REGEX["DOUBLE"], word)
             return self.check_special_cases(word)
 
-        elif re.search(self.REGEX["OU"], word):
+        if re.search(self.REGEX["OU"], word):
             word = self.find_multiple(self.REGEX["OU"], word)
             return self.check_special_cases(word)
 
-        elif re.search(self.REGEX["EY"], word):
+        if re.search(self.REGEX["EY"], word):
             word = self.find_multiple(self.REGEX["EY"], word)
             return self.check_special_cases(word)
 
-        elif re.search(self.REGEX["YV"], word):
+        if re.search(self.REGEX["YV"], word):
             word = self.find_multiple(self.REGEX["YV"], word)
             return self.check_special_cases(word)
 
-        elif re.search(self.REGEX["EA"], word):
+        if re.search(self.REGEX["EA"], word):
             word = self.find_multiple(self.REGEX["EA"], word)
+            return self.check_special_cases(word)
+
+        if re.search(self.REGEX["UI"], word):
+            word = self.find_multiple(self.REGEX["UI"], word)
             return self.check_special_cases(word)
 
         # print("^^^^^^^^^^^", word)
