@@ -94,5 +94,18 @@ class TestSpellingSyllabifier(unittest.TestCase):
         ss = SpellingSyllabifier("rouses")
         self.assertEqual(ss.syllable_count, 2)     
 
+    def test_uncloyed(self):
+        ss = SpellingSyllabifier("uncloyed")
+        self.assertEqual(ss.syllable_count, 2)   
+        self.assertEqual(len(ss.tentative_phonemes), 3)
+
+    def test_gudgeons(self):
+        ss = SpellingSyllabifier("gudgeons")
+        self.assertIn(['AH1', 'AH0'], ss.tentative_phonemes)     
+
+    def test_leveret(self):
+        ss = SpellingSyllabifier("leveret")
+        self.assertIn(['AH1', 'AH0'], ss.tentative_phonemes)   
+
 if __name__ == "__main__":
     unittest.main()

@@ -32,6 +32,8 @@ class DictsSingleton():
             cls._instance.cmudict["dryads"] = [['D', 'R', "AY1", "AE0", "D", "Z"]]
             cls._instance.cmudict["bene"] = [['B', 'EH1', 'N', 'AH0'], ['B', 'EH1', 'N']]
             cls._instance.cmudict["wherefore"] = [["W", "EH1", "R", "F", "ER0"]]
+            cls._instance.cmudict["thereon"] = [["DH", "EH0", "R", "AH1", "N"]]
+            cls._instance.cmudict["whereon"] = [["W", "EH0", "R", "AH1", "N"]]
             
         return cls._instance
 

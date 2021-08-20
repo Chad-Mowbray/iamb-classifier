@@ -63,20 +63,20 @@ class Runner(RepresenterMixin):
 
 
 if __name__ == "__main__":
-    files = ["poems/elizabethan_poems.txt","poems/neoclassical_poems.txt", "poems/victorian_poems.txt","poems/romantic_poems.txt"]
-    for f in files:
-        filename = os.path.join(os.path.dirname(__file__), f)
-        rfp = RawFileProcessor(filename)
-        contents = rfp.cleaned_contents
+    # files = ["poems/elizabethan_poems.txt","poems/neoclassical_poems.txt", "poems/victorian_poems.txt","poems/romantic_poems.txt"]
+    # for f in files:
+    #     filename = os.path.join(os.path.dirname(__file__), f)
+    #     rfp = RawFileProcessor(filename)
+    #     contents = rfp.cleaned_contents
 
-        r = Runner(contents)
-        r.initial_process_contents()
+    #     r = Runner(contents)
+    #     r.initial_process_contents()
 
 
 
-    # contents = ["Till I do bid uncurl then breakyour knots\n"]
-    # r = Runner(contents)
-    # r.initial_process_contents()
+    contents = ["The leveret seat and lark and partridge nest\n"]
+    r = Runner(contents)
+    r.initial_process_contents()
 
     
 

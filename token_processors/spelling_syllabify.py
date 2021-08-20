@@ -31,7 +31,12 @@ class SpellingSyllabifier:
         "EA": r'ea',
         "AI": r'ai',
         "AU": r'au',
-        "UI": r'ui'
+        "UI": r'ui',
+        "OY": r'oy',
+        # Others
+        "EOU": r'eou',
+        "EON": r'eon',
+        "VLV": r'[aeiou]{1}[vwrl][aeiou]{1}'
     }
 
     def __init__(self, token):
@@ -146,6 +151,10 @@ class SpellingSyllabifier:
             word = self.find_multiple(self.REGEX["UI"], word)
             return self.check_special_cases(word)
 
+        if re.search(self.REGEX["OY"], word):
+            word = self.find_multiple(self.REGEX["OY"], word)
+            return self.check_special_cases(word)
+
         # print("^^^^^^^^^^^", word)
         self.modified_word = word
         return self.modified_word
@@ -185,6 +194,29 @@ class SpellingSyllabifier:
                 self.reduced_syllables -= 1
         return phonemes
 
+    
+    def check_vowel_cluster(self, phonemes):
+        print("check vowel clusters called")
+        print(phonemes, self.token)
+
+        if re.search(self.REGEX["EOU"], self.token):
+            print("eou found...")
+            phonemes_len = len(phonemes[0])
+            reduced_phonemes = [self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(phonemes_len - 1) ]
+            print(reduced_phonemes)
+            phonemes.append(reduced_phonemes)
+        if re.search(self.REGEX["EON"], self.token):
+            print("eon found...")
+            reduced_phonemes = [self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(2) ]
+            phonemes.append(reduced_phonemes)
+        if re.search(self.REGEX["VLV"], self.token):
+            phonemes_len = len(phonemes[0])
+            reduced_phonemes = [self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(phonemes_len - 1) ]
+            print(reduced_phonemes)
+            phonemes.append(reduced_phonemes)
+
+        return phonemes
+
 
     def create_phoneme_repr(self):
         """
@@ -212,10 +244,18 @@ class SpellingSyllabifier:
                 self.tentative_phonemes.append(self.simple_stressor(self.reduced_syllables)[0])
 
 
+    def final_reduction_check(self):
+        print("final reduction check called")
+        with_vowel_cluster = self.check_vowel_cluster(self.tentative_phonemes)
+        self.tentative_phonemes = with_vowel_cluster
+
+
+
     def main(self):
         print("spelling syllabify started with:", self.token)
         self.get_syllable_count()
         self.create_phoneme_repr()
+        self.final_reduction_check()
 
 
 
