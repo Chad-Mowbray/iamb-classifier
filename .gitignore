@@ -3,4 +3,5 @@ __pycache__
 .DS_Store
 profile.txt
 log.txt
+big_log.txt
 .vscode

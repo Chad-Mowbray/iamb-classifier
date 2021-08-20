@@ -27,7 +27,7 @@ class SpellingNormalizer(RepresenterMixin):
 
     # @args_logger
     def get_modernized_spelling(self):
-        print("#### get modernized spelling called", self.unknown_word )
+        print("#### get modernized spelling called", self.unknown_word, len(self.unknown_word) )
         # self.apostrophe_check()
         print("#### after apostrophe checcked", self.unknown_word )
         self.modernized = reg.modernize(self.unknown_word) or self.brittish_converter() or self.local_list()
@@ -66,6 +66,7 @@ class SpellingNormalizer(RepresenterMixin):
 
     def apostrophe_check(self):
         print("apostrophe check called")
+        print(self.unknown_word, len(self.unknown_word))
         if self.unknown_word[-1] == "'":
             self.has_apostrophe = True
             self.apostrophe_position = "final" 

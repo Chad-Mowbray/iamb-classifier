@@ -46,6 +46,7 @@ class Runner(RepresenterMixin):
             iambic_line = IambicLine(line)
             truth.append(str(iambic_line))
             truth_and_lines.append( (str(iambic_line), [str(tkn) for tkn in line] ))
+        print("xzyabcd")
         pprint(truth)
         pprint([x for x in truth_and_lines if x[0][0].startswith("F")])
         total_valid_lines = len([x for x in truth if x[0].startswith("T")])
@@ -62,15 +63,21 @@ class Runner(RepresenterMixin):
 
 
 if __name__ == "__main__":
-    filename = os.path.join(os.path.dirname(__file__), "poems/romantic_poems.txt")
-    rfp = RawFileProcessor(filename)
-    contents = rfp.cleaned_contents
-    # contents = ["A well-bred Lord t' assault a gentle Belle\n"]
-   
-# 
+    files = ["poems/elizabethan_poems.txt","poems/neoclassical_poems.txt", "poems/victorian_poems.txt","poems/romantic_poems.txt"]
+    for f in files:
+        filename = os.path.join(os.path.dirname(__file__), f)
+        rfp = RawFileProcessor(filename)
+        contents = rfp.cleaned_contents
 
-    r = Runner(contents)
-    r.initial_process_contents()
+        r = Runner(contents)
+        r.initial_process_contents()
+
+
+
+    # contents = ["Till I do bid uncurl then breakyour knots\n"]
+    # r = Runner(contents)
+    # r.initial_process_contents()
 
     
+
 

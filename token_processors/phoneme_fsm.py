@@ -49,7 +49,8 @@ class PhonemeFSM():
         # print("compound_token: ", compound_token)
         token = self.normalized_spelling if self.normalized_spelling else self.initial_token
         token = compound_token if compound_token else token
-        print("lookup called with: ", token )
+        print("lookup called with: ", token, len(token), self.initial_token )
+        # if len(token) == 0: return []
         # print("token: ", token)
         try:
             phonemes = self.cmudict.get(token, None)
