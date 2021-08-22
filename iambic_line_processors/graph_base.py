@@ -2,6 +2,9 @@ from copy import deepcopy
 
 
 class GraphBase:
+    """
+    Basic implementation of graph traversal to get all possible paths
+    """
 
     def __init__(self):
         self.all_paths = []

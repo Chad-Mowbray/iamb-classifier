@@ -2,12 +2,15 @@ from iambic_line_processors.combinations_base import CombinationsBaseMixin
 from iambic_line_processors.graph_base import GraphBase
 
 
-class CombinationsGraph(GraphBase, CombinationsBaseMixin):
+# class CombinationsGraph(GraphBase, CombinationsBaseMixin):
+class CombinationsGraph(CombinationsBaseMixin, GraphBase):
+
+    """
+    Uses CombinationsBaseMixin and GraphBase to construct new stress patterns for lines
+    """
 
     def __init__(self, lines, product_possibles, is_odd_postition, target_stress):
-
-        CombinationsBaseMixin.__init__(self, lines, product_possibles, is_odd_postition, target_stress)
-        GraphBase.__init__(self)
+        super().__init__(lines, product_possibles, is_odd_postition, target_stress)
         self.all_paths = []
         self.path = []
         self.graph = {}

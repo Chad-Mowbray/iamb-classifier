@@ -6,9 +6,19 @@ from iambic_line_processors.combinations_graph import CombinationsGraph
 
 
 class IambicLine():
-
-    #TODO: to manage state, create an object {0: unmodified, 1: promote_secondary...}
-    #       and increment a counter for every is_valid_IP check, instead of current switches
+    """
+    Takes a tokenized line of IP
+    Checks if the line is a possible line of valid IP using the following process:
+            0. No changes
+            1. Demote compound-word stresses
+            2. Demote monosyllable stresses
+            3. Promote monosyllable stresses
+            4. Promote polysyllabic zero stresses 
+            5. Demote polysyllabic zero stresses
+            6. Invalid line
+    If rule 5 applies, then primary stress on a polysyllabic word had to be demoted
+    Such words are contained in self.changed_words
+    """
 
     BASE_PATTERN = (0,1,0,1,0,1,0,1,0,1)
 
@@ -32,10 +42,6 @@ class IambicLine():
 
     
     def get_transformed_words(self, comparisons):
-        # TODO 
-        """
-        This is still very approximate
-        """
         print("get_transformed_words called")
         pprint(comparisons)
         for comparison in comparisons:
@@ -53,7 +59,6 @@ class IambicLine():
                 for line in lines:
                     intermediate.append(line[i])
                 words.append(intermediate)
-            # pprint(words)
 
             def finder_real(word_variations, realized):
                 print("finder_read, word_variations, realized", word_variations, realized)
@@ -72,56 +77,6 @@ class IambicLine():
             res = [pair[1] for i,pair in enumerate(self.original_stress_patterns_per_token) if changed[i]]
             print(res)
             self.changed_words = res
-
-
-
-
-
-            # print("original stress patterns per token: ", pos)
-            # for i,word_group in enumerate(original):
-            #     if realized[i] in word_group or len(realized[i]) < 2:
-            #         print('match')
-            #         continue
-            #     else:
-            #         print(realized[i], ":", word_group)
-            #         x = []
-            #         realized_word_copy = deepcopy(realized[i])
-            #         for word in word_group:
-            #             if len(word) != len(realized_word_copy): continue
-            #             for i in range(len(word)):
-            #                 if word[i] == 1 and realized_word_copy[i] != 1:
-            #                     realized_word_copy[i] = 1
-
-            #         print(realized_word_copy)
-            #         changed = False
-            #         for j in range(len(realized_word_copy)):
-            #             if realized_word_copy[j] == 1:
-            #                 if realized[i][j] == 1:
-            #                     changed = False
-            #                 else:
-            #                     changed = True
-            #     print(changed)
-            #     changed_word = self.original_stress_patterns_per_token[i][1]
-            #     print("changed word", )
-            #     self.changed_words.append(changed_word)
-            #     self.altered_patterns.append(realized[i])
-            # print(abstract, realized)
-            # realized = [x for y in realized for x in y]
-            # print(realized)
-            # original = [x for x in [x for y in self.original_stress_patterns_per_token for x in y] if type(x) == list]
-            # print("O:",original)
-            # print("D", realized)
-            # for i,word_group in enumerate(original):
-            #     if realized[i] in word_group or len(realized[i]) < 2 or self.current_state <= 5:
-            #         continue
-            #         # print("match")
-            #     else:
-            #         print('novel')
-            #         print('\t', realized[i], word_group)
-            #         changed_word = self.original_stress_patterns_per_token[i][1]
-                    # print("changed word", changed_word)
-                    # self.changed_words.append(changed_word)
-                    # self.altered_patterns.append(realized[i])
 
 
     def test_base_pattern(self):

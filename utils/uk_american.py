@@ -2,6 +2,9 @@ import csv
 import os
 
 class UKAmerican:
+    """
+    Creates a UK-US spelling dictionary
+    """
     
     _instance = None
 

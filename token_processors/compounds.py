@@ -1,16 +1,19 @@
-from token_processors.spelling import SpellingNormalizer
-# from nltk.corpus import words as nltk_wordlist
+from .spelling import SpellingNormalizer
 
 
 
 class Compounds:
+    """
+    If a word token cannot be found in the cmudict, checks if it is composed of two words
+    should_proceed_to_compound_analysis helps reduce false positives
+    """
 
     def __init__(self, original_word, words, lemmatizer, uk_us_dict):
         self.original_word = original_word
         self.lemmatizer = lemmatizer
         self.words = words
         self.uk_us_dict = uk_us_dict
-        # print("Compound instance created: ", self.original_word)
+
 
     def should_proceed_to_compound_analysis(self):
         if self.original_word in self.words or self.original_word[:-1] in self.words:
@@ -19,7 +22,6 @@ class Compounds:
 
 
     def find_compound_in_wordlist(self, initial=2):
-
         # print("find_compound_in_wordlist called")
         dashed_word = self.handle_dashed_word()
         if dashed_word:

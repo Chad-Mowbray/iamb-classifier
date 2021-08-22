@@ -1,9 +1,9 @@
 import unittest
-from iambic_line_processors.iambic_line import IambicLine
-from token_processors.sentencizer import Sentencizer
-from token_processors.tokenizer import Tokenizer
+from iambic_line_processors import IambicLine
+from dataprep import RawFileProcessor
+from token_processors import Tokenizer
 
-from utils.dicts import DictsSingleton
+from utils import DictsSingleton
 
 
 class TestToIambicLine(unittest.TestCase):
@@ -16,14 +16,12 @@ class TestToIambicLine(unittest.TestCase):
     def setUp(self):
         self.ibls = []
 
-        with open("test/test_data/basic_lines.txt") as f:
-            contents = f.read()
-            sentences = Sentencizer(contents).main()
-            tokenizer = Tokenizer(sentences, self.dicts)
-            line_tokens = tokenizer.create_tokens()
-            for line in line_tokens:
-                iambic_line = IambicLine(line)
-                self.ibls.append(iambic_line)
+        sentences = RawFileProcessor("test/test_data/basic_lines.txt").cleaned_contents
+        tokenizer = Tokenizer(sentences, self.dicts)
+        line_tokens = tokenizer.create_tokens()
+        for line in line_tokens:
+            iambic_line = IambicLine(line)
+            self.ibls.append(iambic_line)
 
 
     def test_simple_case(self):

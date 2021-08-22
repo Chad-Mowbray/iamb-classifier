@@ -1,19 +1,18 @@
-from token_processors.spelling import SpellingNormalizer
-from utils.logger import args_logger
-from utils.representer import RepresenterMixin
-from token_processors.compounds import Compounds
-from token_processors.phoneme_fsm import PhonemeFSM
-
-from syllabify.syllabify import syllabify, pprint
-
 from re import search
 
+from utils import args_logger
+from syllabify import syllabify, syllabify_pprint
 
-class Token(RepresenterMixin):
+from .phoneme_fsm import PhonemeFSM
+
+
+
+class Token():
     """
     Accepts a word
     Represents features of a token
     """
+    
     PRIMARY_STRESS = "1"
     NO_STRESS = "0"
     SECONDARY_STRESS = "2"
@@ -28,7 +27,7 @@ class Token(RepresenterMixin):
         self.syllabification = []
 
         self.main()
-        # print("Token instance created: ", self.token)
+
 
     def __str__(self):
         return f"Token instance: {self.token}"
@@ -41,7 +40,7 @@ class Token(RepresenterMixin):
             "original_token": self.token,
             "modified_token": self.modified_token,
             "stress_patterns": self.stress_patterns,
-            "syllable_counts": self.syllable_counts,
+            # "syllable_counts": self.syllable_counts,
             "phoneme_reprs": self.phoneme_reprs,
             "syllabifications": self.syllabifications
         }
@@ -62,19 +61,11 @@ class Token(RepresenterMixin):
        
 
     # @args_logger
-    def get_syllable_count(self):
-        counts = []
-        for syllabification in self.syllabifications:
-            counts.append(len(syllabification))
-        self.syllable_count = counts
-
-
-    # @args_logger
     def get_syllabification(self):
         syllabifications = []
         for stress_repr in self.phoneme_reprs:
             # print("&&&&&&&&&&&&&&&&&&&&&&&&& get_syllabification: ", stress_repr)
-            syllabified = pprint(syllabify(stress_repr, 0)).split('.')
+            syllabified = syllabify_pprint(syllabify(stress_repr, 0)).split('.')
             print("########### syllabified: ", syllabified)
             syllabifications.append(syllabified)
         self.syllabifications = syllabifications
@@ -100,7 +91,7 @@ class Token(RepresenterMixin):
         # print("in Token, token:", self.token)
         self.get_phonemes_from_dict()
         self.get_syllabification()
-        self.get_syllable_count()
+        # self.get_syllable_count()
         self.get_stress_patterns()
         # print(self())
 

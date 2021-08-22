@@ -1,13 +1,17 @@
 from nltk.corpus import words
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import cmudict as cmud
-from utils.uk_american import UKAmerican
+from .uk_american import UKAmerican
+
 
 
 class DictsSingleton():
 
-    #C urrently ad hoc adding syllabic variation
-    # TODO something better
+    """
+    Contains main reference data for looking up tokens
+    Sets some ad-hoc entries
+    Singleton
+    """
     
     _instance = None
     def __new__(cls):

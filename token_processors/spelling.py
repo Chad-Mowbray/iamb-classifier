@@ -1,10 +1,18 @@
-from utils.logger import args_logger
-from utils.representer import RepresenterMixin
 import re
 
 from regularize import regularize as reg
+from utils import args_logger
 
-class SpellingNormalizer(RepresenterMixin):
+
+class SpellingNormalizer():
+    """
+    Accepts a word token which is not in the cmudict
+    Checks:
+        -Old spelling
+        -Brittish spelling
+        -Archaic 2P verb endings
+        -Abbreviations with apostrophes
+    """
 
     def __init__(self, unknown_word, uk_us_dict):
         self.unknown_word = unknown_word

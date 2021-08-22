@@ -1,31 +1,22 @@
 import re
 from string import punctuation
-# from utils.dicts import DictsSingleton
-
 from pprint import pprint
 
-from utils.representer import RepresenterMixin
-from utils.logger import args_logger
-import logging
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(message)s')
-
-from token_processors.token import Token
+from utils import args_logger
+from .token import Token
 
 
-class Tokenizer(RepresenterMixin):
+class Tokenizer():
     """
     Takes in a line of IP
-    Returns list of Tokens
+    Returns list of Token instances
     """
-
 
     def __init__(self, lines, dicts):
         self.lines = lines
         self.line_tokens = []
         self.remove = punctuation
         self.dicts = dicts
-        # print("Tokenizer instance created: ", self.lines)
 
     def tokenize_line(self, line):
         return re.split("[ \n!\"#$%&()*+,./:;<=>?@[\]^_`{|}~  \t]", line)
@@ -52,15 +43,10 @@ class Tokenizer(RepresenterMixin):
     # @args_logger
     def create_tokens(self):
         lines = self.process_lines()
-        # print("lines: ", lines)
         tokenized_lines = []
         for line in lines:
-            # print("sentence tokens: ", [t for t in line])
             tokenized_line = [Token(t, self.dicts) for t in line]
-            # print([id(t) for t in tokenized_line])
             if tokenized_line: tokenized_lines.append(tokenized_line)
-            # pprint(list(map(lambda t: print(pprint(t()), "\n"), tokenized_line)))
-        # print("tokenized lines: ", tokenized_lines)
         return tokenized_lines
 
 

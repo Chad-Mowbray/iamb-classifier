@@ -1,5 +1,4 @@
 import logging
-import inspect
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(message)s')

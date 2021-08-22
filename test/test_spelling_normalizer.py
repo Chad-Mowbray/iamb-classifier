@@ -1,6 +1,6 @@
 import unittest
 from token_processors.spelling import SpellingNormalizer
-from utils.dicts import DictsSingleton
+from utils import DictsSingleton
 
 
 class TestSpellingNormalizer(unittest.TestCase):

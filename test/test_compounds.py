@@ -1,6 +1,6 @@
 import unittest
 from token_processors.compounds import Compounds
-from utils.dicts import DictsSingleton
+from utils import DictsSingleton
 
 class TestCompounds(unittest.TestCase):
 

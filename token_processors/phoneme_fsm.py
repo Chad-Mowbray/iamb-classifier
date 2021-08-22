@@ -1,16 +1,18 @@
-from utils.dicts import DictsSingleton
-from token_processors.spelling import SpellingNormalizer
-from token_processors.compounds import Compounds
-from token_processors.spelling_syllabify import SpellingSyllabifier
+from .spelling import SpellingNormalizer
+from .compounds import Compounds
+from .spelling_syllabify import SpellingSyllabifier
 from copy import deepcopy
-import re
 
 
 class PhonemeFSM():
+    """
+    Transforms a word token into phonemeic representation
+    EX: "moon" ->  [['M', 'UW1', 'N']]
+    """
 
     def __init__(self, token, dicts):
         self.initial_token = token
-        self.dicts = dicts #DictsSingleton()
+        self.dicts = dicts 
         self.cmudict = self.dicts.cmudict
         self.uk_us_dict = self.dicts.uk_us_dict
         self.normalized_spelling = ''
@@ -153,7 +155,6 @@ class PhonemeFSM():
 
 
     def check_stress_reduction(self, phonemes):
-        #TODO make more general -> two consecutive stresses can be reduced
         """
         [['K', 'AA1', 'N', 'JH', 'ER0', 'IH0', 'NG']] ->
         [['K', 'AA1', 'N', 'JH', 'ER0', 'IH0', 'NG'], ['K', 'AA1', 'N', 'JH', 'IH0', 'NG']]
@@ -178,7 +179,6 @@ class PhonemeFSM():
 
     def handle_success(self, phonemes):
         print("handle_success called with: ", phonemes)
-
         phonemes = self.check_stress_reduction(phonemes)
 
         if self.stress_assigned_diy: 
@@ -206,9 +206,6 @@ class PhonemeFSM():
                 # print("right_compound:", self.right_compound)
         if self.left_compound and self.right_compound:
             print("both left and right are valid")
-            # print("Will be a valid compound")
-            # TODO: should final form be one or two words?
-            # self.final_phoneme_repr = [self.left_compound[0] + self.right_compound[0]]
             combined = [lt + rt for lt in self.left_compound for rt in self.right_compound]
             self.final_phoneme_repr = self.apostrophe(combined)
             print("final compound repr:!!!! ", self.final_phoneme_repr)
@@ -227,7 +224,6 @@ class PhonemeFSM():
 
         
     def handle_failure(self):
-        # print("handle_failure called...")
         print("*" * 80, "Unable to parse token ", self.initial_token, "final_phoneme_repr", self.final_phoneme_repr)
         self.diy_stress_assignment()
         return

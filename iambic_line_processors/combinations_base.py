@@ -2,6 +2,9 @@ import itertools
 
 
 class CombinationsBaseMixin:
+    """
+    Creates new possible lines of IP given multiple versions of a token
+    """
 
     def __init__(self, lines, product_possibles, is_odd_postition, target_stress):
         self.lines = lines

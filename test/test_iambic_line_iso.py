@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import MagicMock
-from iambic_line_processors.iambic_line import IambicLine
+from iambic_line_processors import IambicLine
 
 
 class TestIambicLineIso(unittest.TestCase):

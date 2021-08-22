@@ -2,10 +2,12 @@ import re
 from copy import deepcopy
 from nltk import pos_tag
 
+
 class SpellingSyllabifier:
     """
-    If a token is not in the dictionary,
-    Syllabify a word based only on its spelling
+    A last resort if a word token cannot be found elsewhere
+    Syllabifies a word based only on its spelling
+    Ridiculously expandable
     """
 
     VOWELS = "aeiouy"
@@ -155,7 +157,6 @@ class SpellingSyllabifier:
             word = self.find_multiple(self.REGEX["OY"], word)
             return self.check_special_cases(word)
 
-        # print("^^^^^^^^^^^", word)
         self.modified_word = word
         return self.modified_word
 
@@ -168,7 +169,6 @@ class SpellingSyllabifier:
             return [[self.DUMMY_STRESSED if i == self.syllable_count - 2 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count + restore_syllables) ]]
 
 
-    #TODO
     def complicated_stressor(self, POS, restore_syllables=0):
         if POS == "V" or any([self.token.endswith(ending) for ending in ["est", "eth", "ise", "ize"] ]):
             # initial stress 

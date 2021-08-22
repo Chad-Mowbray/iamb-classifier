@@ -179,7 +179,7 @@ def syllabify(pron, alaska_rule=True):
     return output
 
 
-def pprint(syllab):
+def syllabify_pprint(syllab):
     """
     Pretty-print a syllabification
     """

@@ -1,6 +1,6 @@
 import unittest
 from token_processors.phoneme_fsm import PhonemeFSM
-from utils.dicts import DictsSingleton
+from utils import DictsSingleton
 
 
 class TestPhonemeFSM(unittest.TestCase):

@@ -1,36 +1,27 @@
 import os
 import pickle
-
-from dataprep.processor import RawFileProcessor
-from token_processors.sentencizer import Sentencizer
-from token_processors.tokenizer import Tokenizer
-from iambic_line_processors.iambic_line import IambicLine
-
 from pprint import pprint
+from collections import Counter
 
-from utils.representer import RepresenterMixin
-from utils.logger import args_logger
-import logging
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(message)s')
+from dataprep import RawFileProcessor
+from token_processors import Tokenizer
+from iambic_line_processors import IambicLine
+from utils import args_logger
+from utils import DictsSingleton
+
 
 # import nltk
 # nltk.download('wordnet')
-from collections import Counter
-
-from utils.dicts import DictsSingleton
 
 
 
-class Runner(RepresenterMixin):
+class Runner():
     """
     Main entrypoint for application
     Accepts text file
     """
     def __init__(self, sentences):
-        # self.raw_file_contents = raw_file_contents
         self.sentences = sentences #Sentencizer(self.raw_file_contents).main()
-        print(self.sentences)
         self.dicts = DictsSingleton()
         
 
@@ -38,7 +29,7 @@ class Runner(RepresenterMixin):
     def get_stats(truth):
         rules = [int(x.split(', ')[1]) for x in truth]
         total = len(rules)
-        res_dict = Counter(rules)
+        res_dict: Counter = Counter(rules)
         return {k: str(v/total * 100)[:4] + "%" for k,v in res_dict.items()}
         
 
@@ -47,15 +38,14 @@ class Runner(RepresenterMixin):
         truth = []
         truth_and_lines = []
         all_changed_words = []
-        tokenizer = Tokenizer(self.sentences, self.dicts)
-        line_tokens = tokenizer.create_tokens()
+        tokenizer: Tokenizer = Tokenizer(self.sentences, self.dicts)
+        line_tokens: str = tokenizer.create_tokens()
         for line in line_tokens:
             iambic_line = IambicLine(line)
             changed_words = iambic_line.changed_words
             if changed_words: all_changed_words += changed_words
             truth.append(str(iambic_line))
             truth_and_lines.append( (str(iambic_line), [str(tkn) for tkn in line] ))
-        print("xzyabcd")
         pprint(truth)
         pprint([x for x in truth_and_lines if x[0][0].startswith("F")])
         total_valid_lines = len([x for x in truth if x[0].startswith("T")])

@@ -1,6 +1,6 @@
 import unittest
 import os
-from dataprep.processor import RawFileProcessor
+from dataprep import RawFileProcessor
 
 
 class TestRawFileProcessor(unittest.TestCase):
