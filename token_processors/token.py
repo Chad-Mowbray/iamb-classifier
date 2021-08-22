@@ -21,33 +21,28 @@ class Token():
         self.token = token
         self.dicts = dicts
         self.stress_patterns = []
-        self.syllable_counts = set()
         self.modified_token = ''
         self.phoneme_reprs = []
         self.syllabification = []
 
-        self.main()
+        self._main()
 
 
     def __str__(self):
         return f"Token instance: {self.token}"
-    
-    def __repr__(self):
-        return str(self)
 
     def __call__(self, *args, **kwargs):
         return {
             "original_token": self.token,
             "modified_token": self.modified_token,
             "stress_patterns": self.stress_patterns,
-            # "syllable_counts": self.syllable_counts,
             "phoneme_reprs": self.phoneme_reprs,
             "syllabifications": self.syllabifications
         }
 
 
     # @args_logger
-    def get_phonemes_from_dict(self):
+    def _get_phonemes_from_dict(self):
         token = self.token
         # print("token: ", token)
         fsm = PhonemeFSM(token, self.dicts)
@@ -61,7 +56,7 @@ class Token():
        
 
     # @args_logger
-    def get_syllabification(self):
+    def _get_syllabification(self):
         syllabifications = []
         for stress_repr in self.phoneme_reprs:
             # print("&&&&&&&&&&&&&&&&&&&&&&&&& get_syllabification: ", stress_repr)
@@ -72,7 +67,7 @@ class Token():
 
 
     # @args_logger
-    def get_stress_patterns(self):
+    def _get_stress_patterns(self):
         stress_patterns = []
         # print(self.syllabifications)
         for syllabification in self.syllabifications:
@@ -87,12 +82,12 @@ class Token():
   
 
     # @args_logger
-    def main(self):
+    def _main(self):
         # print("in Token, token:", self.token)
-        self.get_phonemes_from_dict()
-        self.get_syllabification()
+        self._get_phonemes_from_dict()
+        self._get_syllabification()
         # self.get_syllable_count()
-        self.get_stress_patterns()
+        self._get_stress_patterns()
         # print(self())
 
 

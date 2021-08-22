@@ -48,17 +48,17 @@ class SpellingSyllabifier:
         self.tentative_phonemes = [[]]
         self.reduced_syllables = 0
 
-        self.main()
+        self._main()
 
     
-    def get_syllable_count(self):
-        word = self.check_endings()
-        word = self.check_special_cases(word)
+    def _get_syllable_count(self):
+        word = self._check_endings()
+        word = self._check_special_cases(word)
         syllables = [w for w in word if w in self.VOWELS]
         self.syllable_count = len(syllables)
         print(self.syllable_count)
 
-    def find_multiple(self, regex, word, rev=False):
+    def _find_multiple(self, regex, word, rev=False):
         res = re.finditer(regex, word)
         indicies = [m.start() + 1 for m in res]
         indicies = indicies[::-1] if rev else indicies
@@ -73,7 +73,7 @@ class SpellingSyllabifier:
         self.reduced_syllables += 1
         return word
 
-    def check_endings(self):
+    def _check_endings(self):
         word = self.token
 
         if re.search(self.REGEX["EST"], word):
@@ -110,58 +110,58 @@ class SpellingSyllabifier:
         return word
 
 
-    def check_special_cases(self, word=None):
+    def _check_special_cases(self, word=None):
         word = word if word else self.token
     
         if re.search(self.REGEX["AU"], word):
-            word = self.find_multiple(self.REGEX["AU"], word)
-            return self.check_special_cases(word)
+            word = self._find_multiple(self.REGEX["AU"], word)
+            return self._check_special_cases(word)
 
         if re.search(self.REGEX["AI"], word):
-            word = self.find_multiple(self.REGEX["AI"], word)
-            return self.check_special_cases(word)
+            word = self._find_multiple(self.REGEX["AI"], word)
+            return self._check_special_cases(word)
 
         if re.search(self.REGEX["QU"], word):
-            word = self.find_multiple(self.REGEX["QU"], word)
-            return self.check_special_cases(word)
+            word = self._find_multiple(self.REGEX["QU"], word)
+            return self._check_special_cases(word)
 
         if re.search(self.REGEX["AE"], word):
-            word = self.find_multiple(self.REGEX["AE"], word, rev=True)
-            return self.check_special_cases(word)
+            word = self._find_multiple(self.REGEX["AE"], word, rev=True)
+            return self._check_special_cases(word)
 
         if re.search(self.REGEX["DOUBLE"], word):
-            word = self.find_multiple(self.REGEX["DOUBLE"], word)
-            return self.check_special_cases(word)
+            word = self._find_multiple(self.REGEX["DOUBLE"], word)
+            return self._check_special_cases(word)
 
         if re.search(self.REGEX["OU"], word):
-            word = self.find_multiple(self.REGEX["OU"], word)
-            return self.check_special_cases(word)
+            word = self._find_multiple(self.REGEX["OU"], word)
+            return self._check_special_cases(word)
 
         if re.search(self.REGEX["EY"], word):
-            word = self.find_multiple(self.REGEX["EY"], word)
-            return self.check_special_cases(word)
+            word = self._find_multiple(self.REGEX["EY"], word)
+            return self._check_special_cases(word)
 
         if re.search(self.REGEX["YV"], word):
-            word = self.find_multiple(self.REGEX["YV"], word)
-            return self.check_special_cases(word)
+            word = self._find_multiple(self.REGEX["YV"], word)
+            return self._check_special_cases(word)
 
         if re.search(self.REGEX["EA"], word):
-            word = self.find_multiple(self.REGEX["EA"], word)
-            return self.check_special_cases(word)
+            word = self._find_multiple(self.REGEX["EA"], word)
+            return self._check_special_cases(word)
 
         if re.search(self.REGEX["UI"], word):
-            word = self.find_multiple(self.REGEX["UI"], word)
-            return self.check_special_cases(word)
+            word = self._find_multiple(self.REGEX["UI"], word)
+            return self._check_special_cases(word)
 
         if re.search(self.REGEX["OY"], word):
-            word = self.find_multiple(self.REGEX["OY"], word)
-            return self.check_special_cases(word)
+            word = self._find_multiple(self.REGEX["OY"], word)
+            return self._check_special_cases(word)
 
         self.modified_word = word
         return self.modified_word
 
     
-    def simple_stressor(self, restore_syllables=0):
+    def _simple_stressor(self, restore_syllables=0):
         count = self.syllable_count
         if count == 1:
             return [[self.DUMMY_STRESSED]]
@@ -169,7 +169,7 @@ class SpellingSyllabifier:
             return [[self.DUMMY_STRESSED if i == self.syllable_count - 2 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count + restore_syllables) ]]
 
 
-    def complicated_stressor(self, POS, restore_syllables=0):
+    def _complicated_stressor(self, POS, restore_syllables=0):
         if POS == "V" or any([self.token.endswith(ending) for ending in ["est", "eth", "ise", "ize"] ]):
             # initial stress 
             return [[self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count + restore_syllables) ]]
@@ -178,7 +178,7 @@ class SpellingSyllabifier:
             return [[self.DUMMY_STRESSED if i == self.syllable_count - 1 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count + restore_syllables) ]]
 
     
-    def check_ed(self, phonemes):
+    def _check_ed(self, phonemes):
         print("check_ed called")
         print(phonemes, self.token)
 
@@ -195,7 +195,7 @@ class SpellingSyllabifier:
         return phonemes
 
     
-    def check_vowel_cluster(self, phonemes):
+    def _check_vowel_cluster(self, phonemes):
         print("check vowel clusters called")
         print(phonemes, self.token)
 
@@ -218,7 +218,7 @@ class SpellingSyllabifier:
         return phonemes
 
 
-    def create_phoneme_repr(self):
+    def _create_phoneme_repr(self):
         """
         Check POS, if none, use simple_stressor, otherwise, use complicated_stressor
         """
@@ -226,36 +226,36 @@ class SpellingSyllabifier:
         tag = pos_tag([self.token])[0][1]
         print("****************", tag)
         if tag.startswith("V") or any([self.token.endswith(ending) for ending in ["est", "eth", "ise", "ize"] ]): #or tag.startswith("N") or tag.startswith("J") 
-            self.tentative_phonemes = self.complicated_stressor(tag[0])
+            self.tentative_phonemes = self._complicated_stressor(tag[0])
             if self.token.endswith('ed'):
                 print("ends with ed...", self.tentative_phonemes)
-                self.tentative_phonemes = self.check_ed(self.tentative_phonemes)
+                self.tentative_phonemes = self._check_ed(self.tentative_phonemes)
             if self.modified_word:
                 print(self.tentative_phonemes)
-                print(self.complicated_stressor(tag[0]))
-                self.tentative_phonemes.append(self.complicated_stressor(tag[0], self.reduced_syllables)[0])
+                print(self._complicated_stressor(tag[0]))
+                self.tentative_phonemes.append(self._complicated_stressor(tag[0], self.reduced_syllables)[0])
         else:
-            self.tentative_phonemes = self.simple_stressor()
+            self.tentative_phonemes = self._simple_stressor()
             if self.token.endswith('ed'):
                 print("ends with ed else...", self.tentative_phonemes)
-                self.tentative_phonemes = self.check_ed(self.tentative_phonemes)
+                self.tentative_phonemes = self._check_ed(self.tentative_phonemes)
                 print("ends with ed else 2...", self.tentative_phonemes)
             if self.modified_word:
-                self.tentative_phonemes.append(self.simple_stressor(self.reduced_syllables)[0])
+                self.tentative_phonemes.append(self._simple_stressor(self.reduced_syllables)[0])
 
 
-    def final_reduction_check(self):
+    def _final_reduction_check(self):
         print("final reduction check called")
-        with_vowel_cluster = self.check_vowel_cluster(self.tentative_phonemes)
+        with_vowel_cluster = self._check_vowel_cluster(self.tentative_phonemes)
         self.tentative_phonemes = with_vowel_cluster
 
 
 
-    def main(self):
+    def _main(self):
         print("spelling syllabify started with:", self.token)
-        self.get_syllable_count()
-        self.create_phoneme_repr()
-        self.final_reduction_check()
+        self._get_syllable_count()
+        self._create_phoneme_repr()
+        self._final_reduction_check()
 
 
 

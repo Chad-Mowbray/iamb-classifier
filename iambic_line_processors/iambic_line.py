@@ -35,21 +35,21 @@ class IambicLine():
         self.altered_patterns = []
         self.changed_words = []
 
-        if not DEV: self.main()
+        if not DEV: self._main()
 
     def __str__(self):
         return f"{self.is_valid_pattern}, {len(self.rules_applied)}, {self.syllables_per_line}, {self.altered_patterns}, {self.changed_words}"
 
     
-    def get_transformed_words(self, comparisons):
-        print("get_transformed_words called")
+    def _get_transformed_words(self, comparisons):
+        print("_get_transformed_words called")
         pprint(comparisons)
         for comparison in comparisons:
             abstract,realized = comparison
             original = self.unique_dict_of_realized_stress_patterns[abstract]
             print("original: ", original)
             
-            lines = self.get_possible_stress_patterns_per_token(self.get_original_stress_patterns_per_token())
+            lines = self._get_possible_stress_patterns_per_token(self._get_original_stress_patterns_per_token())
             realized = original
             iterations = len(realized[0])
             # print(iterations)
@@ -79,7 +79,7 @@ class IambicLine():
             self.changed_words = res
 
 
-    def test_base_pattern(self):
+    def _test_base_pattern(self):
         comparisons = []
         for potential,original in self.unique_dict_of_realized_stress_patterns.items():
             if len(potential) != len(self.BASE_PATTERN): continue
@@ -93,25 +93,25 @@ class IambicLine():
                 comparisons.append([potential, original])
         if comparisons: 
             # print("))))))))))))")
-            if len(self.rules_applied) >= 5: self.get_transformed_words(comparisons)
+            if len(self.rules_applied) >= 5: self._get_transformed_words(comparisons)
             # print(self.original_stress_patterns_per_token)
             # pprint(comparisons)
             return True
         return False
 
 
-    def get_original_stress_patterns_per_token(self):
+    def _get_original_stress_patterns_per_token(self):
         return [(t.stress_patterns, t.token) for t in self.tokens]
 
 
-    def get_possible_stress_patterns_per_token(self, original_stress_patterns_per_token):
+    def _get_possible_stress_patterns_per_token(self, original_stress_patterns_per_token):
         """
         returns: List[Tuples(Lists)]
         """
         return list(product(*[pair[0] for pair in original_stress_patterns_per_token]))
 
 
-    def create_formatted_list_of_realized_stress_patterns(self, stress_patterns_per_token):
+    def _create_formatted_list_of_realized_stress_patterns(self, stress_patterns_per_token):
         """
         accepts: List[Tuples(Lists)]
         produces: 
@@ -127,10 +127,10 @@ class IambicLine():
             }
             formatted_list_of_realized_stress_patterns.append(line) 
         self.formatted_list_of_realized_stress_patterns.extend(formatted_list_of_realized_stress_patterns)
-        self.create_unique_dict_of_realized_stress_patterns()
+        self._create_unique_dict_of_realized_stress_patterns()
 
 
-    def create_unique_dict_of_realized_stress_patterns(self):
+    def _create_unique_dict_of_realized_stress_patterns(self):
         for entry in self.formatted_list_of_realized_stress_patterns:
             if self.unique_dict_of_realized_stress_patterns.get(entry["formatted"]):
                 if entry["original"] not in self.unique_dict_of_realized_stress_patterns[entry["formatted"]]:
@@ -141,25 +141,25 @@ class IambicLine():
         # pprint(self.unique_dict_of_realized_stress_patterns)
 
 
-    def get_syllables_per_line(self):
-        print("from get_syllables_per_line: ")
+    def _get_syllables_per_line(self):
+        print("from _get_syllables_per_line: ")
         # pprint(self.unique_dict_of_realized_stress_patterns)
         for pattern in self.unique_dict_of_realized_stress_patterns:
             if len(pattern) not in self.syllables_per_line:
                 self.syllables_per_line.append(len(pattern))
 
 
-    def is_valid_IP(self):
-        self.get_syllables_per_line()
-        if self.test_base_pattern():
+    def _is_valid_IP(self):
+        self._get_syllables_per_line()
+        if self._test_base_pattern():
             print("##"*60, self.current_state)
             return True
         else:
             # print("INVALID"*80)
-            return self.fit_to_IP()
+            return self._fit_to_IP()
 
 
-    def fit_to_IP(self):
+    def _fit_to_IP(self):
         """
         After the initial check:
             1. Demote compound-word stresses
@@ -170,11 +170,11 @@ class IambicLine():
         """
 
         phases = {
-            1: self.demote_compound_stress,
-            2: self.demote_monosyllable_stress,
-            3: self.promote_monosyllable_stresses,
-            4: self.promote_polysyllabic_zero_stresses, #TODO but only to 2?
-            5: self.demote_polysyllabic_primary_stresses,
+            1: self._demote_compound_stress,
+            2: self._demote_monosyllable_stress,
+            3: self._promote_monosyllable_stresses,
+            4: self._promote_polysyllabic_zero_stresses, #TODO but only to 2?
+            5: self._demote_polysyllabic_primary_stresses,
             # 6: self.alter_primary_stresses # demote polysyllable stress
         }
         self.rules_applied.append(phases[self.current_state].__name__)
@@ -190,12 +190,12 @@ class IambicLine():
             return False
 
 
-    def promote_monosyllable_stresses(self):
-        print("promote_monosyllable_stresses")
+    def _promote_monosyllable_stresses(self):
+        print("_promote_monosyllable_stresses")
         new_combinations = []
         monosyllable_nonprimary_count = 0
         line_i = 0
-        for line in self.get_baseline_before_alteration():
+        for line in self._get_baseline_before_alteration():
             monosyllable_nonprimary_idxs = []
             for i, word in enumerate(line):
                 if len(word) == 1 and word[0] in [0,2] and line_i % 2 == 1:
@@ -210,11 +210,11 @@ class IambicLine():
                         line_copy[monosyllable_nonprimary_idxs[i]] = [val]
                     new_combinations.append(tuple(line_copy))
         # print("promote monosyllables: ", new_combinations)
-        return self.check_validity_and_continue(new_combinations)
+        return self._check_validity_and_continue(new_combinations)
 
 
     @staticmethod
-    def create_demoted_compound_variations(word):
+    def _create_demoted_compound_variations(word):
         word_stress_variations = []
         for i,syllable in enumerate(word):
             if syllable == 1:
@@ -225,17 +225,17 @@ class IambicLine():
         return word_stress_variations
 
 
-    def demote_compound_stress(self):
-        print('demote_compound_stress called')
+    def _demote_compound_stress(self):
+        print('_demote_compound_stress called')
         new_combinations = []
         primary_count = 0
-        for line in self.get_baseline_before_alteration():
+        for line in self._get_baseline_before_alteration():
             for word in line:
                 for syllable in word:
                     if syllable == 1:
                         primary_count += 1
                     if primary_count > 1:
-                        word_stress_variations = self.create_demoted_compound_variations(word)
+                        word_stress_variations = self._create_demoted_compound_variations(word)
                         idx_word_in_line = line.index(word)
                         for word_stress_variation in word_stress_variations:
                             line_copy = [w for w in line]
@@ -245,11 +245,11 @@ class IambicLine():
                 primary_count = 0
             new_combinations.append(line)
         print("&& ", new_combinations)
-        return self.check_validity_and_continue(new_combinations)
+        return self._check_validity_and_continue(new_combinations)
 
 
-    def demote_monosyllable_stress(self):
-        print('demote_monosyllable_stress called')
+    def _demote_monosyllable_stress(self):
+        print('_demote_monosyllable_stress called')
         """
         Works on a List[Tuples(Lists)]
         Creates a new List[Tuples(Lists)]
@@ -259,7 +259,7 @@ class IambicLine():
         new_combinations = []
         monosyllable_primary_count = 0
         line_i = 0
-        for line in self.get_baseline_before_alteration():
+        for line in self._get_baseline_before_alteration():
             monosyllable_primary_idxs = []
             for i, word in enumerate(line):
                 if len(word) == 1 and word[0] == 1 and line_i % 2 == 0:
@@ -274,58 +274,58 @@ class IambicLine():
                         line_copy[monosyllable_primary_idxs[i]] = [val]
                     new_combinations.append(tuple(line_copy))
         # print("demote monosyllables: ", new_combinations)
-        return self.check_validity_and_continue(new_combinations)
+        return self._check_validity_and_continue(new_combinations)
 
 
-    def promote_polysyllabic_zero_stresses(self):
+    def _promote_polysyllabic_zero_stresses(self):
         #TODO: bisyllabic words should get promoted first, this should promote to 2
         """
         check if the word requires more than one stress
         can promote appropriate 0s to 2s
         """
-        print('promote_polysyllabic_zero_stresses called')
+        print('_promote_polysyllabic_zero_stresses called')
         new_combinations = []
-        for line in self.get_baseline_before_alteration():
+        for line in self._get_baseline_before_alteration():
             cg = CombinationsGraph([line], [0,2], True, 0)
             single_combinations = cg.new_combinations
             for single_combination in single_combinations:
                 new_combinations.append(single_combination)
 
-        return self.check_validity_and_continue(new_combinations)
+        return self._check_validity_and_continue(new_combinations)
 
 
-    def demote_polysyllabic_primary_stresses(self):
-        print("demote_polysyllabic_primary_stresses called")
+    def _demote_polysyllabic_primary_stresses(self):
+        print("_demote_polysyllabic_primary_stresses called")
         print(self.tokens)
         new_combinations = []
-        for line in self.get_baseline_before_alteration():
+        for line in self._get_baseline_before_alteration():
             cg = CombinationsGraph([line], [2, 1], False, 1)
             single_combinations = cg.new_combinations
             for single_combination in single_combinations:
                 new_combinations.append(single_combination)
 
-        return self.check_validity_and_continue(new_combinations)
+        return self._check_validity_and_continue(new_combinations)
 
 
-    def get_baseline_before_alteration(self):
+    def _get_baseline_before_alteration(self):
         return (l for line in self.unique_dict_of_realized_stress_patterns.values() for l in line)
 
 
-    def check_validity_and_continue(self, new_combinations):
-        self.create_formatted_list_of_realized_stress_patterns(new_combinations)
+    def _check_validity_and_continue(self, new_combinations):
+        self._create_formatted_list_of_realized_stress_patterns(new_combinations)
         self.current_state += 1
         # pprint(self.unique_dict_of_realized_stress_patterns)
-        self.is_valid_pattern = self.is_valid_IP()
+        self.is_valid_pattern = self._is_valid_IP()
         return self.is_valid_pattern
 
 
-    def main(self):
+    def _main(self):
         print("main called")
         self.tokens = [t for t in self.tokens if t.token not in ["th'", "t'"]]  # remove elided "the"
-        self.original_stress_patterns_per_token = self.get_original_stress_patterns_per_token()
+        self.original_stress_patterns_per_token = self._get_original_stress_patterns_per_token()
         print("original stress patterns per token: ", self.original_stress_patterns_per_token)
-        possible_stress_patterns_per_token = self.get_possible_stress_patterns_per_token(self.original_stress_patterns_per_token)
+        possible_stress_patterns_per_token = self._get_possible_stress_patterns_per_token(self.original_stress_patterns_per_token)
         print("LLLLLLLLLLLLL: ", possible_stress_patterns_per_token)
-        self.is_valid_pattern = self.check_validity_and_continue(possible_stress_patterns_per_token)
+        self.is_valid_pattern = self._check_validity_and_continue(possible_stress_patterns_per_token)
         # print(self.is_valid_pattern)
         

@@ -8,7 +8,7 @@ class TestIambicLineIso(unittest.TestCase):
     def setUp(self):
         self.il = IambicLine("", DEV=True)
         self.m = MagicMock()
-        self.il.check_validity_and_continue = self.m.check_validity_and_continue
+        self.il._check_validity_and_continue = self.m.check_validity_and_continue
 
 
     def test_demote_compound_stress_unchanged(self):
@@ -19,7 +19,7 @@ class TestIambicLineIso(unittest.TestCase):
             (1, 0, 1, 0, 0, 2, 0, 0, 1, 1): [([1], [0, 1, 0, 0, 2, 0], [0], [1], [1])],
             (1, 0, 1, 0, 0, 2, 0, 1, 1, 1): [([1], [0, 1, 0, 0, 2, 0], [1], [1], [1])]
             }
-        self.il.demote_compound_stress()
+        self.il._demote_compound_stress()
         self.m.check_validity_and_continue.assert_called()
         self.m.check_validity_and_continue.assert_called_with(
             [([1], [0, 1, 0, 0, 2, 0], [0], [1], [1]), 
@@ -35,7 +35,7 @@ class TestIambicLineIso(unittest.TestCase):
             (1, 0, 1, 1, 1, 1, 0, 1, 0, 0): [([1], [0], [1], [1], [1, 1], [0, 1, 0, 0])],
             (1, 1, 1, 1, 1, 1, 0, 1, 0, 0): [([1], [1], [1], [1], [1, 1], [0, 1, 0, 0])]
             }
-        self.il.demote_compound_stress()
+        self.il._demote_compound_stress()
         self.m.check_validity_and_continue.assert_called()
         self.m.check_validity_and_continue.assert_called_with([
             ([1], [0], [1], [1], [2, 1], [0, 1, 0, 0]), 
@@ -59,7 +59,7 @@ class TestIambicLineIso(unittest.TestCase):
             (1, 1, 1, 1, 1, 2, 0, 1, 0, 0): [([1], [1], [1], [1], [1, 2], [0, 1, 0, 0])],
             (1, 1, 1, 1, 2, 1, 0, 1, 0, 0): [([1], [1], [1], [1], [2, 1], [0, 1, 0, 0])]
             }
-        self.il.demote_monosyllable_stress()
+        self.il._demote_monosyllable_stress()
         self.m.check_validity_and_continue.assert_called()
         self.m.check_validity_and_continue.assert_called_with([
             ([1], [0], [1], [1], [1, 1], [0, 1, 0, 0]), 
@@ -97,7 +97,7 @@ class TestIambicLineIso(unittest.TestCase):
             (0, 1, 0, 0, 0, 0, 0, 0, 0, 0): [([0], [1], [0], [0], [0], [0], [0], [0], [0], [0])],
 
             }
-        self.il.demote_monosyllable_stress()
+        self.il._demote_monosyllable_stress()
         self.m.check_validity_and_continue.assert_called()
         self.m.check_validity_and_continue.assert_called_with([])    
 
@@ -107,7 +107,7 @@ class TestIambicLineIso(unittest.TestCase):
             (1, 0, 0, 0, 0, 2, 1, 0, 1, 0): [([1], [0, 1, 0, 0, 2], [1], [0], [1], [0])],
 
             }
-        self.il.promote_monosyllable_stresses()
+        self.il._promote_monosyllable_stresses()
         self.m.check_validity_and_continue.assert_called()
         self.m.check_validity_and_continue.assert_called_with([
             ([1], [0, 1, 0, 0, 2], [1], [1], [1], [1]),
@@ -121,7 +121,7 @@ class TestIambicLineIso(unittest.TestCase):
             (1, 0, 0, 0, 0, 2, 1, 1, 1, 1): [([1], [0, 1, 0, 0, 2], [1], [1], [1], [1])],
 
             }
-        self.il.promote_monosyllable_stresses()
+        self.il._promote_monosyllable_stresses()
         self.m.check_validity_and_continue.assert_called()
         self.m.check_validity_and_continue.assert_called_with([])   
 
@@ -131,7 +131,7 @@ class TestIambicLineIso(unittest.TestCase):
             (1, 0, 0, 0, 0, 2, 1, 1, 1, 1): [([1], [0, 1, 0, 0, 2], [1], [1], [1], [1])],
 
             }
-        self.il.promote_polysyllabic_zero_stresses()
+        self.il._promote_polysyllabic_zero_stresses()
         self.m.check_validity_and_continue.assert_called()
         self.m.check_validity_and_continue.assert_called_with([
             ([1], [0, 1, 0, 0, 2], [1], [1], [1], [1]), 
@@ -146,7 +146,7 @@ class TestIambicLineIso(unittest.TestCase):
             (1, 0, 0, 0, 0, 2, 1, 1, 1, 1): [([1], [1, 1, 2, 0, 2], [1], [1], [1], [1])],
 
             }
-        self.il.promote_polysyllabic_zero_stresses()
+        self.il._promote_polysyllabic_zero_stresses()
         self.m.check_validity_and_continue.assert_called()
         self.m.check_validity_and_continue.assert_called_with([
             ([1], [1, 1, 2, 0, 2], [1], [1], [1], [1])
@@ -157,7 +157,7 @@ class TestIambicLineIso(unittest.TestCase):
             (1, 0, 0, 0, 0, 2, 1, 1, 1, 1): [([1], [1, 1, 2, 0, 2], [1], [1], [1], [1])],
 
             }
-        self.il.promote_polysyllabic_zero_stresses()
+        self.il._promote_polysyllabic_zero_stresses()
         self.m.check_validity_and_continue.assert_called()
         self.m.check_validity_and_continue.assert_called_with([
             ([1], [1, 1, 2, 0, 2], [1], [1], [1], [1])
@@ -170,7 +170,7 @@ class TestIambicLineIso(unittest.TestCase):
             (0, 0, 0, 1, 1, 2, 0, 1, 0, 0): [([0], [0], [0], [1], [1, 2], [0, 1, 0, 0])],
             (0, 0, 0, 1, 1, 1, 0, 1, 0, 0): [([0], [0], [0], [1], [1, 1], [0, 1, 0, 0])],
             }
-        self.il.promote_polysyllabic_zero_stresses()
+        self.il._promote_polysyllabic_zero_stresses()
         self.m.check_validity_and_continue.assert_called()
         self.m.check_validity_and_continue.assert_called_with([
             ([0], [0], [0], [1], [1, 1], [0, 1, 0, 0]),
@@ -185,7 +185,7 @@ class TestIambicLineIso(unittest.TestCase):
             (1, 0, 0, 0, 0, 2, 1, 1, 1, 0): [([1], [1, 1, 2, 0, 2], [1], [1], [1, 2])],
 
             }
-        self.il.demote_polysyllabic_primary_stresses()
+        self.il._demote_polysyllabic_primary_stresses()
         self.m.check_validity_and_continue.assert_called()
         self.m.check_validity_and_continue.assert_called_with([
             ([1], [1, 2, 2, 0, 2], [1], [1], [2, 2]), 

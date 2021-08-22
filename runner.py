@@ -26,7 +26,7 @@ class Runner():
         
 
     @staticmethod
-    def get_stats(truth):
+    def _get_stats(truth):
         rules = [int(x.split(', ')[1]) for x in truth]
         total = len(rules)
         res_dict: Counter = Counter(rules)
@@ -38,7 +38,7 @@ class Runner():
         truth = []
         truth_and_lines = []
         all_changed_words = []
-        tokenizer: Tokenizer = Tokenizer(self.sentences, self.dicts)
+        tokenizer = Tokenizer(self.sentences, self.dicts)
         line_tokens: str = tokenizer.create_tokens()
         for line in line_tokens:
             iambic_line = IambicLine(line)
@@ -52,7 +52,7 @@ class Runner():
         total_lines = len(truth)
         print()
         print("Total samples: ", total_lines, "\nTotal valid lines: ", total_valid_lines, "\nsuccess rate: ", total_valid_lines / total_lines)
-        ratios = self.get_stats(truth)
+        ratios = self._get_stats(truth)
         print(ratios)
         print("\npercent of rule 0: ", ratios.get(0,0),"\npercent of rule 1: ", ratios.get(1,0),"\npercent of rule 2: ", ratios.get(2,0),"\npercent of rule 3: ", ratios.get(3,0), "\npercent of rule 4: ", ratios.get(4,0),"\npercent of rule 5: ", ratios.get(5,0), "\npercent failed:", ratios.get(6,0))
         print("ALL CHANGED WORDS:")

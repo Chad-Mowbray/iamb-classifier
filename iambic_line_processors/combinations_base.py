@@ -12,7 +12,7 @@ class CombinationsBaseMixin:
         self.is_odd_position = 1 if is_odd_postition else 0
         self.target_stress = target_stress
 
-    def get_word_combinations(self, word, zero_stress_idxs):
+    def _get_word_combinations(self, word, zero_stress_idxs):
         possible_words = []
         for possible in itertools.product(self.product_possibles,repeat=len(zero_stress_idxs)):
             word_copy = [s for s in word]
@@ -26,7 +26,7 @@ class CombinationsBaseMixin:
         return possible_words
 
 
-    def get_line_combinations(self):
+    def _get_line_combinations(self):
         line_pos = 0
         for line in self.lines:
             temp_line = []
@@ -37,10 +37,10 @@ class CombinationsBaseMixin:
                     continue
                 zero_stress_idxs = [i for i,syl in enumerate(word) if (i + line_pos) % 2 == self.is_odd_position and syl == self.target_stress]
                 if zero_stress_idxs:
-                    word_combinations = self.get_word_combinations(word, zero_stress_idxs)
+                    word_combinations = self._get_word_combinations(word, zero_stress_idxs)
                     temp_line.append(word_combinations)
                 else:
                     temp_line.append([word])
                 line_pos += len(word)
             line_pos = 0
-            self.build_graph(temp_line)
+            self._build_graph(temp_line)

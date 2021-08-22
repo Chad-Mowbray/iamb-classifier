@@ -15,7 +15,7 @@ class Compounds:
         self.uk_us_dict = uk_us_dict
 
 
-    def should_proceed_to_compound_analysis(self):
+    def _should_proceed_to_compound_analysis(self):
         if self.original_word in self.words or self.original_word[:-1] in self.words:
             return False
         return True
@@ -23,12 +23,12 @@ class Compounds:
 
     def find_compound_in_wordlist(self, initial=2):
         # print("find_compound_in_wordlist called")
-        dashed_word = self.handle_dashed_word()
+        dashed_word = self._handle_dashed_word()
         if dashed_word:
             # print(dashed_word)
             return dashed_word
 
-        if not self.should_proceed_to_compound_analysis():
+        if not self._should_proceed_to_compound_analysis():
             return None
 
         median = len(self.original_word) // 2
@@ -54,7 +54,7 @@ class Compounds:
         return res or None
 
     
-    def handle_dashed_word(self):
+    def _handle_dashed_word(self):
         # print("handle_dashed_word called")
         if "-" in self.original_word:
             left, right = self.original_word.split("-")[0], "".join([*self.original_word.split('-')[1:]])
