@@ -8,9 +8,9 @@ import re
 
 class PhonemeFSM():
 
-    def __init__(self, token):
+    def __init__(self, token, dicts):
         self.initial_token = token
-        self.dicts = DictsSingleton()
+        self.dicts = dicts #DictsSingleton()
         self.cmudict = self.dicts.cmudict
         self.uk_us_dict = self.dicts.uk_us_dict
         self.normalized_spelling = ''

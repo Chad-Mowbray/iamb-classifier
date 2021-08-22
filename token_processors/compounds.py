@@ -1,5 +1,5 @@
 from token_processors.spelling import SpellingNormalizer
-from nltk.corpus import words as nltk_wordlist
+# from nltk.corpus import words as nltk_wordlist
 
 
 
@@ -13,7 +13,7 @@ class Compounds:
         # print("Compound instance created: ", self.original_word)
 
     def should_proceed_to_compound_analysis(self):
-        if self.original_word in nltk_wordlist.words() or self.original_word[:-1] in nltk_wordlist.words():
+        if self.original_word in self.words or self.original_word[:-1] in self.words:
             return False
         return True
 

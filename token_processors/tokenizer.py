@@ -1,6 +1,6 @@
 import re
 from string import punctuation
-from utils.dicts import DictsSingleton
+# from utils.dicts import DictsSingleton
 
 from pprint import pprint
 
@@ -20,11 +20,11 @@ class Tokenizer(RepresenterMixin):
     """
 
 
-    def __init__(self, lines):
+    def __init__(self, lines, dicts):
         self.lines = lines
         self.line_tokens = []
         self.remove = punctuation
-        self.dicts = DictsSingleton()
+        self.dicts = dicts
         # print("Tokenizer instance created: ", self.lines)
 
     def tokenize_line(self, line):

@@ -20,7 +20,7 @@ class Token(RepresenterMixin):
 
     def __init__(self, token, dicts):
         self.token = token
-        self.d = dicts
+        self.dicts = dicts
         self.stress_patterns = []
         self.syllable_counts = set()
         self.modified_token = ''
@@ -51,7 +51,7 @@ class Token(RepresenterMixin):
     def get_phonemes_from_dict(self):
         token = self.token
         # print("token: ", token)
-        fsm = PhonemeFSM(token)
+        fsm = PhonemeFSM(token, self.dicts)
         # print("new fsm: ", id(fsm))
         # phoneme_reprs = fsm.dispatch()
         phoneme_reprs = fsm.final_phoneme_repr

@@ -3,8 +3,15 @@ from iambic_line_processors.iambic_line import IambicLine
 from token_processors.sentencizer import Sentencizer
 from token_processors.tokenizer import Tokenizer
 
+from utils.dicts import DictsSingleton
+
 
 class TestToIambicLine(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.dicts = DictsSingleton()
+
 
     def setUp(self):
         self.ibls = []
@@ -12,7 +19,7 @@ class TestToIambicLine(unittest.TestCase):
         with open("test/test_data/basic_lines.txt") as f:
             contents = f.read()
             sentences = Sentencizer(contents).main()
-            tokenizer = Tokenizer(sentences)
+            tokenizer = Tokenizer(sentences, self.dicts)
             line_tokens = tokenizer.create_tokens()
             for line in line_tokens:
                 iambic_line = IambicLine(line)

@@ -1,4 +1,5 @@
 import os
+import pickle
 
 from dataprep.processor import RawFileProcessor
 from token_processors.sentencizer import Sentencizer
@@ -17,6 +18,9 @@ logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(message)s')
 # nltk.download('wordnet')
 from collections import Counter
 
+from utils.dicts import DictsSingleton
+
+
 
 class Runner(RepresenterMixin):
     """
@@ -27,6 +31,8 @@ class Runner(RepresenterMixin):
         # self.raw_file_contents = raw_file_contents
         self.sentences = sentences #Sentencizer(self.raw_file_contents).main()
         print(self.sentences)
+        self.dicts = DictsSingleton()
+        
 
     @staticmethod
     def get_stats(truth):
@@ -37,13 +43,16 @@ class Runner(RepresenterMixin):
         
 
     # @args_logger
-    def initial_process_contents(self):
+    def initial_process_contents(self, genre):
         truth = []
         truth_and_lines = []
-        tokenizer = Tokenizer(self.sentences)
+        all_changed_words = []
+        tokenizer = Tokenizer(self.sentences, self.dicts)
         line_tokens = tokenizer.create_tokens()
         for line in line_tokens:
             iambic_line = IambicLine(line)
+            changed_words = iambic_line.changed_words
+            if changed_words: all_changed_words += changed_words
             truth.append(str(iambic_line))
             truth_and_lines.append( (str(iambic_line), [str(tkn) for tkn in line] ))
         print("xzyabcd")
@@ -56,6 +65,12 @@ class Runner(RepresenterMixin):
         ratios = self.get_stats(truth)
         print(ratios)
         print("\npercent of rule 0: ", ratios.get(0,0),"\npercent of rule 1: ", ratios.get(1,0),"\npercent of rule 2: ", ratios.get(2,0),"\npercent of rule 3: ", ratios.get(3,0), "\npercent of rule 4: ", ratios.get(4,0),"\npercent of rule 5: ", ratios.get(5,0), "\npercent failed:", ratios.get(6,0))
+        print("ALL CHANGED WORDS:")
+        counter_dict = Counter(all_changed_words)
+        print("total changed words: ", len(counter_dict))
+        # pprint(dict(counter_dict))
+        # with open (f"{genre}.pickle", 'wb') as f:
+        #     pickle.dump(counter_dict, f)
 
 
 
@@ -70,13 +85,36 @@ if __name__ == "__main__":
     #     contents = rfp.cleaned_contents
 
     #     r = Runner(contents)
-    #     r.initial_process_contents()
+    #     genre = f[6:16]
+    #     r.initial_process_contents(genre)
+
+
+    # TOTAL = Counter()
+    # for file in ["elizabetha.pickle", "neoclassic.pickle", "romantic_p.pickle", "victorian_.pickle"]:
+    #     with open(file, 'rb') as f:
+    #         new = pickle.load(f)
+    #         TOTAL += new
+
+    # print(len(TOTAL))
+    
+    # with open('accented_words.txt', 'w') as f:
+    #     f.writelines([word + "\n" for word in TOTAL])
 
 
 
-    contents = ["The leveret seat and lark and partridge nest\n"]
+
+    filename = os.path.join(os.path.dirname(__file__), "poems/test_poem.txt")
+    rfp = RawFileProcessor(filename)
+    contents = rfp.cleaned_contents
     r = Runner(contents)
-    r.initial_process_contents()
+    r.initial_process_contents("mixed")
+
+
+
+
+    # contents = ["The leveret seat and lark and partridge nest\n"]
+    # r = Runner(contents)
+    # r.initial_process_contents()
 
     
 
