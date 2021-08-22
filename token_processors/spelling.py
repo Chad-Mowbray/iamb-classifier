@@ -15,12 +15,12 @@ class SpellingNormalizer():
     """
 
     def __init__(self, unknown_word, uk_us_dict):
-        self.unknown_word = unknown_word
-        self.uk_us_dict = uk_us_dict
+        self._unknown_word = unknown_word
+        self._uk_us_dict = uk_us_dict
         self.modernized_word = []
-        self.apostrophe_position = ''
-        self.has_apostrophe = False
-        self.modernized = ''
+        self._apostrophe_position = ''
+        self._has_apostrophe = False
+        self._modernized = ''
 
         self._main()
         # print("SpellingNormalizer instance created")
@@ -30,74 +30,74 @@ class SpellingNormalizer():
         local_list = {
             "o’er": "or"
         }
-        return local_list.get(self.unknown_word, None)
+        return local_list.get(self._unknown_word, None)
 
 
     # @args_logger
     def _get_modernized_spelling(self):
-        print("#### get modernized spelling called", self.unknown_word, len(self.unknown_word) )
+        print("#### get modernized spelling called", self._unknown_word, len(self._unknown_word) )
         # self._apostrophe_check()
-        print("#### after apostrophe checcked", self.unknown_word )
-        self.modernized = reg.modernize(self.unknown_word) or self._brittish_converter() or self._local_list()
-        print("$$$ modernized spelling", self.modernized)
+        print("#### after apostrophe checcked", self._unknown_word )
+        self._modernized = reg.modernize(self._unknown_word) or self._brittish_converter() or self._local_list()
+        print("$$$ modernized spelling", self._modernized)
         self._apostrophe_check()
 
-        if self.modernized is None:
+        if self._modernized is None:
             self._old_fashioned_check()
             self._handle_not_found()
         else:
-            self.modernized_word = [self.modernized, self.has_apostrophe, self.apostrophe_position]
+            self.modernized_word = [self._modernized, self._has_apostrophe, self._apostrophe_position]
         print("modernized_word: ", self.modernized_word)
 
     
     def _brittish_converter(self):
-        if self.unknown_word in self.uk_us_dict:
+        if self._unknown_word in self._uk_us_dict:
             # print("BRITTISH"*50)
-            return self.uk_us_dict[self.unknown_word]
+            return self._uk_us_dict[self._unknown_word]
 
     
     def _old_fashioned_check(self):
-        if self.unknown_word.endswith("est") or self.unknown_word.endswith('eth') and len(self.unknown_word) > 5:
-            self.modernized = self.unknown_word[:-3]
+        if self._unknown_word.endswith("est") or self._unknown_word.endswith('eth') and len(self._unknown_word) > 5:
+            self._modernized = self._unknown_word[:-3]
 
 
     def _handle_not_found(self):
-        if self.unknown_word[0] == "'":
-            self.modernized_word = [self._handle_initial_apostrophe(), self.has_apostrophe, "initial"]
-        elif self.unknown_word[-1] =="'":
-            self.modernized_word = [self._handle_final_apostrophe(), self.has_apostrophe, "final"]
-        elif "'" in self.unknown_word[1:-2]:
-            self.modernized_word = [self._handle_medial_apostrophe(), self.has_apostrophe, "medial"]
+        if self._unknown_word[0] == "'":
+            self.modernized_word = [self._handle_initial_apostrophe(), self._has_apostrophe, "initial"]
+        elif self._unknown_word[-1] =="'":
+            self.modernized_word = [self._handle_final_apostrophe(), self._has_apostrophe, "final"]
+        elif "'" in self._unknown_word[1:-2]:
+            self.modernized_word = [self._handle_medial_apostrophe(), self._has_apostrophe, "medial"]
         else:
-            self.modernized_word = [self.modernized, self.has_apostrophe, '']
+            self.modernized_word = [self._modernized, self._has_apostrophe, '']
 
 
     def _apostrophe_check(self):
         print("apostrophe check called")
-        print(self.unknown_word, len(self.unknown_word))
-        if self.unknown_word[-1] == "'":
-            self.has_apostrophe = True
-            self.apostrophe_position = "final" 
-        elif "'" in self.unknown_word[0:-1]: #if "'" in self.unknown_word[1:-1]:
-            self.has_apostrophe = True
-            print("has an apostrophe: ", self.unknown_word)
-            if self.unknown_word[0] == "'":
-                self.apostrophe_position = "initial"
+        print(self._unknown_word, len(self._unknown_word))
+        if self._unknown_word[-1] == "'":
+            self._has_apostrophe = True
+            self._apostrophe_position = "final" 
+        elif "'" in self._unknown_word[0:-1]: #if "'" in self._unknown_word[1:-1]:
+            self._has_apostrophe = True
+            print("has an apostrophe: ", self._unknown_word)
+            if self._unknown_word[0] == "'":
+                self._apostrophe_position = "initial"
             else:
-                self.apostrophe_position = "medial"
+                self._apostrophe_position = "medial"
 
 
     def _handle_medial_apostrophe(self): # TODO: make more robust
-        return re.sub("'", "e", self.unknown_word)
+        return re.sub("'", "e", self._unknown_word)
 
 
     def _handle_initial_apostrophe(self):
-        return self.unknown_word[1:]
+        return self._unknown_word[1:]
     
 
     def _handle_final_apostrophe(self):
-        # return self.unknown_word[:-1]
-        return self.unknown_word
+        # return self._unknown_word[:-1]
+        return self._unknown_word
 
 
     def _main(self):

@@ -9,14 +9,14 @@ class Compounds:
     """
 
     def __init__(self, original_word, words, lemmatizer, uk_us_dict):
-        self.original_word = original_word
-        self.lemmatizer = lemmatizer
-        self.words = words
-        self.uk_us_dict = uk_us_dict
+        self._original_word = original_word
+        self._lemmatizer = lemmatizer
+        self._words = words
+        self._uk_us_dict = uk_us_dict
 
 
     def _should_proceed_to_compound_analysis(self):
-        if self.original_word in self.words or self.original_word[:-1] in self.words:
+        if self._original_word in self._words or self._original_word[:-1] in self._words:
             return False
         return True
 
@@ -31,15 +31,15 @@ class Compounds:
         if not self._should_proceed_to_compound_analysis():
             return None
 
-        median = len(self.original_word) // 2
+        median = len(self._original_word) // 2
         current_split_idx = 0
-        wordlist = self.words
-        wnl = self.lemmatizer
+        wordlist = self._words
+        wnl = self._lemmatizer
         res = []
 
-        for i in range(initial, len(self.original_word) - 2):
-            left = SpellingNormalizer(self.original_word[:i], self.uk_us_dict).modernized_word[0] or self.original_word[:i]
-            right = SpellingNormalizer(wnl.lemmatize(self.original_word[i:]), self.uk_us_dict).modernized_word[0] or wnl.lemmatize(self.original_word[i:])
+        for i in range(initial, len(self._original_word) - 2):
+            left = SpellingNormalizer(self._original_word[:i], self._uk_us_dict).modernized_word[0] or self._original_word[:i]
+            right = SpellingNormalizer(wnl.lemmatize(self._original_word[i:]), self._uk_us_dict).modernized_word[0] or wnl.lemmatize(self._original_word[i:])
             print("left, right in compounds: ", left, right)
             if left in wordlist and right in wordlist:
                 if current_split_idx:
@@ -47,22 +47,22 @@ class Compounds:
                     current_distance = abs(i - median)
                     if current_distance <= prior_distance:
                         current_split_idx = i
-                        res = [self.original_word[:current_split_idx], self.original_word[current_split_idx:]]    
+                        res = [self._original_word[:current_split_idx], self._original_word[current_split_idx:]]    
                 else:
                     current_split_idx = i
-                    res = [self.original_word[:current_split_idx], self.original_word[current_split_idx:]]
+                    res = [self._original_word[:current_split_idx], self._original_word[current_split_idx:]]
         return res or None
 
     
     def _handle_dashed_word(self):
         # print("handle_dashed_word called")
-        if "-" in self.original_word:
-            left, right = self.original_word.split("-")[0], "".join([*self.original_word.split('-')[1:]])
+        if "-" in self._original_word:
+            left, right = self._original_word.split("-")[0], "".join([*self._original_word.split('-')[1:]])
             # print("left, right in compounds, handle dashed: ", left, right)
-            left = SpellingNormalizer(left, self.uk_us_dict).modernized_word[0] or left
-            right = SpellingNormalizer(self.lemmatizer.lemmatize(right), self.uk_us_dict).modernized_word[0] or self.lemmatizer.lemmatize(right)
+            left = SpellingNormalizer(left, self._uk_us_dict).modernized_word[0] or left
+            right = SpellingNormalizer(self._lemmatizer.lemmatize(right), self._uk_us_dict).modernized_word[0] or self._lemmatizer.lemmatize(right)
             # print(" Processed left, right in compounds, handle dashed: ", left, right)
 
-            if left in self.words and right in self.words:
+            if left in self._words and right in self._words:
                 return [left, right]
 

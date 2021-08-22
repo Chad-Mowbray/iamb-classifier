@@ -19,7 +19,7 @@ class Token():
 
     def __init__(self, token, dicts):
         self.token = token
-        self.dicts = dicts
+        self._dicts = dicts
         self.stress_patterns = []
         self.modified_token = ''
         self.phoneme_reprs = []
@@ -45,7 +45,7 @@ class Token():
     def _get_phonemes_from_dict(self):
         token = self.token
         # print("token: ", token)
-        fsm = PhonemeFSM(token, self.dicts)
+        fsm = PhonemeFSM(token, self._dicts)
         # print("new fsm: ", id(fsm))
         # phoneme_reprs = fsm.dispatch()
         phoneme_reprs = fsm.final_phoneme_repr

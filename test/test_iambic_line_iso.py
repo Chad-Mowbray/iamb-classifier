@@ -15,7 +15,7 @@ class TestIambicLineIso(unittest.TestCase):
         """
         Both deregulatory Heav'n their light,
         """
-        self.il.unique_dict_of_realized_stress_patterns = {
+        self.il._unique_dict_of_realized_stress_patterns = {
             (1, 0, 1, 0, 0, 2, 0, 0, 1, 1): [([1], [0, 1, 0, 0, 2, 0], [0], [1], [1])],
             (1, 0, 1, 0, 0, 2, 0, 1, 1, 1): [([1], [0, 1, 0, 0, 2, 0], [1], [1], [1])]
             }
@@ -31,7 +31,7 @@ class TestIambicLineIso(unittest.TestCase):
         """
         Sees his own face, self-slain Humanity
         """
-        self.il.unique_dict_of_realized_stress_patterns = {
+        self.il._unique_dict_of_realized_stress_patterns = {
             (1, 0, 1, 1, 1, 1, 0, 1, 0, 0): [([1], [0], [1], [1], [1, 1], [0, 1, 0, 0])],
             (1, 1, 1, 1, 1, 1, 0, 1, 0, 0): [([1], [1], [1], [1], [1, 1], [0, 1, 0, 0])]
             }
@@ -51,7 +51,7 @@ class TestIambicLineIso(unittest.TestCase):
         """
         Sees his own face, self-slain Humanity,
         """
-        self.il.unique_dict_of_realized_stress_patterns = {
+        self.il._unique_dict_of_realized_stress_patterns = {
             (1, 0, 1, 1, 1, 1, 0, 1, 0, 0): [([1], [0], [1], [1], [1, 1], [0, 1, 0, 0])],
             (1, 0, 1, 1, 1, 2, 0, 1, 0, 0): [([1], [0], [1], [1], [1, 2], [0, 1, 0, 0])],
             (1, 0, 1, 1, 2, 1, 0, 1, 0, 0): [([1], [0], [1], [1], [2, 1], [0, 1, 0, 0])],
@@ -93,7 +93,7 @@ class TestIambicLineIso(unittest.TestCase):
         """
         Sees his own face, self-slain Humanity,
         """
-        self.il.unique_dict_of_realized_stress_patterns = {
+        self.il._unique_dict_of_realized_stress_patterns = {
             (0, 1, 0, 0, 0, 0, 0, 0, 0, 0): [([0], [1], [0], [0], [0], [0], [0], [0], [0], [0])],
 
             }
@@ -103,7 +103,7 @@ class TestIambicLineIso(unittest.TestCase):
 
 
     def test_promote_monosyllable_stresses(self):
-        self.il.unique_dict_of_realized_stress_patterns = {
+        self.il._unique_dict_of_realized_stress_patterns = {
             (1, 0, 0, 0, 0, 2, 1, 0, 1, 0): [([1], [0, 1, 0, 0, 2], [1], [0], [1], [0])],
 
             }
@@ -117,7 +117,7 @@ class TestIambicLineIso(unittest.TestCase):
         ])   
 
     def test_promote_monosyllable_stresses_unchanged(self):
-        self.il.unique_dict_of_realized_stress_patterns = {
+        self.il._unique_dict_of_realized_stress_patterns = {
             (1, 0, 0, 0, 0, 2, 1, 1, 1, 1): [([1], [0, 1, 0, 0, 2], [1], [1], [1], [1])],
 
             }
@@ -127,7 +127,7 @@ class TestIambicLineIso(unittest.TestCase):
 
 
     def test_promote_polysyllabic_zero_stresses(self):
-        self.il.unique_dict_of_realized_stress_patterns = {
+        self.il._unique_dict_of_realized_stress_patterns = {
             (1, 0, 0, 0, 0, 2, 1, 1, 1, 1): [([1], [0, 1, 0, 0, 2], [1], [1], [1], [1])],
 
             }
@@ -142,7 +142,7 @@ class TestIambicLineIso(unittest.TestCase):
 
 
     def test_promote_polysyllabic_zero_stresses_unchanged(self):
-        self.il.unique_dict_of_realized_stress_patterns = {
+        self.il._unique_dict_of_realized_stress_patterns = {
             (1, 0, 0, 0, 0, 2, 1, 1, 1, 1): [([1], [1, 1, 2, 0, 2], [1], [1], [1], [1])],
 
             }
@@ -153,7 +153,7 @@ class TestIambicLineIso(unittest.TestCase):
         ])  
 
     def test_demote_polysyllabic_primary_stresses(self):
-        self.il.unique_dict_of_realized_stress_patterns = {
+        self.il._unique_dict_of_realized_stress_patterns = {
             (1, 0, 0, 0, 0, 2, 1, 1, 1, 1): [([1], [1, 1, 2, 0, 2], [1], [1], [1], [1])],
 
             }
@@ -165,7 +165,7 @@ class TestIambicLineIso(unittest.TestCase):
 
 
     def test_promote_polysyllabic_zero_stresses_multiple_lines(self):
-        self.il.unique_dict_of_realized_stress_patterns = {
+        self.il._unique_dict_of_realized_stress_patterns = {
             (0, 0, 0, 1, 1, 1, 0, 1, 0, 0): [([0], [0], [0], [1], [1, 1], [0, 1, 0, 0])],
             (0, 0, 0, 1, 1, 2, 0, 1, 0, 0): [([0], [0], [0], [1], [1, 2], [0, 1, 0, 0])],
             (0, 0, 0, 1, 1, 1, 0, 1, 0, 0): [([0], [0], [0], [1], [1, 1], [0, 1, 0, 0])],
@@ -181,7 +181,7 @@ class TestIambicLineIso(unittest.TestCase):
 
 
     def test_demote_polysyllabic_primary_stresses(self):
-        self.il.unique_dict_of_realized_stress_patterns = {
+        self.il._unique_dict_of_realized_stress_patterns = {
             (1, 0, 0, 0, 0, 2, 1, 1, 1, 0): [([1], [1, 1, 2, 0, 2], [1], [1], [1, 2])],
 
             }

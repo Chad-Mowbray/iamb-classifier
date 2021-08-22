@@ -21,8 +21,8 @@ class Runner():
     Accepts text file
     """
     def __init__(self, sentences):
-        self.sentences = sentences #Sentencizer(self.raw_file_contents).main()
-        self.dicts = DictsSingleton()
+        self._sentences = sentences 
+        self._dicts = DictsSingleton()
         
 
     @staticmethod
@@ -38,11 +38,11 @@ class Runner():
         truth = []
         truth_and_lines = []
         all_changed_words = []
-        tokenizer = Tokenizer(self.sentences, self.dicts)
+        tokenizer = Tokenizer(self._sentences, self._dicts)
         line_tokens: str = tokenizer.create_tokens()
         for line in line_tokens:
             iambic_line = IambicLine(line)
-            changed_words = iambic_line.changed_words
+            changed_words = iambic_line.line_facts["changed_words"]
             if changed_words: all_changed_words += changed_words
             truth.append(str(iambic_line))
             truth_and_lines.append( (str(iambic_line), [str(tkn) for tkn in line] ))

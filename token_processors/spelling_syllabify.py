@@ -42,11 +42,12 @@ class SpellingSyllabifier:
     }
 
     def __init__(self, token):
-        self.token = token
-        self.syllable_count = 0
-        self.modified_word = ''
         self.tentative_phonemes = [[]]
-        self.reduced_syllables = 0
+        
+        self._token = token
+        self._syllable_count = 0
+        self._modified_word = ''
+        self._reduced_syllables = 0
 
         self._main()
 
@@ -55,8 +56,8 @@ class SpellingSyllabifier:
         word = self._check_endings()
         word = self._check_special_cases(word)
         syllables = [w for w in word if w in self.VOWELS]
-        self.syllable_count = len(syllables)
-        print(self.syllable_count)
+        self._syllable_count = len(syllables)
+        print(self._syllable_count)
 
     def _find_multiple(self, regex, word, rev=False):
         res = re.finditer(regex, word)
@@ -64,54 +65,54 @@ class SpellingSyllabifier:
         indicies = indicies[::-1] if rev else indicies
         for idx in indicies:
             word = word[:idx] + word[idx + 1:]
-            self.reduced_syllables += 1
+            self._reduced_syllables += 1
         return word
 
-    def find_single(self, letter, word):
+    def _find_single(self, letter, word):
         idx = word.rindex(letter)
         word = word[:idx] + word[idx + 1:]
-        self.reduced_syllables += 1
+        self._reduced_syllables += 1
         return word
 
     def _check_endings(self):
-        word = self.token
+        word = self._token
 
         if re.search(self.REGEX["EST"], word):
-            word = self.find_single("e", word)
+            word = self._find_single("e", word)
             return word
 
         if re.search(self.REGEX["IZE"], word):
-            word = self.find_single("e", word)
+            word = self._find_single("e", word)
             return word
 
         if re.search(self.REGEX["IAN"], word):
-            word = self.find_single("i", word)
+            word = self._find_single("i", word)
             return word
 
         if re.search(self.REGEX["IES"], word):
-            word = self.find_single("e", word)
+            word = self._find_single("e", word)
             return word
        
         if re.search(self.REGEX["SES"], word):
             return word
 
         if re.search(self.REGEX["E"], word):
-            word = self.find_single("e", word)
+            word = self._find_single("e", word)
             return word
 
         if re.search(self.REGEX["ION"], word)  and len(word) > 4:
-            word = self.find_single("i", word)
+            word = self._find_single("i", word)
             return word
 
         if re.search(self.REGEX["ED"], word)  and len(word) >= 4:
-            word = self.find_single("e", word)
+            word = self._find_single("e", word)
             return word
 
         return word
 
 
     def _check_special_cases(self, word=None):
-        word = word if word else self.token
+        word = word if word else self._token
     
         if re.search(self.REGEX["AU"], word):
             word = self._find_multiple(self.REGEX["AU"], word)
@@ -157,59 +158,59 @@ class SpellingSyllabifier:
             word = self._find_multiple(self.REGEX["OY"], word)
             return self._check_special_cases(word)
 
-        self.modified_word = word
-        return self.modified_word
+        self._modified_word = word
+        return self._modified_word
 
     
     def _simple_stressor(self, restore_syllables=0):
-        count = self.syllable_count
+        count = self._syllable_count
         if count == 1:
             return [[self.DUMMY_STRESSED]]
         else:
-            return [[self.DUMMY_STRESSED if i == self.syllable_count - 2 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count + restore_syllables) ]]
+            return [[self.DUMMY_STRESSED if i == self._syllable_count - 2 else self.DUMMY_UNSTRESSED for i in range(self._syllable_count + restore_syllables) ]]
 
 
     def _complicated_stressor(self, POS, restore_syllables=0):
-        if POS == "V" or any([self.token.endswith(ending) for ending in ["est", "eth", "ise", "ize"] ]):
+        if POS == "V" or any([self._token.endswith(ending) for ending in ["est", "eth", "ise", "ize"] ]):
             # initial stress 
-            return [[self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count + restore_syllables) ]]
+            return [[self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(self._syllable_count + restore_syllables) ]]
         if POS in ["N", "J"]:
             # final stress 
-            return [[self.DUMMY_STRESSED if i == self.syllable_count - 1 else self.DUMMY_UNSTRESSED for i in range(self.syllable_count + restore_syllables) ]]
+            return [[self.DUMMY_STRESSED if i == self._syllable_count - 1 else self.DUMMY_UNSTRESSED for i in range(self._syllable_count + restore_syllables) ]]
 
     
     def _check_ed(self, phonemes):
         print("check_ed called")
-        print(phonemes, self.token)
+        print(phonemes, self._token)
 
-        if self.token.endswith("ed") and len(self.token) > 4:
+        if self._token.endswith("ed") and len(self._token) > 4:
             print("\tnot a short word")
-            antepenult_letter = self.token[-3]
+            antepenult_letter = self._token[-3]
             if antepenult_letter not in "aeiou":
                 phonemes_copy = deepcopy(phonemes[0])
                 print("\t", antepenult_letter, phonemes_copy)
                 phonemes_copy.insert(-1,'EH0')
                 print("\t", phonemes_copy)
                 phonemes.append(phonemes_copy)
-                self.reduced_syllables -= 1
+                self._reduced_syllables -= 1
         return phonemes
 
     
     def _check_vowel_cluster(self, phonemes):
         print("check vowel clusters called")
-        print(phonemes, self.token)
+        print(phonemes, self._token)
 
-        if re.search(self.REGEX["EOU"], self.token):
+        if re.search(self.REGEX["EOU"], self._token):
             print("eou found...")
             phonemes_len = len(phonemes[0])
             reduced_phonemes = [self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(phonemes_len - 1) ]
             print(reduced_phonemes)
             phonemes.append(reduced_phonemes)
-        if re.search(self.REGEX["EON"], self.token):
+        if re.search(self.REGEX["EON"], self._token):
             print("eon found...")
             reduced_phonemes = [self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(2) ]
             phonemes.append(reduced_phonemes)
-        if re.search(self.REGEX["VLV"], self.token):
+        if re.search(self.REGEX["VLV"], self._token):
             phonemes_len = len(phonemes[0])
             reduced_phonemes = [self.DUMMY_STRESSED if i == 0 else self.DUMMY_UNSTRESSED for i in range(phonemes_len - 1) ]
             print(reduced_phonemes)
@@ -223,25 +224,25 @@ class SpellingSyllabifier:
         Check POS, if none, use simple_stressor, otherwise, use complicated_stressor
         """
 
-        tag = pos_tag([self.token])[0][1]
+        tag = pos_tag([self._token])[0][1]
         print("****************", tag)
-        if tag.startswith("V") or any([self.token.endswith(ending) for ending in ["est", "eth", "ise", "ize"] ]): #or tag.startswith("N") or tag.startswith("J") 
+        if tag.startswith("V") or any([self._token.endswith(ending) for ending in ["est", "eth", "ise", "ize"] ]): #or tag.startswith("N") or tag.startswith("J") 
             self.tentative_phonemes = self._complicated_stressor(tag[0])
-            if self.token.endswith('ed'):
+            if self._token.endswith('ed'):
                 print("ends with ed...", self.tentative_phonemes)
                 self.tentative_phonemes = self._check_ed(self.tentative_phonemes)
-            if self.modified_word:
+            if self._modified_word:
                 print(self.tentative_phonemes)
                 print(self._complicated_stressor(tag[0]))
-                self.tentative_phonemes.append(self._complicated_stressor(tag[0], self.reduced_syllables)[0])
+                self.tentative_phonemes.append(self._complicated_stressor(tag[0], self._reduced_syllables)[0])
         else:
             self.tentative_phonemes = self._simple_stressor()
-            if self.token.endswith('ed'):
+            if self._token.endswith('ed'):
                 print("ends with ed else...", self.tentative_phonemes)
                 self.tentative_phonemes = self._check_ed(self.tentative_phonemes)
                 print("ends with ed else 2...", self.tentative_phonemes)
-            if self.modified_word:
-                self.tentative_phonemes.append(self._simple_stressor(self.reduced_syllables)[0])
+            if self._modified_word:
+                self.tentative_phonemes.append(self._simple_stressor(self._reduced_syllables)[0])
 
 
     def _final_reduction_check(self):
@@ -252,7 +253,7 @@ class SpellingSyllabifier:
 
 
     def _main(self):
-        print("spelling syllabify started with:", self.token)
+        print("spelling syllabify started with:", self._token)
         self._get_syllable_count()
         self._create_phoneme_repr()
         self._final_reduction_check()
