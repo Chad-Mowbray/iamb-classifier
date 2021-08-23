@@ -18,7 +18,7 @@ class UKAmerican:
 
     @staticmethod
     def create_uk_us_dict():
-        with open(os.path.join(os.path.dirname(__file__), "uk_american_text.txt")) as f:
+        with open(os.path.join(os.path.dirname(__file__), "files/uk_american_text.txt")) as f:
             reader = csv.reader(f, delimiter="\t")
             next(reader)
             next(reader)

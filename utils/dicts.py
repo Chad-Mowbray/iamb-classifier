@@ -54,11 +54,11 @@ class DictsSingleton():
             cls._instance.cmudict["thereon"] = [["DH", "EH0", "R", "AH1", "N"]]
             cls._instance.cmudict["whereon"] = [["W", "EH0", "R", "AH1", "N"]]
 
-            f = os.path.join(os.path.dirname(__file__), 'emspelling.json')
+            f = os.path.join(os.path.dirname(__file__), 'files/emspelling.json')
 
             with codecs.open(f, 'r', encoding='utf-8') as f:
                 temp = f.read()
-            g = os.path.join(os.path.dirname(__file__), 'decruft.json')
+            g = os.path.join(os.path.dirname(__file__), 'files/decruft.json')
 
             with codecs.open(g, 'r', encoding='utf-8') as f:
                 dec = f.read()
