@@ -171,17 +171,17 @@ def syllabify(pron, alaska_rule=True):
 
     ## verify that all segments are included in the ouput
     output = list(zip(onsets, nuclei, codas))  # in Python3 zip is a generator
-    flat_output = list(chain.from_iterable(chain.from_iterable(output)))
-    if flat_output != mypron:
-        print(f"could not syllabify {mypron}, got {flat_output}")
+    # flat_output = list(chain.from_iterable(chain.from_iterable(output)))
+    # if flat_output != mypron:
+         #print(f"could not syllabify {mypron}, got {flat_output}")
         # raise ValueError(f"could not syllabify {mypron}, got {flat_output}")
-    print("syllabify output:", output)
+     #print("syllabify output:", output)
     return output
 
 
 def syllabify_pprint(syllab):
     """
-    Pretty-print a syllabification
+    Pretty  #print a syllabification
     """
     return '.'.join('-'.join(' '.join(p) for p in syl) for syl in syllab)
 

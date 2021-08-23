@@ -1,6 +1,7 @@
 import re
 
-from regularize import regularize as reg
+# from regularize import regularize as reg
+from regularize import Regularize
 from utils import args_logger
 
 
@@ -14,19 +15,20 @@ class SpellingNormalizer():
         -Abbreviations with apostrophes
     """
 
-    def __init__(self, unknown_word, uk_us_dict):
+    def __init__(self, unknown_word, uk_us_dict, regularize_dicts):
         self._unknown_word = unknown_word
         self._uk_us_dict = uk_us_dict
+        self._regularize_dicts = regularize_dicts
         self.modernized_word = []
         self._apostrophe_position = ''
         self._has_apostrophe = False
         self._modernized = ''
 
         self._main()
-        # print("SpellingNormalizer instance created")
+        #  #print("SpellingNormalizer instance created")
 
     def _local_list(self):
-        print("_local_list called")
+         #print("_local_list called")
         local_list = {
             "o’er": "or"
         }
@@ -35,11 +37,11 @@ class SpellingNormalizer():
 
     # @args_logger
     def _get_modernized_spelling(self):
-        print("#### get modernized spelling called", self._unknown_word, len(self._unknown_word) )
+         #print("#### get modernized spelling called", self._unknown_word, len(self._unknown_word) )
         # self._apostrophe_check()
-        print("#### after apostrophe checcked", self._unknown_word )
-        self._modernized = reg.modernize(self._unknown_word) or self._brittish_converter() or self._local_list()
-        print("$$$ modernized spelling", self._modernized)
+         #print("#### after apostrophe checcked", self._unknown_word )
+        self._modernized = Regularize(self._regularize_dicts).modernize(self._unknown_word) or self._brittish_converter() or self._local_list()
+         #print("$$$ modernized spelling", self._modernized)
         self._apostrophe_check()
 
         if self._modernized is None:
@@ -47,12 +49,12 @@ class SpellingNormalizer():
             self._handle_not_found()
         else:
             self.modernized_word = [self._modernized, self._has_apostrophe, self._apostrophe_position]
-        print("modernized_word: ", self.modernized_word)
+         #print("modernized_word: ", self.modernized_word)
 
     
     def _brittish_converter(self):
         if self._unknown_word in self._uk_us_dict:
-            # print("BRITTISH"*50)
+            #  #print("BRITTISH"*50)
             return self._uk_us_dict[self._unknown_word]
 
     
@@ -73,14 +75,14 @@ class SpellingNormalizer():
 
 
     def _apostrophe_check(self):
-        print("apostrophe check called")
-        print(self._unknown_word, len(self._unknown_word))
+         #print("apostrophe check called")
+         #print(self._unknown_word, len(self._unknown_word))
         if self._unknown_word[-1] == "'":
             self._has_apostrophe = True
             self._apostrophe_position = "final" 
         elif "'" in self._unknown_word[0:-1]: #if "'" in self._unknown_word[1:-1]:
             self._has_apostrophe = True
-            print("has an apostrophe: ", self._unknown_word)
+             #print("has an apostrophe: ", self._unknown_word)
             if self._unknown_word[0] == "'":
                 self._apostrophe_position = "initial"
             else:

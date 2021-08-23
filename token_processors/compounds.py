@@ -8,11 +8,12 @@ class Compounds:
     should_proceed_to_compound_analysis helps reduce false positives
     """
 
-    def __init__(self, original_word, words, lemmatizer, uk_us_dict):
+    def __init__(self, original_word, words, lemmatizer, uk_us_dict, regularize_dicts):
         self._original_word = original_word
         self._lemmatizer = lemmatizer
         self._words = words
         self._uk_us_dict = uk_us_dict
+        self.regularize_dicts = regularize_dicts
 
 
     def _should_proceed_to_compound_analysis(self):
@@ -22,10 +23,10 @@ class Compounds:
 
 
     def find_compound_in_wordlist(self, initial=2):
-        # print("find_compound_in_wordlist called")
+        #  #print("find_compound_in_wordlist called")
         dashed_word = self._handle_dashed_word()
         if dashed_word:
-            # print(dashed_word)
+            #  #print(dashed_word)
             return dashed_word
 
         if not self._should_proceed_to_compound_analysis():
@@ -38,9 +39,9 @@ class Compounds:
         res = []
 
         for i in range(initial, len(self._original_word) - 2):
-            left = SpellingNormalizer(self._original_word[:i], self._uk_us_dict).modernized_word[0] or self._original_word[:i]
-            right = SpellingNormalizer(wnl.lemmatize(self._original_word[i:]), self._uk_us_dict).modernized_word[0] or wnl.lemmatize(self._original_word[i:])
-            print("left, right in compounds: ", left, right)
+            left = SpellingNormalizer(self._original_word[:i], self._uk_us_dict, self.regularize_dicts).modernized_word[0] or self._original_word[:i]
+            right = SpellingNormalizer(wnl.lemmatize(self._original_word[i:]), self._uk_us_dict, self.regularize_dicts).modernized_word[0] or wnl.lemmatize(self._original_word[i:])
+             #print("left, right in compounds: ", left, right)
             if left in wordlist and right in wordlist:
                 if current_split_idx:
                     prior_distance = abs(current_split_idx - median)
@@ -55,13 +56,13 @@ class Compounds:
 
     
     def _handle_dashed_word(self):
-        # print("handle_dashed_word called")
+        #  #print("handle_dashed_word called")
         if "-" in self._original_word:
             left, right = self._original_word.split("-")[0], "".join([*self._original_word.split('-')[1:]])
-            # print("left, right in compounds, handle dashed: ", left, right)
-            left = SpellingNormalizer(left, self._uk_us_dict).modernized_word[0] or left
-            right = SpellingNormalizer(self._lemmatizer.lemmatize(right), self._uk_us_dict).modernized_word[0] or self._lemmatizer.lemmatize(right)
-            # print(" Processed left, right in compounds, handle dashed: ", left, right)
+            #  #print("left, right in compounds, handle dashed: ", left, right)
+            left = SpellingNormalizer(left, self._uk_us_dict, self.regularize_dicts).modernized_word[0] or left
+            right = SpellingNormalizer(self._lemmatizer.lemmatize(right), self._uk_us_dict, self.regularize_dicts).modernized_word[0] or self._lemmatizer.lemmatize(right)
+            #  #print(" Processed left, right in compounds, handle dashed: ", left, right)
 
             if left in self._words and right in self._words:
                 return [left, right]

@@ -4,6 +4,21 @@ from nltk.corpus import cmudict as cmud
 from .uk_american import UKAmerican
 
 
+import sys, codecs, os, json, re
+
+# f = os.path.join(os.path.dirname(__file__), 'emspelling.json')
+# temp = codecs.open(f, 'r', encoding='utf-8').read()
+
+# dictionary = json.loads(temp)
+
+# g = os.path.join(os.path.dirname(__file__), 'decruft.json')
+# dec = codecs.open(g, 'r', encoding='utf-8').read()
+
+# decruft = json.loads(dec)
+# decruftre_macron = {re.compile(k): v for k,v in decruft.items()}
+# decruftre = {re.compile(k): v for k,v in decruft.items() if "~" not in k}
+
+
 
 class DictsSingleton():
 
@@ -38,6 +53,22 @@ class DictsSingleton():
             cls._instance.cmudict["wherefore"] = [["W", "EH1", "R", "F", "ER0"]]
             cls._instance.cmudict["thereon"] = [["DH", "EH0", "R", "AH1", "N"]]
             cls._instance.cmudict["whereon"] = [["W", "EH0", "R", "AH1", "N"]]
+
+            f = os.path.join(os.path.dirname(__file__), 'emspelling.json')
+
+            with codecs.open(f, 'r', encoding='utf-8') as f:
+                temp = f.read()
+            g = os.path.join(os.path.dirname(__file__), 'decruft.json')
+
+            with codecs.open(g, 'r', encoding='utf-8') as f:
+                dec = f.read()
+            decruft = json.loads(dec)
+
+            cls._instance.regularize_dicts = {
+                "decruftre_macron": {re.compile(k): v for k,v in decruft.items()},
+                "decruftre": {re.compile(k): v for k,v in decruft.items() if "~" not in k},
+                "dictionary": json.loads(temp)
+            }
             
         return cls._instance
 

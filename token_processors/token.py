@@ -44,14 +44,14 @@ class Token():
     # @args_logger
     def _get_phonemes_from_dict(self):
         token = self.token
-        # print("token: ", token)
+        #  #print("token: ", token)
         fsm = PhonemeFSM(token, self._dicts)
-        # print("new fsm: ", id(fsm))
+        #  #print("new fsm: ", id(fsm))
         # phoneme_reprs = fsm.dispatch()
         phoneme_reprs = fsm.final_phoneme_repr
-        print("phoneme_reprs from Token: ", phoneme_reprs)
+         #print("phoneme_reprs from Token: ", phoneme_reprs)
         self.phoneme_reprs = phoneme_reprs #self.handle_compounds(phoneme_reprs)
-        # print(fsm)
+        #  #print(fsm)
         self.modified_token = fsm.normalized_spelling
        
 
@@ -59,9 +59,9 @@ class Token():
     def _get_syllabification(self):
         syllabifications = []
         for stress_repr in self.phoneme_reprs:
-            # print("&&&&&&&&&&&&&&&&&&&&&&&&& get_syllabification: ", stress_repr)
+            #  #print("&&&&&&&&&&&&&&&&&&&&&&&&& get_syllabification: ", stress_repr)
             syllabified = syllabify_pprint(syllabify(stress_repr, 0)).split('.')
-            print("########### syllabified: ", syllabified)
+             #print("########### syllabified: ", syllabified)
             syllabifications.append(syllabified)
         self.syllabifications = syllabifications
 
@@ -69,26 +69,26 @@ class Token():
     # @args_logger
     def _get_stress_patterns(self):
         stress_patterns = []
-        # print(self.syllabifications)
+        #  #print(self.syllabifications)
         for syllabification in self.syllabifications:
             # pattern = [1 if self.PRIMARY_STRESS in syl else 0 for syl in syllabification]
             pattern = [int(search(r'[12]', syl).group()) if search(r'[12]', syl) else 0 for syl in syllabification]
-            # print(pattern)
+            #  #print(pattern)
             if sum(pattern) > 1:
                 x = 2
-                # print("multiple stress...")
+                #  #print("multiple stress...")
             stress_patterns.append(pattern)
         self.stress_patterns = stress_patterns
   
 
     # @args_logger
     def _main(self):
-        # print("in Token, token:", self.token)
+        #  #print("in Token, token:", self.token)
         self._get_phonemes_from_dict()
         self._get_syllabification()
         # self.get_syllable_count()
         self._get_stress_patterns()
-        # print(self())
+        #  #print(self())
 
 
 

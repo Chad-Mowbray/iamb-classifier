@@ -1,2 +1,2 @@
-from .regularize import modernize
+from .regularize import Regularize
 
