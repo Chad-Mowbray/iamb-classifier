@@ -2,6 +2,7 @@ import os
 import pickle
 from pprint import pprint
 from collections import Counter
+from random import shuffle
 
 from dataprep import RawFileProcessor
 from token_processors import Tokenizer
@@ -58,9 +59,11 @@ class Runner():
         print("ALL CHANGED WORDS:")
         counter_dict = Counter(all_changed_words)
         print("total changed words: ", len(counter_dict))
+
         # pprint(dict(counter_dict))
-        # with open (f"{genre}.pickle", 'wb') as f:
+        # with open (f"dataprep/pickle_jar/elizabethan/{genre}.pickle", 'wb') as f:
         #     pickle.dump(counter_dict, f)
+        return counter_dict
 
 
 
@@ -70,13 +73,46 @@ class Runner():
 if __name__ == "__main__":
     # files = ["poems/elizabethan_poems.txt","poems/neoclassical_poems.txt", "poems/victorian_poems.txt","poems/romantic_poems.txt"]
     # for f in files:
-    #     filename = os.path.join(os.path.dirname(__file__), f)
-    #     rfp = RawFileProcessor(filename)
-    #     contents = rfp.cleaned_contents
+        # filename = os.path.join(os.path.dirname(__file__), f)
+        # rfp = RawFileProcessor(filename)
+        # contents = rfp.cleaned_contents
 
-    #     r = Runner(contents)
-    #     genre = f[6:16]
-    #     r.initial_process_contents(genre)
+        # r = Runner(contents)
+        # genre = f[6:16]
+        # r.initial_process_contents(genre)
+
+
+
+
+
+
+    filename = os.path.join(os.path.dirname(__file__), "poems/neoclassical_poems.txt")
+    rfp = RawFileProcessor(filename)
+    contents = rfp.cleaned_contents
+
+    for j in range(3):
+        shuffle(contents)
+        sectioned_contents = []
+        sections = []
+        for i,line in enumerate(contents):
+            if i == 0: continue
+            # print(line.rstrip("\n"))
+            sections.append(line.rstrip("\n"))
+            if i % 100 == 0:
+                sectioned_contents.append(sections)
+                sections = []
+        # print(len(sectioned_contents))
+        # print(len(sectioned_contents[0]))
+        # print(len(sectioned_contents[5]))
+
+        for i,section in enumerate(sectioned_contents):
+            r = Runner(section)
+            genre = f"neoclassical_test-{j}-{i}"
+            r.initial_process_contents(genre)
+
+
+
+
 
 
     # TOTAL = Counter()
@@ -93,11 +129,11 @@ if __name__ == "__main__":
 
 
 
-    filename = os.path.join(os.path.dirname(__file__), "poems/test_poem.txt")
-    rfp = RawFileProcessor(filename)
-    contents = rfp.cleaned_contents
-    r = Runner(contents)
-    r.initial_process_contents("mixed")
+    # filename = os.path.join(os.path.dirname(__file__), "poems/test_poem.txt")
+    # rfp = RawFileProcessor(filename)
+    # contents = rfp.cleaned_contents
+    # r = Runner(contents)
+    # r.initial_process_contents("mixed")
 
 
 
