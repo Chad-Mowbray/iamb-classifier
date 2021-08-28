@@ -45,7 +45,9 @@ class IambicLine():
         return {
             "rules_applied": len(self._rules_applied),
             "syllables_per_line": self._syllables_per_line,
-            "changed_words": self._changed_words
+            "changed_words": self._changed_words,
+            "words_per_line": len(self._tokens),
+            # "syllables_per_line": sum([s for s in self._syllables_per_line])
         }
 
     

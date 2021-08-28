@@ -1,0 +1,214 @@
+main started...
+create accented word dict started...
+get accented words started...
+on period:  elizabethan
+get sections per period started...
+other_features:  [2.604, 7.91, 16.486]
+other_features:  [2.684, 7.9, 15.48]
+other_features:  [2.66, 7.884, 16.286]
+other_features:  [2.658, 7.8, 15.5]
+other_features:  [2.752, 7.788, 16.432]
+other_features:  [2.702, 7.882, 16.348]
+other_features:  [2.516, 7.926, 15.86]
+other_features:  [2.646, 7.93, 15.832]
+other_features:  [2.714, 7.878, 16.888]
+other_features:  [2.676, 7.91, 17.128]
+other_features:  [2.68, 7.924, 16.084]
+other_features:  [2.66, 7.87, 16.54]
+other_features:  [2.628, 7.848, 16.636]
+other_features:  [2.728, 7.862, 15.594]
+other_features:  [2.722, 7.852, 16.46]
+other_features:  [2.714, 7.928, 16.348]
+other_features:  [2.76, 7.842, 16.644]
+create accebted word feature started...
+reset started...
+on period:  neoclassical
+get sections per period started...
+other_features:  [2.778, 7.626, 17.902]
+other_features:  [2.622, 7.674, 17.14]
+other_features:  [2.696, 7.686, 18.178]
+other_features:  [2.728, 7.602, 18.068]
+other_features:  [2.7, 7.536, 16.992]
+other_features:  [2.79, 7.552, 17.896]
+other_features:  [2.62, 7.598, 17.698]
+other_features:  [2.626, 7.614, 17.978]
+other_features:  [2.682, 7.62, 18.582]
+other_features:  [2.638, 7.572, 18.698]
+other_features:  [2.642, 7.572, 17.486]
+other_features:  [2.578, 7.684, 17.956]
+other_features:  [2.7254509018036073, 7.629258517034068, 17.915831663326653]
+other_features:  [2.718, 7.55, 17.86]
+other_features:  [2.746, 7.602, 17.546]
+other_features:  [2.562, 7.608, 17.858]
+other_features:  [2.867735470941884, 7.653306613226453, 18.17635270541082]
+other_features:  [2.676, 7.626, 18.382]
+other_features:  [2.622, 7.558, 18.278]
+other_features:  [2.692, 7.61, 17.45]
+create accebted word feature started...
+reset started...
+on period:  romantic
+get sections per period started...
+other_features:  [2.67, 7.632, 17.232]
+other_features:  [2.696, 7.604, 17.428]
+other_features:  [2.636, 7.698, 16.902]
+other_features:  [2.804, 7.67, 18.038]
+other_features:  [2.7, 7.626, 17.518]
+other_features:  [2.732, 7.616, 17.86]
+other_features:  [2.744, 7.566, 18.02]
+other_features:  [2.708, 7.652, 17.986]
+other_features:  [2.566, 7.64, 17.546]
+other_features:  [2.728, 7.646, 17.788]
+other_features:  [2.69, 7.71, 17.552]
+other_features:  [2.672, 7.68, 17.83]
+other_features:  [2.738, 7.664, 17.698]
+other_features:  [2.644, 7.652, 17.752]
+other_features:  [2.79, 7.632, 17.97]
+other_features:  [2.696, 7.706, 17.308]
+other_features:  [2.6, 7.766, 17.616]
+other_features:  [2.724, 7.71, 18.12]
+other_features:  [2.71, 7.556, 18.096]
+other_features:  [2.614, 7.618, 18.706]
+create accebted word feature started...
+reset started...
+on period:  victorian
+get sections per period started...
+other_features:  [2.774, 7.828, 17.804]
+other_features:  [2.81, 7.858, 16.818]
+other_features:  [2.813627254509018, 7.95190380761523, 17.218436873747496]
+other_features:  [2.842, 7.938, 17.274]
+other_features:  [2.834, 7.916, 17.452]
+other_features:  [2.65, 7.976, 17.756]
+other_features:  [2.772, 7.966, 17.392]
+other_features:  [2.668, 7.964, 16.624]
+other_features:  [2.92, 7.964, 16.67]
+other_features:  [2.848, 7.976, 17.322]
+other_features:  [2.898, 7.992, 17.928]
+other_features:  [2.824, 7.95, 17.344]
+other_features:  [2.638, 8.008, 16.984]
+other_features:  [2.844, 7.974, 17.394]
+other_features:  [2.644, 7.932, 16.84]
+other_features:  [2.764, 7.912, 17.792]
+other_features:  [2.838, 7.908, 17.18]
+other_features:  [2.904, 7.816, 17.334]
+other_features:  [2.914, 7.946, 17.574]
+other_features:  [2.814, 7.908, 17.432]
+create accebted word feature started...
+reset started...
+combine all period features started...
+get train test split started...
+train model started...
+<class 'sklearn.naive_bayes.GaussianNB'>
+58 58
+<class 'sklearn.svm._classes.LinearSVC'>
+58 58
+<class 'sklearn.naive_bayes.MultinomialNB'>
+58 58
+<class 'sklearn.naive_bayes.ComplementNB'>
+58 58
+<class 'sklearn.ensemble._forest.RandomForestClassifier'>
+58 58
+<class 'sklearn.ensemble._gb.GradientBoostingClassifier'>
+58 58
+test model started...
+gaussiannb... 
+
+              precision    recall  f1-score   support
+
+ elizabethan       1.00      1.00      1.00         3
+neoclassical       1.00      1.00      1.00         5
+    romantic       1.00      1.00      1.00         7
+   victorian       1.00      1.00      1.00         4
+
+    accuracy                           1.00        19
+   macro avg       1.00      1.00      1.00        19
+weighted avg       1.00      1.00      1.00        19
+
+[[3 0 0 0]
+ [0 5 0 0]
+ [0 0 7 0]
+ [0 0 0 4]]
+linearSVC... 
+
+              precision    recall  f1-score   support
+
+ elizabethan       1.00      1.00      1.00         3
+neoclassical       1.00      1.00      1.00         5
+    romantic       1.00      1.00      1.00         7
+   victorian       1.00      1.00      1.00         4
+
+    accuracy                           1.00        19
+   macro avg       1.00      1.00      1.00        19
+weighted avg       1.00      1.00      1.00        19
+
+[[3 0 0 0]
+ [0 5 0 0]
+ [0 0 7 0]
+ [0 0 0 4]]
+MultinomialNB... 
+
+              precision    recall  f1-score   support
+
+ elizabethan       1.00      1.00      1.00         3
+neoclassical       1.00      1.00      1.00         5
+    romantic       1.00      1.00      1.00         7
+   victorian       1.00      1.00      1.00         4
+
+    accuracy                           1.00        19
+   macro avg       1.00      1.00      1.00        19
+weighted avg       1.00      1.00      1.00        19
+
+[[3 0 0 0]
+ [0 5 0 0]
+ [0 0 7 0]
+ [0 0 0 4]]
+ComplementNB... 
+
+              precision    recall  f1-score   support
+
+ elizabethan       1.00      1.00      1.00         3
+neoclassical       1.00      1.00      1.00         5
+    romantic       1.00      1.00      1.00         7
+   victorian       1.00      1.00      1.00         4
+
+    accuracy                           1.00        19
+   macro avg       1.00      1.00      1.00        19
+weighted avg       1.00      1.00      1.00        19
+
+[[3 0 0 0]
+ [0 5 0 0]
+ [0 0 7 0]
+ [0 0 0 4]]
+RandomForestClassifier... 
+
+              precision    recall  f1-score   support
+
+ elizabethan       1.00      1.00      1.00         3
+neoclassical       0.83      1.00      0.91         5
+    romantic       1.00      0.86      0.92         7
+   victorian       1.00      1.00      1.00         4
+
+    accuracy                           0.95        19
+   macro avg       0.96      0.96      0.96        19
+weighted avg       0.96      0.95      0.95        19
+
+[[3 0 0 0]
+ [0 5 0 0]
+ [0 1 6 0]
+ [0 0 0 4]]
+GradientBoostingClassifier... 
+
+              precision    recall  f1-score   support
+
+ elizabethan       1.00      1.00      1.00         3
+neoclassical       1.00      1.00      1.00         5
+    romantic       1.00      1.00      1.00         7
+   victorian       1.00      1.00      1.00         4
+
+    accuracy                           1.00        19
+   macro avg       1.00      1.00      1.00        19
+weighted avg       1.00      1.00      1.00        19
+
+[[3 0 0 0]
+ [0 5 0 0]
+ [0 0 7 0]
+ [0 0 0 4]]

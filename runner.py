@@ -39,31 +39,42 @@ class Runner():
         truth = []
         truth_and_lines = []
         all_changed_words = []
+        all_rules = []    #############################
+        all_words_per_line = []
+        all_syllables_per_line = []
         tokenizer = Tokenizer(self._sentences, self._dicts)
         line_tokens: str = tokenizer.create_tokens()
         for line in line_tokens:
             iambic_line = IambicLine(line)
             changed_words = iambic_line.line_facts["changed_words"]
+            all_rules.append(iambic_line.line_facts["rules_applied"]) ##############
+            all_words_per_line.append(iambic_line.line_facts["words_per_line"])
+            all_syllables_per_line.append(iambic_line.line_facts["syllables_per_line"])
             if changed_words: all_changed_words += changed_words
             truth.append(str(iambic_line))
             truth_and_lines.append( (str(iambic_line), [str(tkn) for tkn in line] ))
-        pprint(truth)
-        pprint([x for x in truth_and_lines if x[0][0].startswith("F")])
+        # pprint(truth)
+        # pprint([x for x in truth_and_lines if x[0][0].startswith("F")])
         total_valid_lines = len([x for x in truth if x[0].startswith("T")])
         total_lines = len(truth)
-        print()
-        print("Total samples: ", total_lines, "\nTotal valid lines: ", total_valid_lines, "\nsuccess rate: ", total_valid_lines / total_lines)
+        # print()
+        # print("Total samples: ", total_lines, "\nTotal valid lines: ", total_valid_lines, "\nsuccess rate: ", total_valid_lines / total_lines)
         ratios = self._get_stats(truth)
-        print(ratios)
-        print("\npercent of rule 0: ", ratios.get(0,0),"\npercent of rule 1: ", ratios.get(1,0),"\npercent of rule 2: ", ratios.get(2,0),"\npercent of rule 3: ", ratios.get(3,0), "\npercent of rule 4: ", ratios.get(4,0),"\npercent of rule 5: ", ratios.get(5,0), "\npercent failed:", ratios.get(6,0))
-        print("ALL CHANGED WORDS:")
+        # print(ratios)
+        # print("\npercent of rule 0: ", ratios.get(0,0),"\npercent of rule 1: ", ratios.get(1,0),"\npercent of rule 2: ", ratios.get(2,0),"\npercent of rule 3: ", ratios.get(3,0), "\npercent of rule 4: ", ratios.get(4,0),"\npercent of rule 5: ", ratios.get(5,0), "\npercent failed:", ratios.get(6,0))
+        # print("ALL CHANGED WORDS:")
         counter_dict = Counter(all_changed_words)
-        print("total changed words: ", len(counter_dict))
+        # print("total changed words: ", len(counter_dict))
 
         # pprint(dict(counter_dict))
         # with open (f"dataprep/pickle_jar/elizabethan/{genre}.pickle", 'wb') as f:
         #     pickle.dump(counter_dict, f)
-        return counter_dict
+        return {
+            "counter_dict":counter_dict,
+            "rules_avg": sum(all_rules) / len(all_rules),
+            "words_per_line": sum(all_words_per_line) / len(all_words_per_line),
+            "avg_syllables_per_line": sum([s for y in all_syllables_per_line for s in y]) / len(all_syllables_per_line)
+        }
 
 
 

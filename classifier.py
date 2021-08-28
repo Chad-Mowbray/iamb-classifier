@@ -2,7 +2,13 @@ import pickle
 import os
 import numpy as np
 from collections import Counter, OrderedDict
-from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import GaussianNB, MultinomialNB, ComplementNB, BernoulliNB, CategoricalNB
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn import svm
+from sklearn.linear_model import SGDClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neural_network import MLPClassifier
 from sklearn import metrics
 from copy import deepcopy
 from random import shuffle
@@ -18,14 +24,18 @@ class Classifier:
 
     PERIODS = (
         "elizabethan",
-        "neoclassical"
+        "neoclassical",
+        "romantic",
+        "victorian"
     )
+    SECTION_LENGTH = 500
 
     def __init__(self, accented_words_file):
         # self.period_pickle_files = period_pickle_files
         self.accented_words_file = accented_words_file
         self.ordered_accented_words = {}
         self.counter_dicts = []
+        self.other_features = []
         self.all_period_features = []
 
         self.main()
@@ -56,7 +66,7 @@ class Classifier:
         return fresh_word_dict
 
     
-    def get_sections_per_period(self, period, iterations=3):
+    def get_sections_per_period(self, period, iterations=1):
         print('get sections per period started...')
 
         filename = os.path.join(os.path.dirname(__file__), f"poems/{period}_poems.txt")
@@ -71,22 +81,28 @@ class Classifier:
                 if i == 0: continue
                 # print(line.rstrip("\n"))
                 sections.append(line.rstrip("\n"))
-                if i % 100 == 0:
+                if i % self.SECTION_LENGTH == 0:
                     sectioned_contents.append(sections)
                     sections = []
 
             for i,section in enumerate(sectioned_contents):
                 r = Runner(section)
                 # genre = f"neoclassical_test-{j}-{i}"
-                counter_dict = r.initial_process_contents(period)
+                features = r.initial_process_contents(period) ######################TODO
+                counter_dict = features["counter_dict"]
+                rules_avg = features["rules_avg"]
+                words_per_line = features["words_per_line"]
+                avg_syllables_per_line = features["avg_syllables_per_line"]
                 self.counter_dicts.append(counter_dict)
+                self.other_features = [rules_avg, words_per_line, avg_syllables_per_line] #######################
+                print("other_features: ", self.other_features)
 
 
     def create_accented_word_feature(self, period):
         print('create accebted word feature started...')
 
         period_features = []
-        for sect in self.counter_dicts:
+        for i,sect in enumerate(self.counter_dicts):
             sect = sorted([word for word in sect])
             sect_dict = OrderedDict(Counter(sect))
             sect_combined = OrderedDict()
@@ -96,6 +112,7 @@ class Classifier:
                 else:
                     sect_combined[k] = 0
             one_hot_sect = [[float(v) for v in sect_combined.values()]]
+            one_hot_sect[0].extend(self.other_features) #######################
             one_hot_sect.append(period)
             period_features.append(one_hot_sect)
 
@@ -106,11 +123,14 @@ class Classifier:
     def reset(self):
         print('reset started...')
         self.counter_dicts = []
+        self.other_features = []
 
 
     def combine_all_period_features(self):
         print('combine all period features started...')
         flattened_all_period_features = [sect for period in self.all_period_features for sect in period]
+        # print(flattened_all_period_features)
+        # raise Exception()
         shuffle(flattened_all_period_features)
         return flattened_all_period_features
 
@@ -119,6 +139,10 @@ class Classifier:
         print('get train test split started...')
         X = [x[0] for x in flattened_all_period_features]
         y = [x[1] for x in flattened_all_period_features]
+        # print("asdf")
+        # print(X)
+        # print("fdsa")
+        # print(y)
 
         size = len(X)
         if size != len(y): raise Exception("X and y not same len")
@@ -143,23 +167,30 @@ class Classifier:
 
     def train_model(self, train_test):
         print('train model started...')
-        model = GaussianNB()
-        model.fit(train_test["X_train_np"], train_test["y_train_np"])
-        with open('test-trained-model.pickle', 'wb') as f:
-            pickle.dump(model, f)
+        models = [GaussianNB, svm.LinearSVC, MultinomialNB, ComplementNB, RandomForestClassifier, GradientBoostingClassifier, MLPClassifier]
+        names = ["gaussiannb", "linearSVC",  "MultinomialNB", "ComplementNB", "RandomForestClassifier", "GradientBoostingClassifier", "MLPClassifier"]
+        for i,model in enumerate(models):
+            print(str(model))
+            print( len(train_test["X_train_np"]), len(train_test["y_train_np"]) )
+            # if model == "RandomForestClassifier":
+            #     test_model = RandomForestClassifier(max_depth=4)
+            # else:
+            test_model = model()
+            test_model.fit(train_test["X_train_np"], train_test["y_train_np"])
+            with open(f'{names[i]}_test-trained-model.pickle', 'wb') as f:
+                pickle.dump(test_model, f)
 
 
     def test_model(self, train_test):
         print('test model started...')
-        with open("test-trained-model.pickle", 'rb') as f:
-            print("opening model...")
-            model = pickle.load(f)
-            print('model loaded...')
-            predicted = model.predict(train_test["X_test_np"])
-            print('prediction made...')
-            print(metrics.classification_report(train_test["y_test_np"], predicted))
-            print(metrics.confusion_matrix(train_test["y_test_np"], predicted))
-        print("test model finished...")
+        models = ["gaussiannb", "linearSVC",  "MultinomialNB", "ComplementNB", "RandomForestClassifier", "GradientBoostingClassifier", "MLPClassifier"]
+        for model in models:
+            with open(f"{model}_test-trained-model.pickle", 'rb') as f:
+                print(f"{model}...", "\n")
+                test_model = pickle.load(f)
+                predicted = test_model.predict(train_test["X_test_np"])
+                print(metrics.classification_report(train_test["y_test_np"], predicted))
+                print(metrics.confusion_matrix(train_test["y_test_np"], predicted))
 
 
     def main(self):
