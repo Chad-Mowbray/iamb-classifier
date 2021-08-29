@@ -28,7 +28,7 @@ class Classifier:
         "romantic",
         "victorian"
     )
-    SECTION_LENGTH = 500
+    SECTION_LENGTH = 3
 
     def __init__(self, accented_words_file):
         # self.period_pickle_files = period_pickle_files
@@ -93,9 +93,16 @@ class Classifier:
                 rules_avg = features["rules_avg"]
                 words_per_line = features["words_per_line"]
                 avg_syllables_per_line = features["avg_syllables_per_line"]
+                rule_0 = features["rule_0"]
+                rule_1 = features["rule_1"]
+                rule_2 = features["rule_2"]
+                rule_3 = features["rule_3"]
+                rule_4 = features["rule_4"]
+                rule_5 = features["rule_5"]
+                rule_6 = features["rule_6"]
                 self.counter_dicts.append(counter_dict)
-                self.other_features = [rules_avg, words_per_line, avg_syllables_per_line] #######################
-                print("other_features: ", self.other_features)
+                self.other_features = [rules_avg, words_per_line, avg_syllables_per_line, rule_0, rule_1, rule_2, rule_3, rule_4, rule_5, rule_6] #######################
+                # print("other_features: ", self.other_features)
 
 
     def create_accented_word_feature(self, period):
@@ -191,6 +198,12 @@ class Classifier:
                 predicted = test_model.predict(train_test["X_test_np"])
                 print(metrics.classification_report(train_test["y_test_np"], predicted))
                 print(metrics.confusion_matrix(train_test["y_test_np"], predicted))
+                print(metrics.accuracy_score(train_test["y_test_np"], predicted))
+
+                print("Accuracy on training set: {:.3f}".format(test_model.score(train_test["X_train_np"], train_test["y_train_np"])))
+                print("Accuracy on test set: {:.3f}".format(test_model.score(train_test["X_test_np"], train_test["y_test_np"])))
+
+
 
 
     def main(self):

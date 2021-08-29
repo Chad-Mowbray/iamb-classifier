@@ -31,7 +31,7 @@ class Runner():
         rules = [int(x.split(', ')[1]) for x in truth]
         total = len(rules)
         res_dict: Counter = Counter(rules)
-        return {k: str(v/total * 100)[:4] + "%" for k,v in res_dict.items()}
+        return {k: v/total * 100 for k,v in res_dict.items()}
         
 
     # @args_logger
@@ -73,7 +73,14 @@ class Runner():
             "counter_dict":counter_dict,
             "rules_avg": sum(all_rules) / len(all_rules),
             "words_per_line": sum(all_words_per_line) / len(all_words_per_line),
-            "avg_syllables_per_line": sum([s for y in all_syllables_per_line for s in y]) / len(all_syllables_per_line)
+            "avg_syllables_per_line": sum([s for y in all_syllables_per_line for s in y]) / len(all_syllables_per_line),
+            "rule_0": ratios.get(0,0),
+            "rule_1": ratios.get(1,0),
+            "rule_2": ratios.get(2,0),
+            "rule_3": ratios.get(3,0),
+            "rule_4": ratios.get(4,0),
+            "rule_5": ratios.get(5,0),
+            "rule_6": ratios.get(6,0)
         }
 
 
