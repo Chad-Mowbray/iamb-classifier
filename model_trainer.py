@@ -10,6 +10,9 @@ from sklearn import metrics
 from copy import deepcopy
 from random import shuffle
 
+from skopt import BayesSearchCV
+from sklearn.model_selection import RepeatedStratifiedKFold
+
 import sys
 sys.path.append("../")
 from dataprep import RawFileProcessor
@@ -139,7 +142,7 @@ class ModelTrainer:
 
         size = len(X)
         if size != len(y): raise Exception("X and y not same len")
-        test_split_point = size // 4
+        test_split_point = size // 10
         X_train = X[test_split_point:]
         y_train = y[test_split_point:]
         X_train_np = np.array(X_train)
@@ -160,32 +163,48 @@ class ModelTrainer:
 
     def train_model(self, train_test):
         print('train model started...')
-        models = [GaussianNB, svm.LinearSVC, MultinomialNB, ComplementNB, RandomForestClassifier, GradientBoostingClassifier, MLPClassifier]
-        names = ["gaussiannb", "linearSVC",  "MultinomialNB", "ComplementNB", "RandomForestClassifier", "GradientBoostingClassifier", "MLPClassifier"]
-        for i,model in enumerate(models):
-            print(str(model))
-            print( len(train_test["X_train_np"]), len(train_test["y_train_np"]) )
-            test_model = model()
-            test_model.fit(train_test["X_train_np"], train_test["y_train_np"])
-            with open(f'{names[i]}_test-trained-model.pickle', 'wb') as f:
-                pickle.dump(test_model, f)
+        # models = [MultinomialNB, ComplementNB, MLPClassifier]
+        # names = ["MultinomialNB", "ComplementNB", "MLPClassifier"]
+        # for i,model in enumerate(models):
+        #     print(str(model))
+        #     print( len(train_test["X_train_np"]), len(train_test["y_train_np"]) )
+
+        #     if names[i] == "ComplementNB":
+        #         test_model = model(alpha=2.0)
+        #     if names[i] == "MLPClassifier":
+        #         test_model = model(activation="identity", alpha=1e-08, solver="lbfgs", hidden_layer_sizes=(100,), max_iter=2000)
+        #     test_model = model()
+        #     test_model.fit(train_test["X_train_np"], train_test["y_train_np"])
+        test_model = ComplementNB(alpha=2.0)
+        test_model.fit(train_test["X_train_np"], train_test["y_train_np"])
+        with open(f'high-test_refined-ComplementNB_test-trained-model.pickle', 'wb') as f:
+            pickle.dump(test_model, f)
 
 
     def test_model(self, train_test):
         print('test model started...')
-        models = ["gaussiannb", "linearSVC",  "MultinomialNB", "ComplementNB", "RandomForestClassifier", "GradientBoostingClassifier", "MLPClassifier"]
-        for model in models:
-            with open(f"{model}_test-trained-model.pickle", 'rb') as f:
-                print(f"{model}...", "\n")
-                test_model = pickle.load(f)
-                predicted = test_model.predict(train_test["X_test_np"])
-                print(metrics.classification_report(train_test["y_test_np"], predicted))
-                print(metrics.confusion_matrix(train_test["y_test_np"], predicted))
-                print(metrics.accuracy_score(train_test["y_test_np"], predicted))
+        # models = ["MultinomialNB", "ComplementNB", "MLPClassifier"]
+        # for model in models:
+        #     with open(f"{model}_test-trained-model.pickle", 'rb') as f:
+        #         print(f"{model}...", "\n")
+        #         test_model = pickle.load(f)
+        #         predicted = test_model.predict(train_test["X_test_np"])
+        #         print(metrics.classification_report(train_test["y_test_np"], predicted))
+        #         print(metrics.confusion_matrix(train_test["y_test_np"], predicted))
+        #         print(metrics.accuracy_score(train_test["y_test_np"], predicted))
 
-                print("Accuracy on training set: {:.3f}".format(test_model.score(train_test["X_train_np"], train_test["y_train_np"])))
-                print("Accuracy on test set: {:.3f}".format(test_model.score(train_test["X_test_np"], train_test["y_test_np"])))
+        #         print("Accuracy on training set: {:.3f}".format(test_model.score(train_test["X_train_np"], train_test["y_train_np"])))
+        #         print("Accuracy on test set: {:.3f}".format(test_model.score(train_test["X_test_np"], train_test["y_test_np"])))
 
+        with open(f"high-test_refined-ComplementNB_test-trained-model.pickle", 'rb') as f:
+            test_model = pickle.load(f)
+            predicted = test_model.predict(train_test["X_test_np"])
+            print(metrics.classification_report(train_test["y_test_np"], predicted))
+            print(metrics.confusion_matrix(train_test["y_test_np"], predicted))
+            print(metrics.accuracy_score(train_test["y_test_np"], predicted))
+
+            print("Accuracy on training set: {:.3f}".format(test_model.score(train_test["X_train_np"], train_test["y_train_np"])))
+            print("Accuracy on test set: {:.3f}".format(test_model.score(train_test["X_test_np"], train_test["y_test_np"])))
 
 
 

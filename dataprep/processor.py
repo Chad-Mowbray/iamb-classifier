@@ -1,5 +1,7 @@
 import re
 from pprint import pprint
+from unidecode import unidecode
+
 
 class RawFileProcessor:
 
@@ -30,12 +32,17 @@ class RawFileProcessor:
     def clean_contents(self):
         cleaned = []
         for line in self._raw_contents:
+            if len(line) < 2: continue
             cleaned_line = line.strip()
+            cleaned_line = unidecode(cleaned_line)
+            cleaned_line = re.sub(r'<{1}[^>]*>{1}', '', cleaned_line)
             cleaned_line = re.sub(r'([!"#$%&\()*+,.\/:;<=>?@[\]^_{|}~\d])|(\'+$)', "", cleaned_line)
-            cleaned_line = re.sub(r'(\s{2,})+|(-{2,})+', " ", cleaned_line)
+            cleaned_line = re.sub(r'(\s{2,})+|(-{2,})+|(-\s+?$)', " ", cleaned_line)
             cleaned_line = re.sub(r"[\'\’]s\s{1}", " ", cleaned_line)
             cleaned_line = re.sub(r'th\'\w+', "th' ", cleaned_line)
-            cleaned_line = re.sub(r'^[MXLICV]+$|(CANTO|Book).*[MXLICV]+', '', cleaned_line)
+            cleaned_line = re.sub(r'^[MXLICV]+$|CANTO.*[MXLICV]+|\[[mxlicv]+\]|^[^a-z]+$', '', cleaned_line)
+            cleaned_line = re.sub(r'[æÆ]', "ae", cleaned_line)
+            cleaned_line = re.sub(r'[œŒ]', "oe", cleaned_line)
             cleaned.append(cleaned_line + "\n")
         self.cleaned_contents = cleaned
 

@@ -100,6 +100,7 @@ if __name__ == "__main__":
         r = Runner(contents)
         features = r.initial_process_contents()
         c = Classifier("accented_words.txt", features)
+        print(c.guessed_period)
 
     else:
         print("doesn't exist")
