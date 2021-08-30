@@ -13,7 +13,7 @@ class Classifier:
     """
 
 
-    def __init__(self, accented_words_file, features):
+    def __init__(self, features, accented_words_file="classifier/accented_words.txt"):
         self.features = features
         self.accented_words_file = accented_words_file
         self.ordered_accented_words = {}
@@ -26,16 +26,12 @@ class Classifier:
 
 
     def get_accented_words(self):
-        print('get accented words started...')
-
         with open(self.accented_words_file, 'r') as f:
             accented_words = [word.rstrip("\n") for word in f.readlines()]
             return accented_words
 
 
     def create_accented_word_dict(self):
-        print('create accented word dict started...')
-
         accented_words = self.get_accented_words()
         unordered_accented_words = Counter(accented_words)
         ordered_accented_words = OrderedDict(unordered_accented_words)
@@ -43,16 +39,12 @@ class Classifier:
 
 
     def create_fresh_word_dict(self):
-        print('create fresh word dict started...')
-
         ordered_accented_words_copy = deepcopy(self.ordered_accented_words)
         fresh_word_dict = OrderedDict({k:0 for k in ordered_accented_words_copy})
         return fresh_word_dict
 
     
     def get_sections_per_period(self):
-        print('get sections per period started...')
-
         counter_dict = self.features["counter_dict"]
         rules_avg = self.features["rules_avg"]
         words_per_line = self.features["words_per_line"]
@@ -80,8 +72,6 @@ class Classifier:
 
 
     def create_accented_word_feature(self):
-        print('create accebted word feature started...')
-
         for sect in self.counter_dicts:
             sect = sorted([word for word in sect])
             sect_dict = OrderedDict(Counter(sect))
@@ -98,7 +88,6 @@ class Classifier:
 
 
     def combine_all_period_features(self):
-        print('combine all period features started...')
         flattened_all_period_features = [sect for period in self.all_period_features for sect in period]
         return np.array(flattened_all_period_features)
 
@@ -111,7 +100,6 @@ class Classifier:
 
 
     def main(self):
-        print('main started...')
         self.create_accented_word_dict()
         self.get_sections_per_period()
         period_features = self.create_accented_word_feature()

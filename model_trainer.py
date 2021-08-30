@@ -225,5 +225,5 @@ class ModelTrainer:
 
 
 if __name__ == "__main__":
-    m = ModelTrainer("accented_words.txt")
+    m = ModelTrainer("classifier/accented_words.txt")
 
