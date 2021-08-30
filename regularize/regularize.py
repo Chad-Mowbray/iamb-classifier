@@ -1,25 +1,17 @@
-# from https://github.com/jrladd/regularize
-import sys, codecs, os, json, re
+# based on https://github.com/jrladd/regularize
+import re
 
 
-# f = os.path.join(os.path.dirname(__file__), 'emspelling.json')
-# temp = codecs.open(f, 'r', encoding='utf-8').read()
-
-# dictionary = json.loads(temp)
-
-# g = os.path.join(os.path.dirname(__file__), 'decruft.json')
-# dec = codecs.open(g, 'r', encoding='utf-8').read()
-
-# decruft = json.loads(dec)
-# decruftre_macron = {re.compile(k): v for k,v in decruft.items()}
-# decruftre = {re.compile(k): v for k,v in decruft.items() if "~" not in k}
 
 class Regularize:
+    """
+    Lookes yfe a wourde be founde inn liste
+    """
+
     def __init__(self, regularize_dicts):
         self.decruftre_macron = regularize_dicts["decruftre_macron"]
         self.decruftre = regularize_dicts["decruftre"]
         self.dictionary = regularize_dicts["dictionary"]
-        # word = word
 
 
     def decruftify(self, word):
@@ -33,7 +25,6 @@ class Regularize:
                     poss.append(re.sub(k,v,poss[-1]))
         else:
             for k,v in self.decruftre.items():
-                #  #print(k,v)
                 if re.search(k,word) and len(poss) == 0:
                     poss.append(re.sub(k,v,word))
                 elif re.search(k,word) and len(poss) != 0:
@@ -44,7 +35,6 @@ class Regularize:
             return word
 
     def lookup(self, word):
-        #print("###### lookup",word, type(word) )
         word = self.decruftify(word)
         if word in self.dictionary:
             return self.dictionary[word]
@@ -56,24 +46,14 @@ class Regularize:
         return None
 
     def two_word_check(self, word):
-        #print("###### two word check",word )
         if (word.startswith("t'") or word.startswith("th'")) and word != "th'":
-            #print("...the...")
             words = word.split("'")
             firstword = self.lookup(words[0]+"'") if self.lookup(words[0]+"'") is not None else ''
             secondword = self.lookup(words[1]) if self.lookup(words[1]) is not None else ''
-            #print(firstword, secondword)
             combined = firstword+" "+secondword
             return combined.strip()
         else:
             return self.lookup(word)
 
     def modernize(self, word):
-        #print("#### modernize called with", text)
         return self.two_word_check(word)
-
-
-
-# if __name__ == "__main__":
-#     w = lookup("th'")
-     #print(w)

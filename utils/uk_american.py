@@ -1,6 +1,8 @@
 import csv
 import os
 
+
+
 class UKAmerican:
     """
     Creates a UK-US spelling dictionary
@@ -23,9 +25,3 @@ class UKAmerican:
             next(reader)
             next(reader)
             return {pair[0]:pair[1] for pair in reader}
-
-
-
-if __name__ == "__main__":
-    uk_am = UKAmerican()
-    print(uk_am.uk_us_dict)

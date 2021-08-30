@@ -2,8 +2,8 @@ from iambic_line_processors.combinations_base import CombinationsBaseMixin
 from iambic_line_processors.graph_base import GraphBase
 
 
-class CombinationsGraph(CombinationsBaseMixin, GraphBase):
 
+class CombinationsGraph(CombinationsBaseMixin, GraphBase):
     """
     Uses CombinationsBaseMixin and GraphBase to construct new stress patterns for lines
     """

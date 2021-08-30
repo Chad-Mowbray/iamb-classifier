@@ -1,5 +1,4 @@
 from os.path import exists
-
 from .feature_runner import FeatureRunner
 from dataprep import RawFileProcessor
 from classifier import Classifier
@@ -7,6 +6,10 @@ from classifier import Classifier
 
 
 def classify_ip(filename):
+    """
+    Entrypoint for classifying a text file
+    """
+
     if exists(filename):
         print("processing starting...")
         rfp = RawFileProcessor(filename)
@@ -16,6 +19,5 @@ def classify_ip(filename):
         c = Classifier(features)
         print(f"Your text is probably {c.guessed_period[0]}")
         return c.guessed_period[0]
-
     else:
         raise FileNotFoundError("Please make sure your file is in the user_input_poems/ folder.")

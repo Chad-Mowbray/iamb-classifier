@@ -1,5 +1,7 @@
 from copy import deepcopy
 
+
+
 class GraphBase():
     """
     Basic implementation of graph traversal to get all possible paths
