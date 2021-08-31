@@ -1,7 +1,7 @@
 # Iambic Pentameter Period Classifier
 
 ## Overview
-`ipclassifier` accepts a text file, which should be lines of English iambic pentameter, and outputs the period/style classification.
+`ipclassifier` accepts a text file, which should be lines of English iambic pentameter, and outputs the period/style classification.  It only uses features derived from prosody to make a classification.
 
 
 ## Installation
