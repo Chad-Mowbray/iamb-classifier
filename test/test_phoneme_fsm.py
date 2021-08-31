@@ -1,6 +1,6 @@
 import unittest
-from token_processors.phoneme_fsm import PhonemeFSM
-from utils import DictsSingleton
+from ipclassifier.token_processors.phoneme_fsm import PhonemeFSM
+from ipclassifier.utils import DictsSingleton
 
 
 class TestPhonemeFSM(unittest.TestCase):

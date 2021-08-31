@@ -1,8 +1,8 @@
 import unittest
-from iambic_line_processors import IambicLine
-from dataprep import RawFileProcessor
-from token_processors import Tokenizer
-from utils import DictsSingleton
+from ipclassifier.iambic_line_processors import IambicLine
+from ipclassifier.dataprep import RawFileProcessor
+from ipclassifier.token_processors import Tokenizer
+from ipclassifier.utils import DictsSingleton
 
 
 

@@ -1,6 +1,6 @@
 import unittest
 from pprint import pformat
-from iambic_line_processors.combinations_graph import CombinationsGraph
+from ipclassifier.iambic_line_processors.combinations_graph import CombinationsGraph
 
 
 

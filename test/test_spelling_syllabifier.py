@@ -1,5 +1,5 @@
 import unittest
-from token_processors.spelling_syllabify import SpellingSyllabifier
+from ipclassifier.token_processors.spelling_syllabify import SpellingSyllabifier
 
 
 

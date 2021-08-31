@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import MagicMock
-from iambic_line_processors import IambicLine
+from ipclassifier.iambic_line_processors import IambicLine
 
 
 

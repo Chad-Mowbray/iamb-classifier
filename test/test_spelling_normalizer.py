@@ -1,6 +1,6 @@
 import unittest
-from token_processors.spelling import SpellingNormalizer
-from utils import DictsSingleton
+from ipclassifier.token_processors.spelling import SpellingNormalizer
+from ipclassifier.utils import DictsSingleton
 
 
 

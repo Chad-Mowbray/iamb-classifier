@@ -1,6 +1,6 @@
 import unittest
-from token_processors.compounds import Compounds
-from utils import DictsSingleton
+from ipclassifier.token_processors.compounds import Compounds
+from ipclassifier.utils import DictsSingleton
 
 
 

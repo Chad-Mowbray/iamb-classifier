@@ -1,6 +1,6 @@
 import unittest
 import os
-from dataprep import RawFileProcessor
+from ipclassifier.dataprep import RawFileProcessor
 
 
 class TestRawFileProcessor(unittest.TestCase):
