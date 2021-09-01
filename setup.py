@@ -1,9 +1,13 @@
 from setuptools import setup, find_packages
 
+with(open("README.md")) as f:
+    long_desc = f.read()
+
 setup(
     name='ipclassifier',
     version='0.1.0',    
     description='Classifies English iambic pentameter poetry by period',
+    long_description=long_desc,
     url='https://github.com/Chad-Mowbray/iamb-classifier',
     author='Chad Mowbray',
     author_email='mail@mail.com',
@@ -25,8 +29,7 @@ setup(
                       ],
 
     classifiers=[
-        'License :: OSI Approved :: MIT License',  
-        'Operating System :: POSIX :: Linux',        
+        'License :: OSI Approved :: MIT License',       
         'Programming Language :: Python :: 3',
     ],
     

@@ -3,6 +3,12 @@ from .feature_runner import FeatureRunner
 from ipclassifier.dataprep import RawFileProcessor
 from ipclassifier.classifier import Classifier
 
+##### use local copy on nltk_data
+import nltk
+import os
+local_path = os.path.join("".join(os.path.dirname(__file__).split('/runners')[0]),  "nltk_data")
+nltk.data.path.insert(0, local_path)
+
 
 
 def classify_ip(filename):
