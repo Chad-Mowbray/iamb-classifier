@@ -58,6 +58,8 @@ class FeatureRunner():
             "rule_5": ratios.get(5,0),
             "rule_6": ratios.get(6,0)
         }
+        # return all_changed_words
+
 
 
 

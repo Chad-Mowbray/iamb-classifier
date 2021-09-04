@@ -1,4 +1,4 @@
-from ipclassifier.runners import classify_ip, train_runner
+from ipclassifier.runners import classify_ip, train_runner, get_new_list, test_params
 from argparse import ArgumentParser
 
 
@@ -16,3 +16,5 @@ if __name__ == "__main__":
         train_runner()
     else:
         classify_ip(f"{args.filename}")
+    # get_new_list()
+    # test_params()

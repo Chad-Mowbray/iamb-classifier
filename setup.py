@@ -27,7 +27,6 @@ setup(
                     "tqdm==4.62.2",
                     "Unidecode==1.2.0 "  ,               
                       ],
-
     classifiers=[
         'License :: OSI Approved :: MIT License',       
         'Programming Language :: Python :: 3',

@@ -53,7 +53,9 @@ class SpellingNormalizer():
 
 
     def _handle_not_found(self):
-        if self._unknown_word[0] == "'":
+        if len(self._unknown_word) == 0:
+            self.modernized_word = [self._modernized, self._has_apostrophe, '']
+        elif self._unknown_word[0] == "'":
             self.modernized_word = [self._handle_initial_apostrophe(), self._has_apostrophe, "initial"]
         elif self._unknown_word[-1] =="'":
             self.modernized_word = [self._handle_final_apostrophe(), self._has_apostrophe, "final"]
@@ -64,6 +66,8 @@ class SpellingNormalizer():
 
 
     def _apostrophe_check(self):
+        if len(self._unknown_word) <= 1:
+            return
         if self._unknown_word[-1] == "'":
             self._has_apostrophe = True
             self._apostrophe_position = "final" 

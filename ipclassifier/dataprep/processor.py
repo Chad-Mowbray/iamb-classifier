@@ -51,6 +51,7 @@ class RawFileProcessor:
             cleaned_line = re.sub(romans, '', cleaned_line)
             cleaned_line = re.sub(ae, "ae", cleaned_line)
             cleaned_line = re.sub(oe, "oe", cleaned_line)
+            cleaned_line = re.sub("`", "'", cleaned_line)
             cleaned.append(cleaned_line + "\n")
         self.cleaned_contents = cleaned
 

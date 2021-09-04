@@ -1,4 +1,5 @@
 import os
+import pickle
 from collections import Counter, OrderedDict
 from copy import deepcopy
 
@@ -10,7 +11,7 @@ class ModelBase:
     """
 
     def __init__(self):
-        self.accented_words_file = os.path.join(os.path.dirname(__file__), "accented_words.txt")
+        self.accented_words_file = os.path.join(os.path.dirname(__file__), "master_word_list.pickle")
         self.ordered_accented_words = {}
         self.counter_dicts = []
         self.other_features = []
@@ -19,8 +20,10 @@ class ModelBase:
 
 
     def get_accented_words(self):
-        with open(self.accented_words_file, 'r') as f:
-            accented_words = [word.rstrip("\n") for word in f.readlines()]
+        with open(self.accented_words_file, 'rb') as f:
+            # accented_words = [word.rstrip("\n") for word in f.readlines()]
+            # return accented_words
+            accented_words = pickle.load(f)
             return accented_words
 
 

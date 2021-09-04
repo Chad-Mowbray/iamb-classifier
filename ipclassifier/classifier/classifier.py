@@ -11,7 +11,7 @@ class Classifier(ModelBase):
     Categorizes the sample
     """
 
-    def __init__(self, features, accented_words_file="accented_words.txt"):
+    def __init__(self, features, accented_words_file="master_word_list.pickle"):
         super().__init__()
         self.features = features
         self.accented_words_file = os.path.join(os.path.dirname(__file__), accented_words_file)
@@ -26,10 +26,16 @@ class Classifier(ModelBase):
 
 
     def guess_period(self, flattened_all_period_features):
-        filepath = os.path.join(os.path.dirname(__file__), "models/complementNB_current.pickle")
-        with open(filepath, "rb") as f:
-            model = pickle.load(f)
-            self.guessed_period = model.predict(flattened_all_period_features)
+        guess_set = []
+        for m in ["MultinomialNB", "ComplementNB"]:
+            filepath = os.path.join(os.path.dirname(__file__), f"models/{m}-test-model.pickle")
+            with open(filepath, "rb") as f:
+                model = pickle.load(f)
+                guessed_period = model.predict(flattened_all_period_features)
+                print(m, guessed_period)
+                guess_set.append(guessed_period[0])
+        self.guessed_period = guess_set[1] if guess_set[1] == "16th-Century" else guess_set[0]
+        print("final_guess", self.guessed_period)
 
 
     def main(self):
