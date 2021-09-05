@@ -1,7 +1,7 @@
 # Premodern Iambic Pentameter Period Classifier
 
 ## Overview
-`ipclassifier` accepts a text file, which should be lines of pre-modern English iambic pentameter, and outputs the period/style classification.  It only uses features derived from prosody to make a classification.
+[ipclassifier](https://pypi.org/project/ipclassifier/) accepts a text file, which should be lines of pre-modern English iambic pentameter, and outputs the period/style classification.  It only uses features derived from prosody to make a classification.
 
 
 ## Installation
@@ -16,30 +16,30 @@ NOTE: The relevant `nltk` datasets are included in the module, in order to avoid
 
 my_poem.txt:
 ```text
-     First was the World as one great Cymbal made,
-     Where Jarring Windes to infant Nature plaid.
-     All Musick was a solitary sound,
-     To hollow Rocks and murm'ring Fountains bound.
-     Jubal first made the wilder Notes agree;
-     And Jubal tun'd Musicks Jubilee:
-     He call'd the Ecchoes from their sullen Cell,
-     And built the Organs City where they dwell.
-     Each sought a consort in that lovely place;
-     And Virgin Trebles wed the manly Base.
-     From whence the Progeny of numbers new
-     Into harmonious Colonies withdrew.
-     Some to the Lute, some to the Viol went,
-     And others chose the Cornet eloquent.
-     These practising the Wind, and those the Wire,
-     To sing Mens Triumphs, or in Heavens quire.
-     Then Musick, the Mosaique of the Air,
-     Did of all these a solemn noise prepare:
-     With which She gain'd the Empire of the Ear,
-     Including all between the Earth and Sphear.
-     Victorious sounds yet here your Homage do
-     Unto a gentler Conqueror then you;
-     Who though He flies the Musick of his praise,
-     Would with you Heavens Hallelujahs raise.
+First was the World as one great Cymbal made,
+Where Jarring Windes to infant Nature plaid.
+All Musick was a solitary sound,
+To hollow Rocks and murm'ring Fountains bound.
+Jubal first made the wilder Notes agree;
+And Jubal tun'd Musicks Jubilee:
+He call'd the Ecchoes from their sullen Cell,
+And built the Organs City where they dwell.
+Each sought a consort in that lovely place;
+And Virgin Trebles wed the manly Base.
+From whence the Progeny of numbers new
+Into harmonious Colonies withdrew.
+Some to the Lute, some to the Viol went,
+And others chose the Cornet eloquent.
+These practising the Wind, and those the Wire,
+To sing Mens Triumphs, or in Heavens quire.
+Then Musick, the Mosaique of the Air,
+Did of all these a solemn noise prepare:
+With which She gain'd the Empire of the Ear,
+Including all between the Earth and Sphear.
+Victorious sounds yet here your Homage do
+Unto a gentler Conqueror then you;
+Who though He flies the Musick of his praise,
+Would with you Heavens Hallelujahs raise.
 ```
 NOTE: Accuracy is best with 100 or more lines.
 

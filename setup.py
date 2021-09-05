@@ -5,9 +5,10 @@ with(open("README.md")) as f:
 
 setup(
     name='ipclassifier',
-    version='1.0.0',    
+    version='1.0.1',    
     description='Classifies English iambic pentameter poetry by period',
     long_description=long_desc,
+    long_description_content_type="text/markdown",
     keywords=["NLP", "iambic pentameter", "meter", "poetry", "English poetry", "scansion", "poetry classification"],
     url='https://github.com/Chad-Mowbray/iamb-classifier',
     author='Chad Mowbray',

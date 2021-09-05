@@ -1,0 +1,10 @@
+venv
+__pycache__
+.DS_Store
+profile.txt
+log.txt
+big_log.txt
+.vscode
+.ipynb_checkpoints
+ipclassifier.egg-info
+build
