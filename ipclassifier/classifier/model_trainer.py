@@ -123,17 +123,14 @@ class ModelTrainer(ModelBase):
         X_test_np = np.array(X_test)
         y_test_np = np.array(y_test)
 
-
-        print("saving train test pickle...")
-        with open("train_test_data.pickle", "wb") as f:
-            pickle.dump({
-            "X_test_np": X_test_np,
-            "y_test_np": y_test_np,
-            "X_train_np": X_train_np,
-            "y_train_np": y_train_np
-        }, f)
-
-
+        # print("saving train test pickle...")
+        # with open("train_test_data.pickle", "wb") as f:
+        #     pickle.dump({
+        #     "X_test_np": X_test_np,
+        #     "y_test_np": y_test_np,
+        #     "X_train_np": X_train_np,
+        #     "y_train_np": y_train_np
+        # }, f)
 
         return {
             "X_test_np": X_test_np,
@@ -164,20 +161,6 @@ class ModelTrainer(ModelBase):
 
 
     def test_model(self, train_test):
-        print('test model started...')
-        # models = ["MultinomialNB", "ComplementNB", "MLPClassifier"]
-        # for model in models:
-        #     with open(f"{model}_test-trained-model.pickle", 'rb') as f:
-        #         print(f"{model}...", "\n")
-        #         test_model = pickle.load(f)
-        #         predicted = test_model.predict(train_test["X_test_np"])
-        #         print(metrics.classification_report(train_test["y_test_np"], predicted))
-        #         print(metrics.confusion_matrix(train_test["y_test_np"], predicted))
-        #         print(metrics.accuracy_score(train_test["y_test_np"], predicted))
-
-        #         print("Accuracy on training set: {:.3f}".format(test_model.score(train_test["X_train_np"], train_test["y_train_np"])))
-        #         print("Accuracy on test set: {:.3f}".format(test_model.score(train_test["X_test_np"], train_test["y_test_np"])))
-
         with open(f"garbage.pickle", 'rb') as f:
             test_model = pickle.load(f)
             predicted = test_model.predict(train_test["X_test_np"])
@@ -187,7 +170,6 @@ class ModelTrainer(ModelBase):
 
             print("Accuracy on training set: {:.3f}".format(test_model.score(train_test["X_train_np"], train_test["y_train_np"])))
             print("Accuracy on test set: {:.3f}".format(test_model.score(train_test["X_test_np"], train_test["y_test_np"])))
-
 
 
     def main(self):

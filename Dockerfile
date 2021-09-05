@@ -1,3 +1,2 @@
-FROM python:3
-ADD test_text.txt /
+FROM python:3.9
 RUN pip install ipclassifier

@@ -144,11 +144,9 @@ def syllabify(pron, alaska_rule=True):
                 depth = 3 if tuple(onsets[i][-3:]) in O3 else 2
         for j in range(len(onsets[i]) - depth):
             coda.append(onsets[i].pop(0))
-        # store coda
         codas.insert(i - 1, coda)
 
-    ## verify that all segments are included in the ouput
-    output = list(zip(onsets, nuclei, codas))  # in Python3 zip is a generator
+    output = list(zip(onsets, nuclei, codas)) 
     return output
 
 
