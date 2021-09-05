@@ -8,3 +8,4 @@ big_log.txt
 .ipynb_checkpoints
 ipclassifier.egg-info
 build
+test_text.txt

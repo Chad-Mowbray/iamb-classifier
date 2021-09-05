@@ -25,7 +25,7 @@ For a set of lines, features are then extracted.  Here are the features:
 
 These features are then fed into two models.  The primary model is a [Multinomial Naive Bayes](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html).  This is supplemented by a second [Complement Naive Bayes](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.ComplementNB.html) model.
 
-The model(s) is trained on approximately 15,000 lines, in groups of 100 lines, from the following categories:
+The model(s) is trained on approximately 15,000 lines, in groups of 100 lines, from each of the following categories:
 
 - 15th Century (Chaucer, Gower, Henryson)
 - 16th Century (Marlowe, Raleigh, Shakespeare, Sidney, Skelton, Spencer, Surrey, Wyatt)
@@ -36,7 +36,7 @@ The model(s) is trained on approximately 15,000 lines, in groups of 100 lines, f
 
 The trained model's accuracy is in the upper 90s.
 
-There is an `/OUT_OF_SAMPLE` folder for demonstration purposes.  None of these poets are found in the train/test data.
+There is an `/OUT_OF_SAMPLE` folder for demonstration purposes.  None of the lines are by poets found in the train/test data.
 
 
 ## Installation

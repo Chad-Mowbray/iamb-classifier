@@ -1,4 +1,4 @@
 global-include *.json
-global-include uk_american_text.txt accented_words.txt
+global-include uk_american_text.txt
 global-include *current.pickle master_word_list.pickle ComplementNB* MultinomialNB*
-global-include *cmudict* *stopwords* *wordnet* *words* *averaged_perceptron_tagger* en en-basic *.exc *.bib *.rev *.adj *adv *.noun *.verb *.sense lexnames
+global-include *cmudict* *words* *averaged_perceptron_tagger* 
