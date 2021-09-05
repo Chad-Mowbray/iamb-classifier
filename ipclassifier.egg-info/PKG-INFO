@@ -1,61 +1,68 @@
 Metadata-Version: 2.1
 Name: ipclassifier
-Version: 0.1.0
+Version: 1.0.0
 Summary: Classifies English iambic pentameter poetry by period
 Home-page: https://github.com/Chad-Mowbray/iamb-classifier
 Author: Chad Mowbray
 Author-email: mail@mail.com
 License: MIT
+Keywords: NLP,iambic pentameter,meter,poetry,English poetry,scansion,poetry classification
 Platform: UNKNOWN
 Classifier: License :: OSI Approved :: MIT License
-Classifier: Operating System :: POSIX :: Linux
 Classifier: Programming Language :: Python :: 3
 License-File: LICENSE
 
-# Iambic Pentameter Period Classifier
+# Premodern Iambic Pentameter Period Classifier
 
 ## Overview
-`ipclassifier` accepts a text file, which should be lines of English iambic pentameter, and outputs the period/style classification.  It only uses features derived from prosody to make a classification.
+`ipclassifier` accepts a text file, which should be lines of pre-modern English iambic pentameter, and outputs the period/style classification.  It only uses features derived from prosody to make a classification.
 
 
 ## Installation
 ```bash
 pip install ipclassifier
 ```
+NOTE: The relevant `nltk` datasets are included in the module, in order to avoid having to download additional required files.
+
 
 ## Usage
-`ipclassifier` can be run either as a script or as a module
+`ipclassifier` can be run either as a script or as a module.
 
 my_poem.txt:
 ```text
-     All devil as I am--a damned wretch,
-     A hardened, stubborn, unrepenting villain,
-     Still my heart melts at human wretchedness;
-     And with sincere but unavailing sighs
-     I view the helpless children of distress:
-     With tears indignant I behold the oppressor
-     Rejoicing in the honest man's destruction,
-     Whose unsubmitting heart was all his crime.--
-     Ev'n you, ye hapless crew! I pity you;
-     Ye, whom the seeming good think sin to pity;
-     Ye poor, despised, abandoned vagabonds,
-     Whom Vice, as usual, has turn'd o'er to ruin.
-     Oh! but for friends and interposing Heaven,
-     I had been driven forth like you forlorn,
-     The most detested, worthless wretch among you!
-     O injured God! Thy goodness has endow'd me
-     With talents passing most of my compeers,
-     Which I in just proportion have abused--
-     As far surpassing other common villains
-     As Thou in natural parts has given me more.
+     First was the World as one great Cymbal made,
+     Where Jarring Windes to infant Nature plaid.
+     All Musick was a solitary sound,
+     To hollow Rocks and murm'ring Fountains bound.
+     Jubal first made the wilder Notes agree;
+     And Jubal tun'd Musicks Jubilee:
+     He call'd the Ecchoes from their sullen Cell,
+     And built the Organs City where they dwell.
+     Each sought a consort in that lovely place;
+     And Virgin Trebles wed the manly Base.
+     From whence the Progeny of numbers new
+     Into harmonious Colonies withdrew.
+     Some to the Lute, some to the Viol went,
+     And others chose the Cornet eloquent.
+     These practising the Wind, and those the Wire,
+     To sing Mens Triumphs, or in Heavens quire.
+     Then Musick, the Mosaique of the Air,
+     Did of all these a solemn noise prepare:
+     With which She gain'd the Empire of the Ear,
+     Including all between the Earth and Sphear.
+     Victorious sounds yet here your Homage do
+     Unto a gentler Conqueror then you;
+     Who though He flies the Musick of his praise,
+     Would with you Heavens Hallelujahs raise.
 ```
 NOTE: Accuracy is best with 100 or more lines.
+
 
 ### From the command line
 ```bash
 python -m ipclassifier -f my_poem.txt
 >>> processing starting...
->>> Your text is probably romantic
+>>> Your text is probably 17th-Century
 ```
 
 ### As a module
@@ -66,7 +73,7 @@ from ipclassifier.runners import classify_ip
 
 my_filename = "my_poem.txt"
 classification = classify_ip(my_filename)
-# classification = "romantic"
+# classification = "17th-Century"
 ```
 
 ## Credit
@@ -94,9 +101,20 @@ For a set of lines, features are then extracted.  Here are the features:
 4. The average syllables per line
 5. The individual ratios of each sample's transformation rules
 
-These features are then fed into the model [(Complement Naive Bayes)](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.ComplementNB.html).
+These features are then fed into two models.  The primary model is a [Multinomial Naive Bayes](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html).  This is supplemented by a second model, [(Complement Naive Bayes)](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.ComplementNB.html).
 
-The model is trained on approximately 10,000 lines from each category (so far: Elizabethan, Victorian, Neoclassical, Romantic), using groups of 100 lines.
+The model is trained on approximately 15,000 lines from each category 
+
+- 15th Century (Chaucer, Gower, Henryson)
+- 16th Century (Marlowe, Raleigh, Shakespeare, Sidney, Skelton, Spencer, Surrey, Wyatt)
+- 17th Century (Donne, Dryden, Jonson, Milton, Vaughan)
+- 18th Century (Akenside, Cowper, Johnson, Pope, Swift)
+- 19th Century, Romantic (Byron, Coleridge, Shelley, Wordsworth)
+- 19th Century, Victorian (Arnold, Browning, Swinburne, Tennyson, Wilde)
+
+using groups of 100 lines.
 
 The trained model's accuracy is in the upper 90s.
+
+There is an `/OUT_OF_SAMPLE` folder for demonstration purposes.  None of these poets are found in the train/test data.
 

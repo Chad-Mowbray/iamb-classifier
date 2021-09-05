@@ -17,14 +17,16 @@ from ipclassifier.dataprep import RawFileProcessor
 class ModelTrainer(ModelBase):
 
     PERIODS = (
-        "elizabethan",
-        "neoclassical",
-        "romantic",
-        "victorian"
+        "15th-Century",
+        "16th-Century",
+        "17th-Century",
+        "18th-Century",
+        "19th-Century-(Romantic)",
+        "19th-Century-(Victorian)"
     )
     SECTION_LENGTH = 100
 
-    def __init__(self, feature_runner ,accented_words_file="accented_words.txt"):
+    def __init__(self, feature_runner ,accented_words_file="master_word_list.pickle"):
         super().__init__()
         self.accented_words_file = os.path.join(os.path.dirname(__file__), accented_words_file)
         self.feature_runner = feature_runner
@@ -35,7 +37,7 @@ class ModelTrainer(ModelBase):
     def get_sections_per_period(self, period, iterations=1):
         print('get sections per period started...')
 
-        filename = os.path.join(os.path.dirname(__file__), f"poems/{period}_poems.txt")
+        filename = os.path.join(os.path.dirname(__file__), f"poems/_{period}.txt")
         rfp = RawFileProcessor(filename)
         contents = rfp.cleaned_contents
 
@@ -120,6 +122,18 @@ class ModelTrainer(ModelBase):
         y_test = y[:test_split_point]
         X_test_np = np.array(X_test)
         y_test_np = np.array(y_test)
+
+
+        print("saving train test pickle...")
+        with open("train_test_data.pickle", "wb") as f:
+            pickle.dump({
+            "X_test_np": X_test_np,
+            "y_test_np": y_test_np,
+            "X_train_np": X_train_np,
+            "y_train_np": y_train_np
+        }, f)
+
+
 
         return {
             "X_test_np": X_test_np,
