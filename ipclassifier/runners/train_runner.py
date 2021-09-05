@@ -1,4 +1,4 @@
-from ipclassifier.classifier import ModelTrainer, tune_params
+from ipclassifier.classifier import ModelTrainer
 from .feature_runner import FeatureRunner 
 
 
@@ -6,5 +6,4 @@ from .feature_runner import FeatureRunner
 def train_runner():
     ModelTrainer(FeatureRunner)
 
-def test_params():
-    tune_params()
+

@@ -168,8 +168,3 @@ def destress(syllab):
         nuke = [p[:-1] if p[-1] in {'0', '1', '2'} else p for p in nucleus]
         syls.append((onset, nuke, coda))
     return syls
-
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()

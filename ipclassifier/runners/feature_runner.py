@@ -2,8 +2,6 @@ from collections import Counter
 from ipclassifier.token_processors import Tokenizer
 from ipclassifier.iambic_line_processors import IambicLine
 from ipclassifier.utils import DictsSingleton
-# import nltk
-# nltk.download('wordnet')
 
 
 
@@ -58,7 +56,6 @@ class FeatureRunner():
             "rule_5": ratios.get(5,0),
             "rule_6": ratios.get(6,0)
         }
-        # return all_changed_words
 
 
 

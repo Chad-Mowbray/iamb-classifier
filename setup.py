@@ -8,6 +8,7 @@ setup(
     version='0.1.0',    
     description='Classifies English iambic pentameter poetry by period',
     long_description=long_desc,
+    keywords=["NLP", "iambic pentameter", "meter", "poetry", "English poetry", "scansion", "poetry classification"],
     url='https://github.com/Chad-Mowbray/iamb-classifier',
     author='Chad Mowbray',
     author_email='mail@mail.com',
@@ -25,7 +26,7 @@ setup(
                     "sklearn==0.0",
                     "threadpoolctl==2.2.0",
                     "tqdm==4.62.2",
-                    "Unidecode==1.2.0 "  ,               
+                    "Unidecode==1.2.0 ",               
                       ],
     classifiers=[
         'License :: OSI Approved :: MIT License',       

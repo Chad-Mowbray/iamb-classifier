@@ -23,27 +23,8 @@ def classify_ip(filename):
         r = FeatureRunner(contents)
         features = r.initial_process_contents()
         c = Classifier(features)
-        print(f"Your text is probably {c.guessed_period[0]}")
-        return c.guessed_period[0]
+        print(f"Your text is probably {c.guessed_period}")
+        return c.guessed_period
     else:
         raise FileNotFoundError("Please make sure your file is in the user_input_poems/ folder.")
 
-
-
-
-
-def get_new_list():
-    import pickle
-    master_changed_words = []
-    files = ["c_15_master.txt", "c_16_master.txt", "c_17_master.txt", "c_18_master.txt", "c_19_rom_master.txt", "c_19_vic_master.txt"]
-    for f in files:
-        print("starting on ", f)
-        rfp = RawFileProcessor(f"ipclassifier/runners/{f}")
-        contents = rfp.cleaned_contents
-        r = FeatureRunner(contents)
-        changed_words = r.initial_process_contents()
-        master_changed_words += changed_words
-
-    print("done processing, starting pickling")
-    with open("master_changed_words_list.pickle", "wb") as f:
-        pickle.dump(master_changed_words, f)

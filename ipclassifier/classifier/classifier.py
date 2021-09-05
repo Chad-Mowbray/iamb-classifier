@@ -32,10 +32,8 @@ class Classifier(ModelBase):
             with open(filepath, "rb") as f:
                 model = pickle.load(f)
                 guessed_period = model.predict(flattened_all_period_features)
-                print(m, guessed_period)
                 guess_set.append(guessed_period[0])
         self.guessed_period = guess_set[1] if guess_set[1] == "16th-Century" else guess_set[0]
-        print("final_guess", self.guessed_period)
 
 
     def main(self):

@@ -17,7 +17,7 @@ def classify_ip(filename):
         r = FeatureRunner(contents)
         features = r.initial_process_contents()
         c = Classifier(features)
-        print(f"Your text is probably {c.guessed_period[0]}")
-        return c.guessed_period[0]
+        print(f"Your text is probably {c.guessed_period}")
+        return c.guessed_period
     else:
         raise FileNotFoundError("Please make sure your file is in the user_input_poems/ folder.")

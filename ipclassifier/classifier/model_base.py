@@ -21,8 +21,6 @@ class ModelBase:
 
     def get_accented_words(self):
         with open(self.accented_words_file, 'rb') as f:
-            # accented_words = [word.rstrip("\n") for word in f.readlines()]
-            # return accented_words
             accented_words = pickle.load(f)
             return accented_words
 
