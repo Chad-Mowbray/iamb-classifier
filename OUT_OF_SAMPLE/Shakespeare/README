@@ -1,0 +1,11 @@
+Obtained test data of Shakespeare sonnets by:
+
+- wget -m http://shakespeare.mit.edu/Poetry/sonnets.html
+- cd to appropriate directory
+- for sonnet in *.html; do 
+        links -dump $sonnet | 
+        cut -c6- | 
+        grep '^[A-Za-z]' > $(basename $sonnet .html); 
+    done
+
+

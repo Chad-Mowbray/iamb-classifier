@@ -1,0 +1,17 @@
+#!/bin/bash
+
+python -c "import nltk; nltk.download('words')"
+
+echo "All Shakespeare sonnets concatenated"
+python -m ipclassifier -f <(cat sonnet*)
+echo 
+
+rm -f classified.tmp
+for sonnet in sonnet.*; do
+    echo -n "$sonnet: "
+    python -m ipclassifier -f $sonnet | grep -v '^processing' | tee -a classified.tmp
+done
+echo
+
+echo "Histogram of classifications"
+sort classified.tmp | uniq -c | sort -n
