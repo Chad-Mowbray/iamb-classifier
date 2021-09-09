@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python -c "import nltk; nltk.download('words')"
+# python -c "import nltk; nltk.download('words')"
 
 echo "All Shakespeare sonnets concatenated"
 python -m ipclassifier -f <(cat sonnet*)

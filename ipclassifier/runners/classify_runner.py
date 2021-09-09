@@ -16,15 +16,25 @@ def classify_ip(filename):
     Entrypoint for classifying a text file
     """
 
-    if exists(filename):
-        print("processing starting...")
-        rfp = RawFileProcessor(filename)
-        contents = rfp.cleaned_contents
-        r = FeatureRunner(contents)
-        features = r.initial_process_contents()
-        c = Classifier(features)
-        print(f"Your text is probably {c.guessed_period}")
-        return c.guessed_period
-    else:
-        raise FileNotFoundError("Please make sure your filepath is correct.")
+    try:
+        if exists(filename):
+            print("processing starting...")
+            rfp = RawFileProcessor(filename)
+            contents = rfp.cleaned_contents
+            r = FeatureRunner(contents)
+            features = r.initial_process_contents()
+            c = Classifier(features)
+            print(f"Your text is probably {c.guessed_period}")
+            return c.guessed_period
+        else:
+            raise FileNotFoundError("Please make sure your filepath is correct.")
+    except LookupError:
+        print("""
+    WordNet is not installed.  Run:
+
+        python -c "import nltk; nltk.download('words')"
+
+    To remedy this
+        """)
+
 

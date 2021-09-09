@@ -5,7 +5,7 @@ with(open("README.md")) as f:
 
 setup(
     name='ipclassifier',
-    version='1.0.2',    
+    version='1.0.3',    
     description='Classifies English iambic pentameter poetry by period',
     long_description=long_desc,
     long_description_content_type="text/markdown",
